@@ -10,4 +10,5 @@ public class IurisApplication {
 		SpringApplication.run(IurisApplication.class, args);
 	}
         //Agregada conexion mysql
+
 }
