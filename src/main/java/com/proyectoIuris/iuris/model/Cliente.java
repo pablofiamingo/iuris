@@ -17,7 +17,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCliente;
+    private int idCliente; //Revisar por las moscas el tipo de dato
     private String nombre;
     private String apellido;
     private String dni;
