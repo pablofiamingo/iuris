@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="lista de tareas")
+@Table(name="lista_de_tareas")
 public class ListaDeTareas {
 
     @Id
@@ -20,6 +20,6 @@ public class ListaDeTareas {
     private int idToDo;
     private String tarea;
     private String relevancia;
-    private boolean check;
+    //private boolean check; revisar esto
 
 }
