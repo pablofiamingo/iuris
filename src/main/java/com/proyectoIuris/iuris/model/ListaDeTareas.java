@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,8 +19,17 @@ public class ListaDeTareas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idToDo;
+
+    @Column(nullable = false, length = 50)
     private String tarea;
+
+    @Column(nullable = false, length = 250)
     private String relevancia;
-    //private boolean check; revisar esto
+
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean enabled;
+
+    @OneToOne
+    private Usuario usuario;
 
 }
