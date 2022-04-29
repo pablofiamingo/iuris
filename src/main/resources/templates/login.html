@@ -5,6 +5,12 @@
     <title>Test Login</title>
 </head>
 <body>
-    Este es el login
+    <form th:action="@{/usuario/login}" th:object="${usuario}" method="POST">
+        Username: <input th:field="*{user}" type="text" required><br><br>
+        Pass: <input th:field="*{pass}" type="password" required><br><br>
+        <input type="submit" value="Loguearse"><br><br>
+        <a href="/usuario/registro"><button type="button">Registrarse</button></a>
+        <span th:text="${error}"></span>
+    </form>
 </body>
 </html>
