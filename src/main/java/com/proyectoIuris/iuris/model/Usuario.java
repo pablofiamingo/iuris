@@ -36,11 +36,17 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Cliente> cliente;
 
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "id_calendario", updatable = false, nullable = false)
+    private Calendario calendario;*/
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Calendario calendario;
 
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "id_to_do", updatable = false, nullable = false)
+    private ListaDeTareas listaDeTareas;*/
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private ListaDeTareas listaDeTareas;
 }

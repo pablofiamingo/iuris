@@ -5,7 +5,7 @@
     <title>Test Registro</title>
 </head>
 <body>
-    <form th:action="@{/insertUser}" th:object="${usuario}" method="post">
+    <form th:action="@{/usuario/insert}" th:object="${usuario}" method="post">
         Username: <input th:field="*{user}" type="text" required><br><br>
         Pass: <input th:field="*{pass}" type="password" required><br><br>
         Email: <input th:field="*{email}" type="text" required><br><br>

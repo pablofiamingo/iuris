@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping
 public class TestUsuarioController {
@@ -19,21 +21,4 @@ public class TestUsuarioController {
     @Autowired
     private IUsuarioService uService;
 
-    @GetMapping("/register")
-    public String getRegistro(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "register";
-    }
-
-    @PostMapping("/insertUser")
-    public String insertUser(@Validated Usuario u, Model model) {
-        uService.insert(u);
-        return "register";
-
-    }
-
-    @GetMapping("/login")
-    String getLogin() {
-        return "login";
-    }
 }
