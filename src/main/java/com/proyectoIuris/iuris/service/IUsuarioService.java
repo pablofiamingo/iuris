@@ -7,8 +7,7 @@ import java.util.Optional;
 
 public interface IUsuarioService {
     public List<Usuario> list();
-
-    //hacer un findByUsername que reciba la lista y devuelva un unico Usuario
+    public Usuario findByUsername(String username);
     public Optional<Usuario> findById(int id);
     public void insert(Usuario u);
 }

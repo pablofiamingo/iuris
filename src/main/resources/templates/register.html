@@ -8,10 +8,15 @@
     <form th:action="@{/usuario/insert}" th:object="${usuario}" method="post">
         Username: <input th:field="*{user}" type="text" required><br><br>
         Pass: <input th:field="*{pass}" type="password" required><br><br>
-        Email: <input th:field="*{email}" type="text" required><br><br>
+        Email: <input th:field="*{email}" type="email" required><br><br>
         Nombre completo: <input th:field="*{fullName}" type="text" required><br><br>
-        Rol: <input th:field="*{rol}" type="text" required><br><br>
-    <input type="submit" value="Registrarse"><br><br>
+        Rol: <select th:field="*{rol}" required>
+                <option value="abogado">Abogado</option>
+                <option value="empleado">Empleado</option>
+            </select><br><br>
+        <input type="submit" value="Registrarse"><br><br>
+        <a href="/usuario/login"><button type="button">Login</button></a>
+        <span th:text="${exito}"></span>
     </form>
 </body>
 </html>

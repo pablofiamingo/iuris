@@ -21,20 +21,23 @@ public class CUsuarioService implements IUsuarioService{
     }
 
     @Override
+    public Usuario findByUsername(String username) {
+        Usuario user = null;
+        for (Usuario u : this.list()) {
+            if(u.getUser().equals(username)) {
+                user = u;
+            }
+        }
+        return user;
+    }
+
+    @Override
     public Optional<Usuario> findById(int id) {
 
         Optional<Usuario> usuario = uRepo.findById(id);
 
         return usuario;
     }
-
-    //@Override
-    //public Usuario findByUsername(String username) {
-        //this.list().contains()
-
-
-      //  return null;
-    //}
 
     @Override
     public void insert(Usuario u) {
