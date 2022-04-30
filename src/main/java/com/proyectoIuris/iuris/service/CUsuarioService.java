@@ -33,9 +33,7 @@ public class CUsuarioService implements IUsuarioService{
 
     @Override
     public Optional<Usuario> findById(int id) {
-
         Optional<Usuario> usuario = uRepo.findById(id);
-
         return usuario;
     }
 
