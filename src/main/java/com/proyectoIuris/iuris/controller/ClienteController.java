@@ -1,7 +1,7 @@
 package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.Cliente;
-import com.proyectoIuris.iuris.service.IClienteService;
+//import com.proyectoIuris.iuris.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +24,7 @@ public class ClienteController {
         return "testClientes";
     }
 
+    //no esta la interfaz de clienteService en el ultimo merge y rompe el programa
     @PostMapping("/buscador")
     public String buscarCliente(@RequestParam(value = "nombre",required = true) String keyword, Model model) {
         //String keyword = (String) model.getAttribute("nombre");
@@ -31,5 +32,4 @@ public class ClienteController {
         model.addAttribute("listaClientes", clientes);
         return "testClientes";
     }
-
 }
