@@ -26,7 +26,7 @@ public class CPagoService implements IPagoService {
     public Pago insert(Pago pago) {
         return pagoRepository.save(pago);
     }
-
+    
     @Override
     public void delete(int idPago){
         pagoRepository.deleteById(idPago);
