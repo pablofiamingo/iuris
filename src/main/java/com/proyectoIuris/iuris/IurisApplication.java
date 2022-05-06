@@ -9,5 +9,6 @@ public class IurisApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IurisApplication.class, args);
 	}
+        //Agregada conexion mysql
 
 }
