@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -27,15 +25,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    String getLogin(Model model, HttpSession httpSession) {
-        Usuario user = (Usuario) httpSession.getAttribute("user");
+    String getLogin(Model model) {
         //redirect a login enviandole un Usuario para que manipule el form
-        if(httpSession.getAttribute("user") != null) {
-            model.addAttribute("nombre", user);
-            return "inicio";
-        }
         model.addAttribute("usuario", new Usuario());
-
         return "login";
     }
 
@@ -55,7 +47,8 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
+    public String login(@Validated Usuario u, Model model) {
+        String error = "Los datos ingresados son incorrectos. Por favor, inténtelo nuevamente.";
         //Busca el usuario con el username indicado
         Usuario usuario = usuarioService.findByUsername(u.getUser());
 
@@ -63,14 +56,13 @@ public class UsuarioController {
         if(usuario != null) {
             if(usuario.getPass().equals(u.getPass())) {
                 model.addAttribute("nombre", usuario.getFullName());
-                httpSession.setAttribute("user", usuario);
                 return "inicio";
             } else {
-                model.addAttribute("error", "true");
+                model.addAttribute("error", error);
                 return "login";
             }
         } else {
-            model.addAttribute("error", "true");
+            model.addAttribute("error", error);
             return "login";
         }
     }
