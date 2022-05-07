@@ -14,5 +14,4 @@ public interface CasoRepository extends CrudRepository<Caso, Integer> {
     public List<Caso> findCasoByIdUsuario(@Param("idUsuario") int idUsuario);
     void deleteByIdCaso(int idCaso);
     Caso findByIdCaso(int idCaso);
-
 }

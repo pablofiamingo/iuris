@@ -21,7 +21,6 @@ public class UsuarioController {
     //Métodos por GET
     @GetMapping("/registro")
     public String getRegistro(Model model) {
-        //redirect a registro enviandole un Usuario para que manipule el form
         model.addAttribute("usuario", new Usuario());
         return "register";
     }
@@ -29,21 +28,17 @@ public class UsuarioController {
     @GetMapping("/login")
     String getLogin(Model model, HttpSession httpSession) {
         Usuario user = (Usuario) httpSession.getAttribute("user");
-        //redirect a login enviandole un Usuario para que manipule el form
         if(httpSession.getAttribute("user") != null) {
             model.addAttribute("nombre", user);
             return "inicio";
         }
         model.addAttribute("usuario", new Usuario());
-
         return "login";
     }
 
     //Métodos por POST
     @PostMapping("/registro")
     public String insertUser(@Validated Usuario u, Model model) {
-        //si el usuario no es null, y el rol es empleado o abogado, permite el registro
-        //las otras validaciones ya se hacen con el required de html
         if(u != null) {
             if(u.getRol().equals("abogado") || u.getRol().equals("empleado")) {
                 usuarioService.insert(u);
@@ -51,15 +46,11 @@ public class UsuarioController {
             }
         }
         return "register";
-        //falta agregar mas seguridad para evitar caracteres raros, etc.
     }
 
     @PostMapping("/login")
     public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
-        //Busca el usuario con el username indicado
         Usuario usuario = usuarioService.findByUsername(u.getUser());
-
-        //si encuentra el usuario (o sea, no es null) compara la contraseña ingresada con la registrada
         if(usuario != null) {
             if(usuario.getPass().equals(u.getPass())) {
                 model.addAttribute("nombre", usuario.getFullName());
