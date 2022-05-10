@@ -1,15 +1,15 @@
-package com.proyectoIuris.iuris.service;
+package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.repository.UsuariosRepository;
+import com.proyectoIuris.iuris.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
-public class CUsuarioService implements IUsuarioService{
+public class CUsuarioService implements IUsuarioService {
 
     @Autowired
     private UsuariosRepository uRepo;

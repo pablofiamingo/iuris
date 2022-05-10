@@ -1,9 +1,6 @@
 package com.proyectoIuris.iuris.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,16 +33,8 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Cliente> cliente;
 
-    /*@OneToOne
-    @JoinColumn(name = "id_calendario", updatable = false, nullable = false)
-    private Calendario calendario;*/
-
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Calendario calendario;
-
-    /*@OneToOne
-    @JoinColumn(name = "id_to_do", updatable = false, nullable = false)
-    private ListaDeTareas listaDeTareas;*/
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private ListaDeTareas listaDeTareas;

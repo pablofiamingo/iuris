@@ -31,8 +31,6 @@ public class Calendario {
     @Temporal(TemporalType.TIME)
     private Date hora;
 
-    /*@OneToOne(mappedBy = "calendario", cascade = CascadeType.ALL)
-    private Usuario usuario;*/
     @OneToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
