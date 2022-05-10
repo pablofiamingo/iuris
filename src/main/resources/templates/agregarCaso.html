@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Agregar Caso</title>
+</head>
+<body>
+<form th:action="@{/caso/agregar}" th:object="${caso}" method="post">
+    Caratula: <input th:field="*{caratula}" type="text" required><br><br>
+    Link: <input th:field="*{link}" type="text" required><br><br>
+    Materia: <input th:field="*{materia}" type="text" required><br><br>
+    Fuero: <input th:field="*{fuero}" type="text" required><br><br>
+    Estado: <input th:field="*{estado}" type="text" required><br><br>
+    Juzgado: <input th:field="*{juzgado}" type="text" required><br><br>
+    Datos de otra parte: <input th:field="*{datoOtraParte}" type="text" required><br><br>
+    Descripcion: <input th:field="*{descripcion}" type="text" required><br><br>
+    Representante <input th:field="*{representante}" type="text" disabled required><br><br>
+    Cliente: <input th:field="*{cliente.idCliente}" type="text" required><br><br>
+
+    <input type="submit" value="Agregar Caso"><br><br>
+    <a href="/caso/lista"><button type="button">Ver listado</button></a>
+    <span th:text="${exito}"></span>
+</form>
+</body>
+</html>

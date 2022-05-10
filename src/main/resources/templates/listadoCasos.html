@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Lista de casos</title>
+</head>
+<body>
+<table border="1" >
+    <tr>
+        <th>ID</th>
+        <th>Caratula</th>
+        <th>Link</th>
+        <th>Materia</th>
+        <th>Fuero</th>
+        <th>Estado</th>
+        <th>Juzgado</th>
+        <th>Datos</th>
+        <th>Descripcion</th>
+        <th>Representante</th>
+        <th>Cliente</th>
+    </tr>
+    <tr th:each="caso: ${listaDeCasos}">
+        <td th:text="${caso.idCaso}"></td>
+        <td th:text="${caso.caratula}"></td>
+        <td th:text="${caso.link}"></td>
+        <td th:text="${caso.materia}"></td>
+        <td th:text="${caso.fuero}"></td>
+        <td th:text="${caso.estado}"></td>
+        <td th:text="${caso.juzgado}"></td>
+        <td th:text="${caso.datoOtraParte}"></td>
+        <td th:text="${caso.descripcion}"></td>
+        <td th:text="${caso.representante}"></td>
+        <td th:text="${caso.cliente.nombre}"></td>
+        <td>
+            <a th:href="@{'/caso/editar/' + ${caso.idCaso}}">
+                <!--@{'/pathvars/single/' + ${item.id}}-->
+                <button type="button">Editar</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/caso/editar/' + ${caso.idCaso}}">
+                <!--@{'/pathvars/single/' + ${item.id}}-->
+                <button type="button">Eliminar</button>
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
