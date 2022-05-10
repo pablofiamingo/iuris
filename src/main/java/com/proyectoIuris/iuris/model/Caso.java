@@ -1,5 +1,6 @@
 package com.proyectoIuris.iuris.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,7 @@ public class Caso {
     @Column(nullable = false, length = 50)
     private String representante;
 
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;

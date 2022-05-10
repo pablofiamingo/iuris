@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test clientes</title>
+</head>
+<body>
+<form th:action="@{/cliente/buscador}" method="POST">
+    Buscador de clientes: <input th:name="nombre" type="text" required><br><br>
+    <input type="submit" value="Buscar"><br><br>
+    <a href="/usuario/registro"><button type="button">Registrarse</button></a><br><br>
+    <span th:unless="${listaClientes != null}">No se encontraron coincidencias.</span>
+    <table border="1" >
+        <tr th:each="cliente: ${listaClientes}">
+            <td th:text="${cliente.nombre}"></td>
+            <td th:text="${cliente.apellido}"></td>
+        </tr>
+    </table>
+
+    <!--<td th:text="${teacher.additionalSkills} ?: 'UNKNOWN'" />
+        <span th:if="${teacher.gender == 'F'}">Female</span>
+        <span th:unless="${clientes !=  null}">No se encontraron coincidencias.</span>
+    -->
+</form>
+</body>
+</html>
