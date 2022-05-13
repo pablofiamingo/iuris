@@ -2,13 +2,12 @@ package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.service.IUsuarioService;
+import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,8 +40,12 @@ public class UsuarioController {
     public String insertUser(@Validated Usuario u, Model model) {
         if(u != null) {
             if(u.getRol().equals("abogado") || u.getRol().equals("empleado")) {
+                if(Util.containsIllegals(u.getUser()) || Util.containsIllegals(u.getFullName())) {
+                    model.addAttribute("error", "true");
+                    return "register";
+                }
                 usuarioService.insert(u);
-                model.addAttribute("exito","Usuario registrado con éxito.");
+                model.addAttribute("exito","true");
             }
         }
         return "register";
@@ -58,11 +61,16 @@ public class UsuarioController {
                 return "inicio";
             } else {
                 model.addAttribute("error", "true");
-                return "login";
             }
         } else {
             model.addAttribute("error", "true");
-            return "login";
         }
+        return "login";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/usuario/login";
     }
 }
