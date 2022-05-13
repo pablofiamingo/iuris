@@ -5,7 +5,9 @@
     <title>Test Lista de casos</title>
 </head>
 <body>
-<table border="1" >
+<!-- terminar esto -->
+<span th:if="{}"></span>
+<table border="1" th:if="{casos != null}">
     <tr>
         <th>ID</th>
         <th>Caratula</th>
@@ -39,7 +41,6 @@
         </td>
         <td>
             <a th:href="@{'/caso/editar/' + ${caso.idCaso}}">
-                <!--@{'/pathvars/single/' + ${item.id}}-->
                 <button type="button">Eliminar</button>
             </a>
         </td>
