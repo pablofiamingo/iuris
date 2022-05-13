@@ -20,6 +20,7 @@ public class CUsuarioService implements IUsuarioService {
         return usuarios;
     }
 
+    
     @Override
     public Usuario findByUsername(String username) {
         Usuario user = null;
