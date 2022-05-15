@@ -27,9 +27,22 @@ public class CPagoService implements IPagoService {
     public Pago insert(Pago pago) {
         return pagoRepository.save(pago);
     }
-    
+
     @Override
-    public void delete(int idPago){
+    public Optional<Pago> findById(int id) {
+        return pagoRepository.findById(id);
+    }
+
+    @Override
+    public boolean delete(int idPago) {
         pagoRepository.deleteById(idPago);
-  }
+        return true;
+    }
+    @Override
+    public boolean save(Pago pago) {
+        if (pago != null) {
+            pagoRepository.save(pago);
+            return true;
+        } else return false;
+    }
 }
