@@ -56,9 +56,8 @@ public class UsuarioController {
         Usuario usuario = usuarioService.findByUsername(u.getUser());
         if(usuario != null) {
             if(usuario.getPass().equals(u.getPass())) {
-                model.addAttribute("nombre", usuario.getFullName());
                 httpSession.setAttribute("user", usuario);
-                return "inicio";
+                return "redirect:/inicio";
             } else {
                 model.addAttribute("error", "true");
             }
