@@ -1,6 +1,8 @@
 package com.proyectoIuris.iuris.controller;
 
+import com.proyectoIuris.iuris.model.ListaDeTareas;
 import com.proyectoIuris.iuris.model.Pago;
+import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.service.IArchivoService;
 import com.proyectoIuris.iuris.service.IPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,23 @@ public class PagoController {
     private IArchivoService fileService;
 
     @GetMapping("/lista")
-    public String getPagos(Model model) {
+    public String getAll(Model model) {
         List<Pago> listaDePagos = pagoService.getAll();
         model.addAttribute("listaDePagos", listaDePagos);
         return "listadoPago";
+    }
+
+    @GetMapping("/agregar")
+    public String getAgregarPago(Pago pago, Model model, HttpSession httpSession) {
+        Usuario user = (Usuario) httpSession.getAttribute("user");
+        //pago.setCantAbonada(user.getFullName());
+
+        //Aca me colge, y me puse a pensar si no necesitamos que
+        // cliente y pago o usuario esten conectado, bueno despues lo vemos.
+       // porque necesitamos la cantidad abonada por el cliente y x caso
+        model.addAttribute("pago", pago);
+        model.addAttribute("user", user);
+        return "agregarPago";
     }
 
     @GetMapping("/buscar")
@@ -49,7 +64,7 @@ public class PagoController {
         }
         return "vistaPago";
     }
-    //POST MAPPING-----------------------------------------------------------------------------------------------
+    //POST
 
     @PostMapping("/alta")
     public String agregarPago(@RequestPart Pago pago, HttpSession session) {
@@ -62,14 +77,8 @@ public class PagoController {
     }
 
     @PostMapping("/baja")
-    public String eliminarPago(@RequestParam(value = "id", required = true) int id, Model model) {
-        if (pagoService.delete(id)) {
-            model.addAttribute("exito", true);
-            return "inicio";
-        } else {
-            model.addAttribute("exito", false);
-            return "vistaPago";
-        }
+    public void eliminarPago(@RequestParam("idPago") int idPago) {
+        pagoService.delete(idPago);
     }
 
     @PostMapping("/editar")

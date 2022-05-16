@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface IPagoService {
 
     public List<Pago> getAll();
-    public Optional<Pago> getPago(int idPago);
     public Pago insert(Pago pago);
     public Optional<Pago> findById(int id);
     public boolean save(Pago pago);

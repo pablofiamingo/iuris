@@ -19,11 +19,6 @@ public class CPagoService implements IPagoService {
     }
 
     @Override
-    public Optional<Pago> getPago(int idPago){
-        return pagoRepository.findById(idPago);
-    }
-
-    @Override
     public Pago insert(Pago pago) {
         return pagoRepository.save(pago);
     }
