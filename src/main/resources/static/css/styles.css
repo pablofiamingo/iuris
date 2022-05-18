@@ -1,0 +1,61 @@
+.no-padding {
+    padding: 0px 0px;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+}
+
+.bg-blue900{
+    background-color: #031633;
+}
+
+.bg-blue800{
+    background-color: #052c65;
+}
+
+.bg-blue700{
+    background-color: #084298;
+}
+
+.bg-blue600{
+    background-color: #0a58ca;
+}
+
+.bg-blue300{
+    background-color: #6ea8fe;
+}
+
+.bg-blue200{
+    background-color: #9ec5fe;
+}
+
+.bg-blue100{
+    background-color: #cfe2ff;
+}
+
+.full-height{
+    height:100%;
+}
+
+.round-img{
+    width:220px;
+    height:220px;
+    border-radius:150px;
+}
+
+.icon-x{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 0px;
+}
+
+.icon-pen{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 35px;
+}
