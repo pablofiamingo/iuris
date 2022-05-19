@@ -15,14 +15,12 @@ public class CCasoService implements ICasoService {
 
     @Override
     public List<Caso> list(int id) {
-        List<Caso> casos = casoRepo.findCasoByIdUsuario(id);
-        return casos;
+        return casoRepo.findCasoByIdUsuario(id);
     }
 
     @Override
     public Caso findCasoById(int idCaso) {
-        Caso caso = casoRepo.findByIdCaso(idCaso);
-        return caso;
+        return casoRepo.findByIdCaso(idCaso);
     }
 
     @Override
@@ -45,5 +43,10 @@ public class CCasoService implements ICasoService {
             casoRepo.save(caso);
             return true;
         } else return false;
+    }
+
+    @Override
+    public List<Caso> buscador(String keyword) {
+        return casoRepo.buscador(keyword);
     }
 }
