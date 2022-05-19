@@ -1,6 +1,6 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.ListaDeTareas;
+import com.proyectoIuris.iuris.model.Caso;
 import com.proyectoIuris.iuris.model.Pago;
 import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.service.IArchivoService;
@@ -32,11 +32,8 @@ public class PagoController {
     @GetMapping("/agregar")
     public String getAgregarPago(Pago pago, Model model, HttpSession httpSession) {
         Usuario user = (Usuario) httpSession.getAttribute("user");
-        //pago.setCantAbonada(user.getFullName());
-
-        //Aca me colge, y me puse a pensar si no necesitamos que
-        // cliente y pago o usuario esten conectado, bueno despues lo vemos.
-       // porque necesitamos la cantidad abonada por el cliente y x caso
+        Caso caso = new Caso();
+        pago.setCantAbonada(caso.getCliente().getIdCliente());
         model.addAttribute("pago", pago);
         model.addAttribute("user", user);
         return "agregarPago";

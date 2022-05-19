@@ -33,4 +33,6 @@ public class ListaDeTareas {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "lista_de_tareas")
+    private List<DetalleTarea> detalleTareaList;
 }

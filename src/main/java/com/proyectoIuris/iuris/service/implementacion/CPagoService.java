@@ -4,10 +4,12 @@ import com.proyectoIuris.iuris.model.Pago;
 import com.proyectoIuris.iuris.repository.PagoRepository;
 import com.proyectoIuris.iuris.service.IPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CPagoService implements IPagoService {
 
     @Autowired
