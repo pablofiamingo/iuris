@@ -28,4 +28,5 @@ public class DetalleTarea {
     @JoinColumn(name = "id_to_do")
     private ListaDeTareas listaDeTareas;
 
+    
 }
