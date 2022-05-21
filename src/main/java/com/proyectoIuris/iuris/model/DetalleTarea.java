@@ -24,9 +24,7 @@ public class DetalleTarea {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "id_to_do")
-    private ListaDeTareas listaDeTareas;
-
-    
+    private ListaDeTareas listaDeTareas;*/
 }

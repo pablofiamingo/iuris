@@ -2,7 +2,7 @@ package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.ListaDeTareas;
 import com.proyectoIuris.iuris.repository.ListaDeTareasRepository;
-import com.proyectoIuris.iuris.service.IListaDeTareasService;
+import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

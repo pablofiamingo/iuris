@@ -2,7 +2,7 @@ package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Pago;
 import com.proyectoIuris.iuris.repository.PagoRepository;
-import com.proyectoIuris.iuris.service.IPagoService;
+import com.proyectoIuris.iuris.service.Interfaces.IPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
