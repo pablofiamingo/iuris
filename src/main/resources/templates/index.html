@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body>
+<div class="row g-0 bg-blue300">
+    <!--div del panel usuario-->
+    <div class="col-md-3">
+        <div class="bg-blue900 py-1 text-primary">
+            <div class="text-center">
+                <img th:src="@{/img/logoIuris2.png}" class="round-img my-4">
+                <!-- th:src="@{~/billing-app/images/Invoice.png}"-->
+                <h5 class="text-center"><span th:text="${usuario.fullName}" ></span></h5>
+                <h6 class="text-center"><span th:text="${usuario.rol}" ></span></h6>
+                <div class="d-grid gap-2 col-6 mx-auto py-4">
+
+                    <button class="btn btn-primary my-1" type="button">Nuevo Cliente</button>
+
+                    <button class="btn btn-primary my-1" type="button">Nuevo Caso</button>
+
+                    <button class="btn btn-primary my-1" type="button">Crear Usuario</button>
+
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <form th:action="@{/usuario/logout}"  method="POST">
+                        <button class="btn btn-primary my-5" type="submit">Cerrar sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--div del buscador y calendario-->
+    <div class="col-md-6 px-1">
+        <div class="card my-1 bg-blue800">
+            <div class="card-body">
+                <!--
+                <h5 class="card-title text-center text-primary">Buscador por Cliente o Caso</h5>
+                -->
+                <div class="input-group">
+                    <form class="input-group" th:action="@{/buscar}" method="POST">
+                        <input type="text" th:name="valorABuscar" class="form-control text-primary bg-blue100" placeholder="Ingrese cliente o caso a buscar" required>
+                        <button class="btn btn-outline-secondary" th:name="donde" value="cliente" type="submit">Cliente</button>
+                        <button class="btn btn-outline-secondary" th:name="donde" value="caso" type="submit">Caso</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--calendario-->
+        <!--div de calendario-->
+        <div class="card text-center my-1 bg-blue800">
+            <div class="card-header">
+
+                <div class="btn-group py-2 px-2" role="group" aria-label="Basic outlined example">
+                    <button type="button" class="btn btn-outline-primary">Semana anterior</button>
+                    <button type="button" class="btn btn-outline-primary">Semana actual</button>
+                    <button type="button" class="btn btn-outline-primary">Semana siguiente</button>
+                </div>
+
+                <div class="btn-group py-2 px-2" role="group" aria-label="Basic outlined example">
+                    <button type="button" class="btn btn-outline-primary active">Lunes</button>
+                    <button type="button" class="btn btn-outline-primary">Martes</button>
+                    <button type="button" class="btn btn-outline-primary">Miercoles</button>
+                    <button type="button" class="btn btn-outline-primary">Jueves</button>
+                    <button type="button" class="btn btn-outline-primary">Viernes</button>
+                    <button type="button" class="btn btn-outline-primary">Sabado</button>
+                    <button type="button" class="btn btn-outline-primary">Domingo</button>
+                </div>
+
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active bg-primary text-dark" aria-current="true" href="#">Lunes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Martes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Miercoles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Jueves</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Viernes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sabado</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Domingo</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <form class="row g-2">
+                    <div class="col-md-10">
+                        <input class="form-control bg-blue200" id="input-calendario" placeholder="Ingrese cita">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary mb-3">Agregar</button>
+                    </div>
+                </form>
+                <div class="list-group">
+                    <!--traer ID de la bdd para este div, por cada cita del día-->
+                    <div id="idDeLaBDD" class="list-group-item list-group-item-action bg-dark text-light">
+                        <a >Algo para hacer a las 9hs</a>
+                        <img src="@{/img/square-pen-solid.png}" onclick="editarCita()" class="icon-pen">
+                        <img src="@{/img/square-xmark-solid.png}" onclick="eliminarCita()" class="icon-x">
+                    </div>
+
+                    <div class="list-group-item list-group-item-action bg-dark text-light">
+                        <a >Algo para hacer a las 11hs</a>
+                        <img src="@{/img/square-pen-solid.png}" class="icon-pen">
+                        <img src="@{/img/square-xmark-solid.png}" class="icon-x">
+                    </div>
+
+                    <div class="list-group-item list-group-item-action bg-dark text-light">
+                        <a >Algo para hacer a las 16hs</a>
+                        <img src="@{/img/square-pen-solid.png}" class="icon-pen">
+                        <img src="@{/img/square-xmark-solid.png}" class="icon-x">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--div de lista de tareas-->
+    <div class="col-md-3 px-1">
+        <div class="card my-1 bg-blue800">
+            <div class="card-body">
+                <h5 class="card-title text-center text-primary py-2">TAREAS</h5>
+                <form class="row g-2">
+                    <div class="col-md-8">
+                        <input class="form-control bg-blue200" placeholder="Ingrese tarea">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary mb-3">Agregar</button>
+                    </div>
+                </form>
+                <ul class="list-group">
+                    <li class="list-group-item bg-dark text-light">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        First checkbox
+                    </li>
+                    <li class="list-group-item list-group-item-danger">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        Second checkbox
+                    </li>
+                    <li class="list-group-item bg-dark text-light">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        Third checkbox
+                    </li>
+                    <li class="list-group-item list-group-item-warning">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        Fourth checkbox
+                    </li>
+                    <li class="list-group-item bg-dark text-light">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        Fifth checkbox
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+<script>
+    function editarCita(){
+      remove(document.getElementById("idDeLaBDD"));
+    };
+    function eliminarCita(){
+      var div = document.getElementById("idDeLaBDD");
+      div.remove();
+    };
+
+  </script>
+</body>
+</html>
