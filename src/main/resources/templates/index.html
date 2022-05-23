@@ -111,20 +111,20 @@
                     <!--traer ID de la bdd para este div, por cada cita del día-->
                     <div id="idDeLaBDD" class="list-group-item list-group-item-action bg-dark text-light">
                         <a >Algo para hacer a las 9hs</a>
-                        <img src="@{/img/square-pen-solid.png}" onclick="editarCita()" class="icon-pen">
-                        <img src="@{/img/square-xmark-solid.png}" onclick="eliminarCita()" class="icon-x">
+                        <img th:src="@{/img/square-pen-solid.png}" onclick="editarCita()" class="icon-pen">
+                        <img th:src="@{/img/square-xmark-solid.png}" onclick="eliminarCita()" class="icon-x">
                     </div>
 
                     <div class="list-group-item list-group-item-action bg-dark text-light">
                         <a >Algo para hacer a las 11hs</a>
-                        <img src="@{/img/square-pen-solid.png}" class="icon-pen">
-                        <img src="@{/img/square-xmark-solid.png}" class="icon-x">
+                        <img th:src="@{/img/square-pen-solid.png}" class="icon-pen">
+                        <img th:src="@{/img/square-xmark-solid.png}" class="icon-x">
                     </div>
 
                     <div class="list-group-item list-group-item-action bg-dark text-light">
                         <a >Algo para hacer a las 16hs</a>
-                        <img src="@{/img/square-pen-solid.png}" class="icon-pen">
-                        <img src="@{/img/square-xmark-solid.png}" class="icon-x">
+                        <img th:src="@{/img/square-pen-solid.png}" class="icon-pen">
+                        <img th:src="@{/img/square-xmark-solid.png}" class="icon-x">
                     </div>
 
                 </div>
@@ -136,34 +136,27 @@
         <div class="card my-1 bg-blue800">
             <div class="card-body">
                 <h5 class="card-title text-center text-primary py-2">TAREAS</h5>
-                <form class="row g-2">
+                <!-- form de agregar tarea -->
+                <form class="row g-2" th:action="@{/listaDeTareas/agregar}" method="post">
                     <div class="col-md-8">
-                        <input class="form-control bg-blue200" placeholder="Ingrese tarea">
+                        <input class="form-control bg-blue200" th:name="tareaNueva" placeholder="Ingrese tarea" required>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary mb-3">Agregar</button>
                     </div>
                 </form>
-                <ul class="list-group">
+
+                <ul class="list-group" th:each="tarea: ${tareas}">
                     <li class="list-group-item bg-dark text-light">
                         <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        First checkbox
-                    </li>
-                    <li class="list-group-item list-group-item-danger">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        Second checkbox
-                    </li>
-                    <li class="list-group-item bg-dark text-light">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        Third checkbox
-                    </li>
-                    <li class="list-group-item list-group-item-warning">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        Fourth checkbox
-                    </li>
-                    <li class="list-group-item bg-dark text-light">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        Fifth checkbox
+                        <span th:text="${tarea.tarea}" />
+                        <!--boton para eliminar
+                        arreglenlo uds front >:(
+                        faltaria  que margaret tache (front: buscar alguna cosilla que margaret)-->
+                        <form th:action="@{/listaDeTareas/eliminar}" method="post">
+                            <button type="submit"> x </button>
+                            <input type="hidden" th:name="idTarea" th:value="${tarea.idDetalleTarea}">
+                        </form>
                     </li>
                 </ul>
             </div>
