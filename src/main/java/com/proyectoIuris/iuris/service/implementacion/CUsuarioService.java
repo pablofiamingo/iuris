@@ -2,7 +2,7 @@ package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.repository.UsuariosRepository;
-import com.proyectoIuris.iuris.service.IUsuarioService;
+import com.proyectoIuris.iuris.service.Interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +20,7 @@ public class CUsuarioService implements IUsuarioService {
         return usuarios;
     }
 
+    
     @Override
     public Usuario findByUsername(String username) {
         Usuario user = null;

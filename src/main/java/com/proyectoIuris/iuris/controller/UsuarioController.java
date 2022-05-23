@@ -1,7 +1,7 @@
 package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.IUsuarioService;
+import com.proyectoIuris.iuris.service.Interfaces.IUsuarioService;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

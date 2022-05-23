@@ -18,30 +18,38 @@ public class Caso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCaso;
+
     @Column(nullable = false, length = 50)
     private String caratula;
-    @Column(nullable = false, length = 50)
-    private String link;
+
     @Column(nullable = false, length = 50)
     private String materia;
+
     @Column(nullable = false, length = 50)
     private String fuero;
+
     @Column(nullable = false, length = 50)
     private String estado;
+
     @Column(nullable = false, length = 50)
     private String juzgado;
-    @Column(nullable = false, length = 50)
+
+    @Column(nullable = false, length = 80)
     private String datoOtraParte;
-    @Column(nullable = false, length = 50)
+
+    @Column(nullable = false)
     private String descripcion;
+
     @Column(nullable = false, length = 50)
     private String representante;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
+
     @OneToMany(mappedBy = "caso")
     private List<Pago> pagoList;
+
     @OneToMany(mappedBy = "caso")
     private List<Archivo> archivos;
 

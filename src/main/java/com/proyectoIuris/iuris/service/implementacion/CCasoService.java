@@ -2,7 +2,7 @@ package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Caso;
 import com.proyectoIuris.iuris.repository.CasoRepository;
-import com.proyectoIuris.iuris.service.ICasoService;
+import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.proyectoIuris.iuris.service;
+package com.proyectoIuris.iuris.service.Interfaces;
 
 import com.proyectoIuris.iuris.model.Usuario;
 

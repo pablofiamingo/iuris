@@ -2,12 +2,11 @@ package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Cliente;
 import com.proyectoIuris.iuris.repository.ClienteRepository;
-import com.proyectoIuris.iuris.service.IClienteService;
+import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CClienteService implements IClienteService {

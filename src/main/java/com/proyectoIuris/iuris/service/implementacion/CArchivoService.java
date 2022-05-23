@@ -2,7 +2,7 @@ package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Archivo;
 import com.proyectoIuris.iuris.repository.ArchivoRepository;
-import com.proyectoIuris.iuris.service.IArchivoService;
+import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

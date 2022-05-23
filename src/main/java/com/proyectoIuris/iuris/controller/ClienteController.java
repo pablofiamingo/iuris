@@ -2,8 +2,8 @@ package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.Cliente;
 import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.IClienteService;
-import com.proyectoIuris.iuris.service.IArchivoService;
+import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
+import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +49,7 @@ public class ClienteController {
             model.addAttribute("cliente", cliente);
             return "vistaCliente";
         } else {
-            model.addAttribute("error", "No se encontró el cliente.");
+            model.addAttribute("error", "No se encontrï¿½ el cliente.");
             return "vistaCliente";
         }
     }
