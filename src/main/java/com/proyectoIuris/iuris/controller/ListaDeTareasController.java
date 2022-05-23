@@ -1,18 +1,15 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.ListaDeTareas;
+import com.proyectoIuris.iuris.model.DetalleTarea;
 import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
 import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/listaDeTareas")
@@ -21,65 +18,46 @@ public class ListaDeTareasController {
     @Autowired
     private IListaDeTareasService listaDeTareasService;
 
-    @Autowired
-    private IArchivoService fileService;
-
-    @GetMapping("/lista")
-    public String getAll(Model model) {
-        List<ListaDeTareas> listaDeTareas = listaDeTareasService.getAll();
-        model.addAttribute("listaDeTareas", listaDeTareas);
-        return "listadoDeTareas";
-    }
-
-    @GetMapping("/agregar")
-    public String getAgregarTarea(ListaDeTareas tarea, Model model, HttpSession httpSession) {
-        Usuario user = (Usuario) httpSession.getAttribute("user");
-        tarea.setTarea(user.getFullName());
-        model.addAttribute("tarea", tarea);
-        model.addAttribute("user", user);
-        return "agregarTarea";
-    }
-
-    @GetMapping(value = "/editar/{idToDo}")
-    public String getEditarTarea(@PathVariable("idToDo") int idToDo, Model model ) {
-        Optional<ListaDeTareas> tarea = listaDeTareasService.findById(idToDo);
-        model.addAttribute("idToDo", idToDo);
-        return "editarTarea";
-    }
-
-    @GetMapping("/ver/{idToDo}")
-    public String getPagoByID(@PathVariable("idToDo") int idToDo, Model model) {
-        if(listaDeTareasService.findById(idToDo).isPresent()) {
-            Optional<ListaDeTareas> tarea = listaDeTareasService.findById(idToDo);
-            model.addAttribute("tarea", tarea);
-        } else {
-            model.addAttribute("error", "No se encontró ninguna tarea.");
-        }
-        return "vistaTarea";
-    }
     //POST
+    @PostMapping("/agregar")
+    public String agregarTarea(@NotNull @RequestParam("tareaNueva") String tareaNueva,
+                               HttpSession session,
+                               Model model) {
 
-    @PostMapping("/alta")
-    public String agregarTarea(@RequestPart ListaDeTareas tarea, HttpSession session) {
-        if (listaDeTareasService.save(tarea)) {
-            fileService.crearDir(System.getenv("APPDATA") +
-                    "\\IURIS\\Archivos\\Pagos\\"
-                    + tarea.getIdToDo());
-        }
-        return "altaTarea";
+        Usuario usuario = (Usuario) session.getAttribute("user");
+
+        DetalleTarea tarea = new DetalleTarea();
+        tarea.setTarea(tareaNueva);
+        tarea.setEnabled(true);
+        tarea.setListaDeTareas(usuario.getListaDeTareas());
+
+        listaDeTareasService.guardarTarea(tarea);
+
+        //redirige al controller, no a la vista
+        return "redirect:/inicio";
+
     }
 
-    @PostMapping("/editar")
-    public String editarTarea(@Validated ListaDeTareas tarea, Model model) {
+    /*@PostMapping("/editar")
+    public String editarTarea(@RequestParam("textohtml") String texto,
+                              @RequestParam("idTarea")int idTarea,
+                              Model model) {
+
         if (tarea!=null) {
             listaDeTareasService.save(tarea);
             model.addAttribute("exito", "tarea editada.");
             return "inicio";
         } else return "agregarTarea";
-    }
+    }*/
 
     @PostMapping("/eliminar")
-    public void eliminarTarea(@RequestParam("idToDo") int idToDo) {
-        listaDeTareasService.delete(idToDo);
+    public String eliminarTarea(@RequestParam("idTarea") int idTarea) {
+        /*
+        * @RequestParam("nombre que le pusiste en el html") tipodedato nombre de la variable
+        * y esta variable es para usar el dato que trajiste desde el html
+        * en el metodo del controlador
+        * */
+        listaDeTareasService.deleteTarea(idTarea);
+        return "redirect:/inicio";
     }
 }

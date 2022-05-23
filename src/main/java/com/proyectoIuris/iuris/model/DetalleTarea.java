@@ -1,12 +1,9 @@
 package com.proyectoIuris.iuris.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -20,11 +17,14 @@ public class DetalleTarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDetalleTarea;
 
-    @OneToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @Column(nullable = false, length = 50)
+    private String tarea;
 
-/*    @ManyToOne
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean enabled;
+
+    @ManyToOne
     @JoinColumn(name = "id_to_do")
-    private ListaDeTareas listaDeTareas;*/
+    private ListaDeTareas listaDeTareas;
+
 }

@@ -1,10 +1,9 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Caso;
-import com.proyectoIuris.iuris.model.Cliente;
-import com.proyectoIuris.iuris.model.Usuario;
+import com.proyectoIuris.iuris.model.*;
 import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
 import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
+import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
 import com.proyectoIuris.iuris.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,8 @@ public class InicioController {
     private IClienteService clienteService;
     @Autowired
     private ICasoService casoService;
+    @Autowired
+    private IListaDeTareasService listaDeTareasService;
 
     /***
      * Cuando se le pega a este método por get, primero verifica si existe un usuario en la sesión, si existe lo carga en el Model y lo envia
@@ -40,6 +41,12 @@ public class InicioController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
         model.addAttribute("usuario", usuario);
+
+        List<DetalleTarea> tareas = listaDeTareasService.getTareas(usuario.getListaDeTareas().getIdToDo());
+
+        if(!tareas.isEmpty()) {
+            model.addAttribute("tareas", tareas);
+        }
 
         return "index";
     }
