@@ -1,6 +1,10 @@
 package com.proyectoIuris.iuris.controller;
 
+import com.proyectoIuris.iuris.model.Calendario;
+import com.proyectoIuris.iuris.model.DetalleTarea;
+import com.proyectoIuris.iuris.model.ListaDeTareas;
 import com.proyectoIuris.iuris.model.Usuario;
+import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
 import com.proyectoIuris.iuris.service.Interfaces.IUsuarioService;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +14,16 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
+    @Autowired
+    private IListaDeTareasService listaDeTareasService;
 
     //Métodos por GET
     @GetMapping("/registro")
@@ -37,16 +45,34 @@ public class UsuarioController {
 
     //Métodos por POST
     @PostMapping("/registro")
-    public String insertUser(@Validated Usuario u, Model model) {
-        if(u != null) {
-            if(u.getRol().equals("abogado") || u.getRol().equals("empleado")) {
-                if(Util.containsIllegals(u.getUser()) || Util.containsIllegals(u.getFullName())) {
+    public String insertUser(@Validated Usuario usuario,
+                             Model model,
+                             HttpSession session) {
+        //para registrar, me fijo si es admin primero
+        //parece al cuete la validacion pero por las dudas la dejo
+        Usuario usuarioActivo = (Usuario) session.getAttribute("user");
+        if (usuarioActivo.getRol() != "admin") {
+            return "redirect:/inicio";
+        }
+        //después paso a registrar al usuario
+        if(usuario != null) {
+            if(usuario.getRol().equals("abogado") || usuario.getRol().equals("empleado")) {
+                if(Util.containsIllegals(usuario.getUser()) || Util.containsIllegals(usuario.getFullName())) {
                     model.addAttribute("error", "true");
                     return "register";
                 }
-                usuarioService.insert(u);
+                Usuario usuarioInsertado = usuarioService.insert(usuario); //aca el metodo save del repository te devuelve la entidad insertada, segun la documentacion
+                //por lo tanto, el return lo guardo en usuarioInsertado para tener el usuario pero con el id que se le puso en al bd
+                //para poder poner este valor en la lista de tareas
+                ListaDeTareas listaDeTareas = new ListaDeTareas();
+                listaDeTareas.setUsuario(usuarioInsertado);
+                usuarioInsertado.setListaDeTareas(listaDeTareas);
+                listaDeTareasService.save(listaDeTareas);
+                usuarioService.insert(usuarioInsertado);
+
                 model.addAttribute("exito","true");
             }
+            model.addAttribute("error", "true");
         }
         return "register";
     }

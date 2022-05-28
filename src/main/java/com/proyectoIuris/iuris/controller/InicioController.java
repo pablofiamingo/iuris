@@ -1,18 +1,13 @@
 package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.*;
-import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
-import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
-import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
+import com.proyectoIuris.iuris.service.Interfaces.*;
 import com.proyectoIuris.iuris.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -28,7 +23,7 @@ public class InicioController {
     @Autowired
     private IListaDeTareasService listaDeTareasService;
 
-    /***
+    /**
      * Cuando se le pega a este método por get, primero verifica si existe un usuario en la sesión, si existe lo carga en el Model y lo envia
      * al inicio, para obtener datos como el nombre completo y el rol
      * @param session obtiene la sesión activa
@@ -51,7 +46,7 @@ public class InicioController {
         return "index";
     }
 
-    /***
+    /**
      * Método buscar accedido por POST, recibe un valor y una indicacion de donde debe buscar dicho valor.
      * El primer condicional verifica que no se hayan ingresado carácteres inválidos, de ser asi, retorna un error.
      * El segundo condicional se encarga de buscar el caracter o la palabra indicada, evaluando si el tipo es caso o cliente.

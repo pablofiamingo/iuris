@@ -39,7 +39,7 @@ public class CUsuarioService implements IUsuarioService {
     }
 
     @Override
-    public void insert(Usuario u) {
-        Usuario user = uRepo.save(u);
+    public Usuario insert(Usuario u) {
+        return uRepo.save(u);
     }
 }
