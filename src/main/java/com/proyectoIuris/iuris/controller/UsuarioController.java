@@ -84,12 +84,9 @@ public class UsuarioController {
             if(usuario.getPass().equals(u.getPass())) {
                 httpSession.setAttribute("user", usuario);
                 return "redirect:/inicio";
-            } else {
-                model.addAttribute("error", "true");
             }
-        } else {
-            model.addAttribute("error", "true");
         }
+        model.addAttribute("error", "Algo no se ingresó bien, pero ánimo, probá nuevamente!");
         return "login";
     }
 
