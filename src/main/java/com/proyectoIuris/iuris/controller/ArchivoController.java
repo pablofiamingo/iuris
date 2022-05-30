@@ -1,16 +1,11 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Archivo;
-import com.proyectoIuris.iuris.model.Caso;
-import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
-import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
+import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.service.Interfaces.*;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +26,10 @@ public class ArchivoController {
     @Autowired
     private ICasoService casoService;
 
+
     @GetMapping("/test")
     public String testFile(HttpSession session, Model model) {
-
+        //ESTE MÉTODO ERA DE PRUEBA PERO LO VOY A DEJAR PORQUE VOY A NECESITAR HACER COPYPASTE DE ACA
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario usuario = (Usuario) session.getAttribute("user");
@@ -48,8 +44,17 @@ public class ArchivoController {
         return "testFile";
     }
 
+    /**
+     * Con este metodo, cuando se le pegue a la ruta /ver/{id} va a visualizar el archivo que tenga el id indicado. </br>
+     *
+     * @param id identificador del archivo. tipo int
+     * @param session recibe la sesion actual para ... todavia no sé para qué.
+     * @return vista del pdf en el navegador
+     * @throws FileNotFoundException si no encuentra el archivo
+     */
     @GetMapping(value = "/ver/{id}")
     public ResponseEntity<InputStreamResource> getTermsConditions(@PathVariable("id") int id, HttpSession session) throws FileNotFoundException {
+        //tengo que restringir el acceso a pdf que no son propios del usuario.
         Archivo archivo = fileService.findById(id);
         String filePath = archivo.getRuta();
         String fileName = archivo.getNombre() ;
@@ -68,6 +73,15 @@ public class ArchivoController {
 
     //POSTMAPPING-------------------------------------------------------------------------------------------------------
 
+    /**
+     * Con este método de tipo POST, el usuario va a poder cargar un archivo nuevo para el caso deseado. <br>
+     * Recibe un objeto de tipo MultipartFile, el archivo en cuestión, junto con el id del caso.<br>
+     * Con estos datos, se procede a crear un directorio para almacenar el archivo recibido por formulario, siguiendo el siguiente patrón: Archivos>Usuario>Cliente>Caso>Archivo <br>
+     * @param file de tipo MultipartFile
+     * @param idCaso el id del caso para almacenar el archivo
+     * @param session de tipo HttpSession, obtiene la sesión actual
+     * @return pendiente
+     */
     @PostMapping("/subir")
     public String fileHandler(@RequestParam("file") MultipartFile file,
                               @RequestParam("idCaso") int idCaso,
@@ -91,6 +105,10 @@ public class ArchivoController {
         return "testFile";
     }
 
+    /**
+     *Método POST para eliminar el archivo deseado, requiriendo el parametro "id" para especificar que archivo es.
+     * @param id tipo int, identificador del archivo
+     */
     @PostMapping("/delete")
     public void eliminarArchivo(@RequestParam("id") int id) {
         fileService.delete(id);

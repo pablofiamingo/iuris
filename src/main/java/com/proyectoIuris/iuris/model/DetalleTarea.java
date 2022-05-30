@@ -18,10 +18,10 @@ public class DetalleTarea {
     private int idDetalleTarea;
 
     @Column(nullable = false, length = 50)
-    private String tarea;
+    private String tarea = "Esta es tu lista de tareas.";
 
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean enabled;
+    @Column( columnDefinition = "TINYINT(1)")
+    private boolean enabled = true;
 
     @ManyToOne
     @JoinColumn(name = "id_to_do")

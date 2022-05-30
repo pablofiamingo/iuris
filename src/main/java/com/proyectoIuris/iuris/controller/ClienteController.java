@@ -1,9 +1,8 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Cliente;
-import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
-import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
+import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.service.Interfaces.*;
+import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,7 @@ public class ClienteController {
     private IArchivoService fileService;
 
     //GET MAPPING-----------------------------------------------------------------------------------------------------
+    //este creo que tambien se va baneado por bobi
     @GetMapping("/alta")
     public String getAltaCliente(Model model, HttpSession httpSession) {
         Usuario usuario = (Usuario) httpSession.getAttribute("user");
@@ -28,11 +28,6 @@ public class ClienteController {
         cliente.setUsuario(usuario);
         model.addAttribute("cliente", cliente);
         return "altaCliente";
-    }
-
-    @GetMapping("/buscar")
-    public String getClientes() {
-        return "testClientes";
     }
 
     @GetMapping(value = "/editar/{idCliente}")
@@ -54,21 +49,17 @@ public class ClienteController {
         }
     }
 
+    //mepa que este get lo fleto, vemos.
     @GetMapping("/lista")
-    public String getListaClientes(HttpSession httpSession, Model model) {
-        Usuario usuario = (Usuario) httpSession.getAttribute("user");
+    public String getListaClientes(HttpSession session, Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario usuario = (Usuario) session.getAttribute("user");
         List<Cliente> clientes = clienteService.list(usuario.getIdUsuario());
         model.addAttribute("clientes", clientes);
         return "listaClientes";
     }
 
     //POST MAPPING-----------------------------------------------------------------------------------------------
-    @PostMapping("/buscador")
-    public String buscarCliente(@RequestParam(value = "nombre",required = true) String keyword, Model model) {
-        List<Cliente> clientes = (List<Cliente>) clienteService.findByNombreOApellido(keyword);
-        model.addAttribute("listaClientes", clientes);
-        return "testClientes";
-    }
 
     @PostMapping("/alta")
     public String agregarCliente(@RequestPart Cliente cliente, HttpSession session) {
@@ -101,8 +92,5 @@ public class ClienteController {
            return "vistaCliente";
        }
     }
-
-
-    //TENOG QUE HACER QUE CUANDO CREE EL CLIENTE CREE UN DIRECTORIO
 
 }

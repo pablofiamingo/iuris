@@ -9,5 +9,5 @@ public interface IUsuarioService {
     public List<Usuario> list();
     public Usuario findByUsername(String username);
     public Optional<Usuario> findById(int id);
-    public void insert(Usuario u);
+    public Usuario insert(Usuario u);
 }
