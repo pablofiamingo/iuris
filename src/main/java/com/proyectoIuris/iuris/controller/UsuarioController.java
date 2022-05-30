@@ -40,7 +40,7 @@ public class UsuarioController {
             return "inicio";
         }
         model.addAttribute("usuario", new Usuario());
-        return "login2";
+        return "login";
     }
 
     //Métodos por POST
@@ -90,7 +90,7 @@ public class UsuarioController {
         } else {
             model.addAttribute("error", "true");
         }
-        return "login2";
+        return "login";
     }
 
     @PostMapping("/logout")
