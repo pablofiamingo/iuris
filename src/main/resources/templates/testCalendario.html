@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8' />
+    <link th:href="@{/fullcalendar/lib/main.css}" rel='stylesheet' />
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/fullcalendar/lib/main.js}"></script>
+    <script th:src="@{/fullcalendar/lib/locales/es.js}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          themeSystem: 'bootstrap4',
+          locale: 'es',
+          initialView: 'dayGridWeek',
+          headerToolbar: {
+          left:'prev,next,today',
+          center: 'title',
+          right: 'dayGridMonth, dayGridWeek'
+          },
+          selectable: 'true',
+          dateClick: function(info) {
+            id_usuario = 1
+            document.getElementById("fecha").value = info['dateStr']
+            document.getElementById("usuario").value = id_usuario
+          }
+        });
+        calendar.render();
+      });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id='calendar'></div>
+    </div>
+
+    <div class="modal fade" id="modal">
+        <div class="container-fluid">
+            <div class="row">
+                <form>
+                    <input type="text">
+                    <input type="hidden" id="fecha" >
+                    <input type="hidden" id="usuario">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
