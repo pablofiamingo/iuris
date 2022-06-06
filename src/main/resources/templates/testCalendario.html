@@ -6,7 +6,7 @@
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
     <script th:src="@{/fullcalendar/lib/main.js}"></script>
     <script th:src="@{/fullcalendar/lib/locales/es.js}"></script>
-    <script>
+    <script >
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -20,9 +20,7 @@
           },
           selectable: 'true',
           dateClick: function(info) {
-            id_usuario = 1
             document.getElementById("fecha").value = info['dateStr']
-            document.getElementById("usuario").value = id_usuario
           }
         });
         calendar.render();
@@ -31,19 +29,19 @@
 </head>
 <body>
     <div class="container">
+        <div>
+            <form th:action="@{/}">
+                <input type="text" id="fecha" placeholder="fecha">
+                <input type="text" id="evento" placeholder="evento">
+                <input type="color" id="color">
+                <button type="button" class="btn btn-primary">
+                    Agregar cita
+                </button>
+            </form>
+        </div>
         <div id='calendar'></div>
     </div>
 
-    <div class="modal fade" id="modal">
-        <div class="container-fluid">
-            <div class="row">
-                <form>
-                    <input type="text">
-                    <input type="hidden" id="fecha" >
-                    <input type="hidden" id="usuario">
-                </form>
-            </div>
-        </div>
-    </div>
+
 </body>
 </html>
