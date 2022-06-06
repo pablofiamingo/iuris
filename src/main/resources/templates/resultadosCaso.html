@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>IurisFront</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <link href="dist/bootstrap/css/bootstrap.css" rel="stylesheet">
+</head>
+<body class="bg-blue900">
+      <div class="row g-0">
+        <div class="col">
+          <div class="rounded bg-blue800 px-3 py-3 mt-3">
+            <table class="table table-dark table-striped my-2">
+              <thead>
+                <tr>
+                  <!--
+                    caratula
+                    materia
+                    fuero
+                    estado
+                    juzgado
+                    datoOtraParte
+                    descripción
+                    representante
+                  -->
+                  <th scope="col" class="border-1st">Caratula</th>
+                  <th scope="col">Materia</th>
+                  <th scope="col">Fuero</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Juzgado</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Otra Parte</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Representante</th>
+                  <th scope="col">Pagos</th>
+                  <th scope="col">Archivos</th>
+                  <th scope="col" class="border-last">Edición</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Caso de algo</th>
+                  <td>Una materia</td>
+                  <td>Un fuero</td>
+                  <td>Cerrado</td>
+                  <td>Juzgado ficticio</td>
+                  <td>Mendez, Sandra <a href="">Ver</a></td>
+                  <td><button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO1" aria-controls="offcanvasBottom">Ver</button></td>
+                  <td>Descripcion del caso y bla bla bla, sarasa, bla</td>
+                  <td>Pato Cerrado</td>
+                  <td>Adeuda <a href="">Ver</a></td>
+                  <td>(5) <a href="">Ver</a></td>
+                  <td>
+                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
+                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
+                  </td>
+                  <!--
+                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
+                </tr>
+                <!--aca se viene la piiiiii-->
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO1" aria-labelledby="offcanvasBottomLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 1</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                </div>
+                  
+                <!--la piiiizzaaaaaaaa EEEAAAA-->
+                <tr>
+                  <th scope="row">Caso de algo</th>
+                  <td>Una materia</td>
+                  <td>Un fuero</td>
+                  <td>Cerrado</td>
+                  <td>Juzgado ficticio</td>
+                  <td>Niglio, Gabriel Hernan <a href="">Ver</a></td>
+                  <td>
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO2" aria-controls="offcanvasBottom">
+                      Ver
+                    </button>
+                  </td>
+                  <td>Descripcion del caso y bla bla bla, sarasa, bla</td>
+                  <td>Pato Cerrado</td>
+                  <td>Saldado <a href="">Ver</a></td>
+                  <td>(3) <a href="">Ver</a></td>
+                  <td>
+                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
+                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
+                  </td>
+                </tr>
+
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO2" aria-labelledby="offcanvasBottomLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 2</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                </div>
+
+                <tr>
+                  <th scope="row">Caso de algo</th>
+                  <td>Una materia</td>
+                  <td>Un fuero</td>
+                  <td>Cerrado</td>
+                  <td>Juzgado ficticio</td>
+                  <td>Ubieta, Martina <a href="">Ver</a></td>
+                  <td>
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO3" aria-controls="offcanvasBottom">
+                      Ver
+                    </button>
+                  </td>
+                  <td>Descripcion del caso y bla bla bla, sarasa, bla</td>
+                  <td>Pato Cerrado</td>
+                  <td>Adeuda <a href="">Ver</a></td>
+                  <td>(8) <a href="">Ver</a></td>
+                  <td>
+                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
+                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
+                  </td>
+                  <!--
+                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
+                </tr>
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO3" aria-labelledby="offcanvasBottomLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 3</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                </div>
+              </tbody>
+            </table>
+          </div>
+            
+        </div>
+      </div>
+
+      
+
+  <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
+  <!-- borrar el siguiente script antes de entregar... a chiquita -->
+  <script>
+    function hacerAlgo(){
+      return "Proximamente";
+    };
+
+  </script>
+</body>
+</html>
