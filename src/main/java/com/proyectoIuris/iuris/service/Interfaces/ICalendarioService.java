@@ -7,9 +7,8 @@ import java.util.List;
 
 public interface ICalendarioService {
     public Calendario save(Calendario cal);
-
     //eventos
-    public List<Evento> getEventos();//poner id
-    public void guardarEvento(Evento e);
+    public List<Evento> getEventos(int id);
+    public Evento guardarEvento(Evento e);
     public void deleteEvento(int id);
 }

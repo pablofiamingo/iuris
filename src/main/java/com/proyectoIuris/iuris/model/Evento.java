@@ -1,5 +1,6 @@
 package com.proyectoIuris.iuris.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +22,15 @@ public class Evento {
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private Date start;
 
     @Column(nullable = false, length = 100)
-    private String evento;
+    private String title;
 
     @Column(nullable = false, length = 100)
     private String color;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_calendario")
     private Calendario calendario;

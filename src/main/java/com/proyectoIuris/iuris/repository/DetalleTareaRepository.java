@@ -14,5 +14,4 @@ public interface DetalleTareaRepository extends CrudRepository<DetalleTarea, Int
 
     public DetalleTarea save(DetalleTarea tarea);
 
-
 }

@@ -46,12 +46,6 @@ public class InicioController {
         return "index";
     }
 
-    //TEST calendario
-    @GetMapping("/calendario")
-    public String calendario() {
-        return "testCalendario";
-    }
-
     /**
      * Método buscar accedido por POST, recibe un valor y una indicacion de donde debe buscar dicho valor.
      * El primer condicional verifica que no se hayan ingresado carácteres inválidos, de ser asi, retorna un error.

@@ -19,8 +19,10 @@
           right: 'dayGridMonth, dayGridWeek'
           },
           selectable: 'true',
+          events: 'http://localhost:8080/calendario/listar',
           dateClick: function(info) {
-            document.getElementById("fecha").value = info['dateStr']
+            console.log(info)
+            document.getElementById("start").value = info['dateStr']
           }
         });
         calendar.render();
@@ -30,18 +32,16 @@
 <body>
     <div class="container">
         <div>
-            <form th:action="@{/}">
-                <input type="text" id="fecha" placeholder="fecha">
-                <input type="text" id="evento" placeholder="evento">
-                <input type="color" id="color">
-                <button type="button" class="btn btn-primary">
+            <form th:action="@{/calendario/agregar}" method="post">
+                <input type="text" th:name="title" id="title" placeholder="evento">
+                <input type="date" th:name="start" id="start" >
+                <input type="color" th:name="color" id="color">
+                <button type="submit" class="btn btn-primary">
                     Agregar cita
                 </button>
             </form>
         </div>
         <div id='calendar'></div>
     </div>
-
-
 </body>
 </html>

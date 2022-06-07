@@ -1,9 +1,9 @@
 package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.Calendario;
-import com.proyectoIuris.iuris.model.DetalleTarea;
 import com.proyectoIuris.iuris.model.ListaDeTareas;
 import com.proyectoIuris.iuris.model.Usuario;
+import com.proyectoIuris.iuris.service.Interfaces.ICalendarioService;
 import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
 import com.proyectoIuris.iuris.service.Interfaces.IUsuarioService;
 import com.proyectoIuris.iuris.util.Util;
@@ -14,8 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/usuario")
@@ -24,6 +22,8 @@ public class UsuarioController {
     private IUsuarioService usuarioService;
     @Autowired
     private IListaDeTareasService listaDeTareasService;
+    @Autowired
+    private ICalendarioService calendarioService;
 
     //Métodos por GET
     @GetMapping("/registro")
@@ -68,6 +68,12 @@ public class UsuarioController {
                 listaDeTareas.setUsuario(usuarioInsertado);
                 usuarioInsertado.setListaDeTareas(listaDeTareas);
                 listaDeTareasService.save(listaDeTareas);
+
+                Calendario calendario = new Calendario();
+                calendario.setUsuario(usuarioInsertado);
+                usuarioInsertado.setCalendario(calendario);
+                calendarioService.save(calendario);
+
                 usuarioService.insert(usuarioInsertado);
 
                 model.addAttribute("exito","true");
