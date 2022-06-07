@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar los datos de un cliente</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+<body>
+
+
+    
+    <style>
+        body {
+            background-color: #133C55;
+            color: #EEEEEE;
+        }
+
+        #tarjeta {
+            background-color: #386FA4;
+            color: #EEEEEE;
+
+        }
+
+        #btnEditarUsuario {
+            padding-top: 15px;
+            padding-left: 30%;
+        }
+    </style>
+
+
+    
+<h1 class="h1" align="center">Agregar un nuevo usuario</h1>
+
+<br> <br>
+
+
+<div class="container py-3 card" id="tarjeta" style="width:35%">
+    <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post">
+		<div style="padding-left: 10%; padding-right: 10%;">
+
+            
+            <div class="form-group">
+                <label for="id_usuario" class="col-sm-4 control-label">ID:</label>
+
+                <input id="id_usuario" maxlength="50" class="form-control" th:field="*{id_usuario}" readonly>
+
+            </div>
+
+
+			<div class="form-group">
+				<label for="email" class="col-sm-6 control-label">Correo electrónico:</label>
+
+				<input id="email" maxlength="50" class="form-control" th:field="*{email}" type="email" required>
+
+			</div>
+			<div class="form-group">
+				<label for="full_name" class="col-sm-6 control-label">Nombre completo:</label>
+
+				<input id="full_name" maxlength="30" class="form-control" th:field="*{full_name}" type="text" required>
+
+			</div>
+			<div class="form-group">
+				<label for="password" class="col-sm-4 control-label">Contraseña:</label>
+
+				<input id="password" maxlength="50" class="form-control" th:field="*{pass}" type="text" required>
+
+			</div>
+			<div class="form-group">
+				<label for="rol" class="col-sm-4 control-label">Rol:</label>
+
+				<input id="rol" maxlength="30" class="form-control" th:field="*{rol}" type="text" required>
+
+			</div>
+			<div class="form-group">
+				<label for="user" class="col-sm-4 control-label">User:</label>
+
+				<input id="user" maxlength="50" class="form-control" th:field="*{user}" type="text" required>
+
+			</div>
+		
+		</div>
+		<div id="btnEditarUsuario">
+			<input class="btn btn-info" type="submit" value="Confirmar cambios">
+		</div>
+    </form>
+
+
+
+
+</div>
+
+  
+
+
+
+
+</body>
