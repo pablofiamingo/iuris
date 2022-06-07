@@ -63,3 +63,13 @@ body{
     position: absolute;
     right: 35px;
 }
+
+#calendario-container {
+    background-color: white;
+}
+
+#formulario-calendario {
+    background-color: #031633;
+    width: 100%;
+    justify-content: space-evenly;
+}
