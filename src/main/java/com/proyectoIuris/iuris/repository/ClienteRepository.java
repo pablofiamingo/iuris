@@ -10,8 +10,8 @@ import java.util.List;
 
 @Transactional
 public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
-    @Query("SELECT cli FROM Cliente cli WHERE cli.nombre LIKE %:keyword% OR cli.apellido LIKE %:keyword%")
-    public List<Cliente> findByNombreOApellido(@Param("keyword")String keyword);
+    @Query("SELECT cli FROM Cliente cli WHERE cli.usuario.idUsuario=:id AND cli.nombre LIKE %:keyword% OR cli.apellido LIKE %:keyword%")
+    public List<Cliente> findByNombreOApellido(@Param("keyword")String keyword, @Param("id")int id);
     public void deleteByIdCliente(int idCliente);
     @Query("SELECT cli FROM Cliente cli WHERE cli.usuario.idUsuario = :idUser")
     public List<Cliente> findByIdUsuario(@Param("idUser") int idUser);

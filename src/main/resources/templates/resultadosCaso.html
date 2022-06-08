@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>IurisFront</title>
+  <title>IURIS | CASOS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="styles.css">
-  <link href="dist/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
       <div class="alert alert-danger mx-4 mt-4" role="alert">
@@ -35,16 +35,6 @@
             <table class="table table-dark table-striped my-2">
               <thead>
                 <tr>
-                  <!--
-                    caratula
-                    materia
-                    fuero
-                    estado
-                    juzgado
-                    datoOtraParte
-                    descripción
-                    representante
-                  -->
                   <th scope="col" class="border-1st">Caratula</th>
                   <th scope="col">Materia</th>
                   <th scope="col">Fuero</th>
@@ -76,8 +66,7 @@
                     <a href=""><img src="square-pen-solid.png" class="icon"></a>
                     <a href=""><img src="square-xmark-solid.png" class="icon"></a>
                   </td>
-                  <!--
-                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
+                  <!--<td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
                 </tr>
                 <!--aca se viene la piiiiii-->
                 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO1" aria-labelledby="offcanvasBottomLabel">
@@ -110,9 +99,9 @@
                   </td>
                 </tr>
 
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO2" aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO2" aria-labelledby="offcanvasBottomLabe">
                   <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 2</h5>
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabe">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 2</h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                 </div>
@@ -140,9 +129,9 @@
                   <!--
                   <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
                 </tr>
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO3" aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO3" aria-labelledby="offcanvasBottomLab">
                   <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 3</h5>
+                    <h5 class="offcanvas-title" id="offcanvasBottomLab">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 3</h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                 </div>

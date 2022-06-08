@@ -26,8 +26,8 @@ public class CClienteService implements IClienteService {
     }
 
     @Override
-    public List<Cliente> findByNombreOApellido(String keyword) {
-        List<Cliente> clientes = (List<Cliente>) clienteRepo.findByNombreOApellido(keyword);
+    public List<Cliente> findByNombreOApellido(String keyword, int id) {
+        List<Cliente> clientes = clienteRepo.findByNombreOApellido(keyword, id);
         return clientes;
     }
 

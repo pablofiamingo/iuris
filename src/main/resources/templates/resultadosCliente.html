@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>IurisFront</title>
+  <title>IURIS | CLIENTES</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="styles.css">
-  <link href="dist/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
       <div class="alert alert-danger mx-4 mt-4" role="alert">
@@ -33,58 +33,33 @@
         </div>
         <div class="col-md-10">
           <div class="rounded bg-blue800 px-3 py-3 mt-3">
-            <table class="table table-dark table-striped my-2">
-              <thead>
+            <table class="table table-dark table-striped my-2" >
+              <thead >
                 <tr>
-                  <th scope="col" class="border-1st">Apellido</th>
+                  <th scope="col" class="border-1st"> ID</th>
+                  <th scope="col" >Apellido</th>
                   <th scope="col">Nombres</th>
                   <th scope="col">DNI</th>
                   <th scope="col">Telefono</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Cant. Casos</th>
+                  <th scope="col">Casos</th>
                   <th scope="col" class="border-last">Edición</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">Mendez</th>
-                  <td>Sandra</td>
-                  <td>25256365</td>
-                  <td>1125256365</td>
-                  <td>mendez.sandra@gmail.com</td>
-                  <td>(3) <a href="">Ver</a></td>
+                <tr th:each="cliente: ${resultados}">
+                  <td th:text="${cliente.idCliente}"></td>
+                  <td scope="row" th:text="${cliente.apellido}">Mendez</td>
+                  <td th:text="${cliente.nombre}">Sandra</td>
+                  <td th:text="${cliente.dni}">25256365</td>
+                  <td th:text="${cliente.telefono}">1125256365</td>
+                  <td th:text="${cliente.email}">mendez.sandra@gmail.com</td>
+                  <td><a href="">Ver</a></td>
                   <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
+                    <a href=""><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a>
+                    <a href=""><img th:src="@{/img/square-xmark-solid.png}" class="icon-x"></a>
                   </td>
-                  <!--
-                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
-                </tr>
-                <tr>
-                  <th scope="row">Iusem</th>
-                  <td>Damian</td>
-                  <td>23256365</td>
-                  <td>1123256365</td>
-                  <td>iusem.damian@gmail.com</td>
-                  <td>(15) <a href="">Ver</a></td><!--
-                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
-                  <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Niglio</th>
-                  <td>Gabriel Hernan</td>
-                  <td>55256365</td>
-                  <td>1155256365</td>
-                  <td>niglio.gabriel@gmail.com</td>
-                  <td>(1) <a href="">Ver</a></td><!--
-                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
-                  <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                  </td>
+                  <!--<td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
                 </tr>
               </tbody>
             </table>
@@ -95,7 +70,7 @@
         </div>
       </div>
 
-  <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
   <!-- borrar el siguiente script antes de entregar... a chiquita -->
   <script>
     function hacerAlgo(){
