@@ -74,18 +74,13 @@ public class InicioController {
         if(donde.equals("cliente") ) {
 
             List<Cliente> clientes = clienteService.findByNombreOApellido(keyword, user.getIdUsuario());
-            if(clientes.isEmpty()) {
-                return "resultadosCliente";
-            }
             model.addAttribute("resultados", clientes);
             return "resultadosCliente";
 
         } else if (donde.equals("caso") ) {
 
             List<Caso> casos = casoService.buscador(keyword, user.getIdUsuario());
-            if(casos.isEmpty()) return "resultadosCaso";
             model.addAttribute("resultados", casos);
-            model.addAttribute("type", "caso");
             return "resultadosCaso";
         }
 

@@ -9,6 +9,7 @@ public interface IClienteService {
     public List<Cliente> list(int id);
     public Cliente findById(int id);
     public List<Cliente> findByNombreOApellido(String keyword, int id);
+    public Cliente findByDni(String dni);
     public boolean save(Cliente cliente);
     public boolean update(Cliente cliente);
     public boolean delete(int id);

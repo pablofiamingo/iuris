@@ -6,6 +6,7 @@ import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -22,12 +23,13 @@ public class ClienteController {
     //GET MAPPING-----------------------------------------------------------------------------------------------------
     //este creo que tambien se va baneado por bobi
     @GetMapping("/alta")
-    public String getAltaCliente(Model model, HttpSession httpSession) {
-        Usuario usuario = (Usuario) httpSession.getAttribute("user");
+    public String getAltaCliente(Model model, HttpSession session) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario usuario = (Usuario) session.getAttribute("user");
         Cliente cliente = new Cliente();
         cliente.setUsuario(usuario);
         model.addAttribute("cliente", cliente);
-        return "altaCliente";
+        return "agregarCliente";
     }
 
     @GetMapping(value = "/editar/{idCliente}")
@@ -62,11 +64,22 @@ public class ClienteController {
     //POST MAPPING-----------------------------------------------------------------------------------------------
 
     @PostMapping("/alta")
-    public String agregarCliente(@RequestPart Cliente cliente, HttpSession session) {
+    public String agregarCliente(@Validated Cliente cliente,
+                                 HttpSession session,
+                                 Model model) {
+
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+
+        if(clienteService.findByDni(cliente.getDni()) != null) {
+            model.addAttribute("error", "El DNI ingresado ya existe en los registros.");
+            System.out.println("El DNI ingresado ya existe en los registros.");
+            return "agregarCliente";
+        }
+
         if(clienteService.save(cliente)) {
             fileService.crearDir(System.getenv("APPDATA") + "\\IURIS\\Archivos\\Clientes\\" + cliente.getIdCliente());
-            return "altaCliente";
-        } else return "altaCliente";
+            return "redirect:/inicio";
+        } else return "agregarCliente";
     }
 
     @PostMapping("/baja")
