@@ -50,18 +50,21 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">Caso de algo</th>
-                  <td>Una materia</td>
-                  <td>Un fuero</td>
-                  <td>Cerrado</td>
-                  <td>Juzgado ficticio</td>
-                  <td>Mendez, Sandra <a href="">Ver</a></td>
+                <tr th:each="caso: ${resultados}">
+                  <td th:if="${resultados} == null">
+                    <span th:if="${resultados == null}">No hay resultados.</span>
+                  </td>
+                  <td scope="row" th:text="${caso.caratula}"></td>
+                  <td th:text="${caso.materia}"></td>
+                  <td th:text="${caso.fuero}"></td>
+                  <td th:text="${caso.estado}"></td>
+                  <td th:text="${caso.juzgado}"></td>
+                  <td th:text="${caso.cliente.nombre + ' ' + caso.cliente.apellido}"><a href="">Ver</a></td>
                   <td><button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO1" aria-controls="offcanvasBottom">Ver</button></td>
-                  <td>Descripcion del caso y bla bla bla, sarasa, bla</td>
-                  <td>Pato Cerrado</td>
-                  <td>Adeuda <a href="">Ver</a></td>
-                  <td>(5) <a href="">Ver</a></td>
+                  <td th:text="${caso.descripcion}">Descripcion del caso y bla bla bla, sarasa, bla</td>
+                  <td th:text="${caso.representante}">Pato Cerrado</td>
+                  <td ><a href=""> Pagos Pendiente</a></td>
+                  <td ><a href="">Ver archivos (pendiente)</a></td>
                   <td>
                     <a href=""><img src="square-pen-solid.png" class="icon"></a>
                     <a href=""><img src="square-xmark-solid.png" class="icon"></a>
@@ -72,66 +75,6 @@
                 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO1" aria-labelledby="offcanvasBottomLabel">
                   <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 1</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                </div>
-                  
-                <!--la piiiizzaaaaaaaa EEEAAAA-->
-                <tr>
-                  <th scope="row">Caso de algo</th>
-                  <td>Una materia</td>
-                  <td>Un fuero</td>
-                  <td>Cerrado</td>
-                  <td>Juzgado ficticio</td>
-                  <td>Niglio, Gabriel Hernan <a href="">Ver</a></td>
-                  <td>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO2" aria-controls="offcanvasBottom">
-                      Ver
-                    </button>
-                  </td>
-                  <td>Descripcion del caso y bla bla bla, sarasa, bla</td>
-                  <td>Pato Cerrado</td>
-                  <td>Saldado <a href="">Ver</a></td>
-                  <td>(3) <a href="">Ver</a></td>
-                  <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                  </td>
-                </tr>
-
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO2" aria-labelledby="offcanvasBottomLabe">
-                  <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasBottomLabe">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 2</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                </div>
-
-                <tr>
-                  <th scope="row">Caso de algo</th>
-                  <td>Una materia</td>
-                  <td>Un fuero</td>
-                  <td>Cerrado</td>
-                  <td>Juzgado ficticio</td>
-                  <td>Ubieta, Martina <a href="">Ver</a></td>
-                  <td>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO3" aria-controls="offcanvasBottom">
-                      Ver
-                    </button>
-                  </td>
-                  <td>Descripcion del caso y bla bla bla, sarasa, bla</td>
-                  <td>Pato Cerrado</td>
-                  <td>Adeuda <a href="">Ver</a></td>
-                  <td>(8) <a href="">Ver</a></td>
-                  <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                  </td>
-                  <!--
-                  <td><a href="">Editar</a> <a href="">Eliminar</a></td>-->
-                </tr>
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO3" aria-labelledby="offcanvasBottomLab">
-                  <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasBottomLab">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 3</h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                 </div>

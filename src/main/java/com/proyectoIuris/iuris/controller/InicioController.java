@@ -75,7 +75,6 @@ public class InicioController {
 
             List<Cliente> clientes = clienteService.findByNombreOApellido(keyword, user.getIdUsuario());
             if(clientes.isEmpty()) {
-                System.out.println("entro por aca!!!");
                 return "resultadosCliente";
             }
             model.addAttribute("resultados", clientes);
