@@ -49,4 +49,9 @@ public class CCasoService implements ICasoService {
     public List<Caso> buscador(String keyword, int id) {
         return casoRepo.buscador(keyword, id);
     }
+
+    @Override
+    public List<Caso> findCasoByIdCliente(int idCliente) {
+        return casoRepo.findCasoByIdCliente(idCliente);
+    }
 }
