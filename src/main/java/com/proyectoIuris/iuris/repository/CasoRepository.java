@@ -17,4 +17,7 @@ public interface CasoRepository extends CrudRepository<Caso, Integer> {
     Caso findByIdCaso(int idCaso);
     @Query("SELECT c FROM Caso c WHERE c.cliente.usuario.idUsuario=:id AND c.materia LIKE %:keyword% OR c.caratula LIKE %:keyword% OR c.fuero LIKE %:keyword%")
     List<Caso> buscador(@Param("keyword")String keyword, @Param("id")int id);
+
+    @Query("SELECT c FROM Caso c WHERE c.cliente.idCliente = :idCliente")
+    List<Caso> findCasoByIdCliente(@Param("idCliente") int idCliente);
 }

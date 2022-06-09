@@ -27,21 +27,21 @@ public class ArchivoController {
     private ICasoService casoService;
 
 
-    @GetMapping("/test")
-    public String testFile(HttpSession session, Model model) {
-        //ESTE MÉTODO ERA DE PRUEBA PERO LO VOY A DEJAR PORQUE VOY A NECESITAR HACER COPYPASTE DE ACA
+    @GetMapping("/lista/{idCaso}")
+    public String listarArchivosCaso(HttpSession session,
+                                     Model model,
+                                     @PathVariable("idCaso")int idCaso) {
+
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario usuario = (Usuario) session.getAttribute("user");
-        List<Archivo> archivos = fileService.list(usuario.getIdUsuario());
+        Caso caso = casoService.findCasoById(idCaso);
+        List<Archivo> archivos = fileService.list(usuario.getIdUsuario(), idCaso);
 
-        if(!archivos.isEmpty()) {
-            model.addAttribute("archivos", archivos);
-        } else {
-            model.addAttribute("error","No hay archivos.");
-        }
+        model.addAttribute("resultados", archivos);
+        model.addAttribute("caso", caso);
 
-        return "testFile";
+        return "resultadosArchivos";
     }
 
     /**
@@ -102,15 +102,17 @@ public class ArchivoController {
         archivo.setRuta(ruta+file.getOriginalFilename());
         fileService.insert(archivo);
 
-        return "testFile";
+        return "redirect:/archivo/lista/" + caso.getIdCaso();
     }
 
     /**
      *Método POST para eliminar el archivo deseado, requiriendo el parametro "id" para especificar que archivo es.
      * @param id tipo int, identificador del archivo
      */
-    @PostMapping("/delete")
-    public void eliminarArchivo(@RequestParam("id") int id) {
+    @PostMapping("/eliminar")
+    public String eliminarArchivo(@RequestParam("idArc") int id) {
+        Archivo arc = fileService.findById(id);
         fileService.delete(id);
+        return "redirect:/archivo/lista/" + arc.getCaso().getIdCaso();
     }
 }
