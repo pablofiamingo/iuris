@@ -47,16 +47,21 @@
                 </tr>
               </thead>
               <tbody>
+                <tr th:if="${#lists.isEmpty(resultados)}">
+                  <td colspan="12" align="center">
+                    No hay resultados
+                  </td>
+                </tr>
                 <tr th:each="cliente: ${resultados}">
                   <td th:text="${cliente.idCliente}"></td>
-                  <td scope="row" th:text="${cliente.apellido}">Mendez</td>
-                  <td th:text="${cliente.nombre}">Sandra</td>
-                  <td th:text="${cliente.dni}">25256365</td>
-                  <td th:text="${cliente.telefono}">1125256365</td>
-                  <td th:text="${cliente.email}">mendez.sandra@gmail.com</td>
-                  <td><a href="">Ver</a></td>
+                  <td scope="row" th:text="${cliente.apellido}"></td>
+                  <td th:text="${cliente.nombre}"></td>
+                  <td th:text="${cliente.dni}"></td>
+                  <td th:text="${cliente.telefono}"></td>
+                  <td th:text="${cliente.email}"></td>
+                  <td><a th:href="@{'/caso/lista/' + ${cliente.idCliente}}">Ver ></a></td>
                   <td>
-                    <a href=""><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a>
+                    <a th:href="@{'/cliente/alta/' + ${cliente.idCliente}}"><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a>
                     <a href=""><img th:src="@{/img/square-xmark-solid.png}" class="icon-x"></a>
                   </td>
                   <!--<td><a href="">Editar</a> <a href="">Eliminar</a></td>-->

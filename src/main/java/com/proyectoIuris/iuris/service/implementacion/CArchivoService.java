@@ -20,7 +20,6 @@ public class CArchivoService implements IArchivoService {
 
     @Autowired
     private ArchivoRepository arcRepo;
-    //private final String url = System.getenv("APPDATA") + "\\IURIS\\Archivos\\";
     @Override
     public void uploadToLocal(MultipartFile file, String ruta) {
         try {
@@ -33,8 +32,8 @@ public class CArchivoService implements IArchivoService {
     }
 
     @Override
-    public List<Archivo> list(int idUser) {
-        return arcRepo.list(idUser);
+    public List<Archivo> list(int idUser, int idCaso) {
+        return arcRepo.list(idUser, idCaso);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class CArchivoService implements IArchivoService {
 
     @Override
     public boolean delete(int id) {
-        if(arcRepo.existsById((long) id)) {
+        if(arcRepo.existsById(id)) {
             arcRepo.delete(findById(id));
             return true;
         } else return false;
