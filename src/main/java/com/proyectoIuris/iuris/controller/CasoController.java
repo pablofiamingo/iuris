@@ -2,9 +2,11 @@ package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.Archivo;
 import com.proyectoIuris.iuris.model.Caso;
+import com.proyectoIuris.iuris.model.Cliente;
 import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
 import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
+import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ public class CasoController {
     private ICasoService casoService;
     @Autowired
     private IArchivoService archivoService;
+    @Autowired
+    private IClienteService clienteService;
 
     @GetMapping("/lista")
     public String getCasos(Model model, HttpSession session) {
@@ -40,15 +44,19 @@ public class CasoController {
         return "listadoCasos";
     }
 
-    @GetMapping("/agregar")
+    @GetMapping("/alta")
     public String getAgregarCaso(Caso caso, Model model, HttpSession session) {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario user = (Usuario) session.getAttribute("user");
+        List<Cliente> clientes = clienteService.list(user.getIdUsuario());
+
         caso.setRepresentante(user.getFullName());
         model.addAttribute("caso", caso);
         model.addAttribute("user", user);
+        model.addAttribute("clientes", clientes);
+
         return "agregarCaso";
     }
 
@@ -77,12 +85,16 @@ public class CasoController {
 
     //POSTMAPPING-----------------------------------------------------------------------------------------------------
     @PostMapping("/agregar")
-    public String agregarCaso(@Validated Caso caso, Model model) {
+    public String agregarCaso(@Validated Caso caso,
+                              Model model,
+                              @RequestParam("cliente")int id) {
         if (caso!=null) {
+            Cliente cli = clienteService.findById(id);
+            caso.setCliente(cli);
             casoService.save(caso);
             model.addAttribute("exito", "Caso agregado con éxito.");
-            return "agregarCaso";
-        } else return "agregarCaso";
+            return "redirect:/caso/alta";
+        } else return "redirect:/caso/alta";
     }
 
     @PostMapping("/editar")

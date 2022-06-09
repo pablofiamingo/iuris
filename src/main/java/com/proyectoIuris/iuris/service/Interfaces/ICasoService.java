@@ -10,7 +10,7 @@ public interface ICasoService {
     public boolean delete(int idCaso);
     public boolean save(Caso caso);
     public boolean update(Caso caso);
-    public List<Caso> buscador(String keyword);
+    public List<Caso> buscador(String keyword, int id);
 }
 
 

@@ -46,7 +46,7 @@ public class CCasoService implements ICasoService {
     }
 
     @Override
-    public List<Caso> buscador(String keyword) {
-        return casoRepo.buscador(keyword);
+    public List<Caso> buscador(String keyword, int id) {
+        return casoRepo.buscador(keyword, id);
     }
 }

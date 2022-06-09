@@ -61,7 +61,10 @@ public class InicioController {
     @PostMapping("/buscar")
     public String buscar(@RequestParam(value="valorABuscar") @NotNull String keyword,
                          @RequestParam(value="donde")String donde,
-                         Model model) {
+                         Model model,
+                         HttpSession session) {
+
+        Usuario user = (Usuario) session.getAttribute("user");
 
         if (Util.containsIllegals(keyword)) {
             model.addAttribute("error", "true");
@@ -70,21 +73,18 @@ public class InicioController {
 
         if(donde.equals("cliente") ) {
 
-            List<Cliente> clientes = (List<Cliente>) clienteService.findByNombreOApellido(keyword);
-            if(clientes.isEmpty()) return "testClientes";
+            List<Cliente> clientes = clienteService.findByNombreOApellido(keyword, user.getIdUsuario());
             model.addAttribute("resultados", clientes);
-            model.addAttribute("type", "cliente");
+            return "resultadosCliente";
 
         } else if (donde.equals("caso") ) {
 
-            List<Caso> casos = casoService.buscador(keyword);
-            if(casos.isEmpty()) return "testClientes";
+            List<Caso> casos = casoService.buscador(keyword, user.getIdUsuario());
             model.addAttribute("resultados", casos);
-            model.addAttribute("type", "caso");
-
+            return "resultadosCaso";
         }
 
-        return "testClientes";
+        return "redirect:/inicio";
     }
 
 }

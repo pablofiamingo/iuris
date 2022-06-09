@@ -44,6 +44,16 @@
         calendar.render();
       });
     </script>
+    <script>
+        function agregarCita() {
+            if (document.getElementById("formulario").style.visibility == "hidden") {
+                document.getElementById("formulario").style.visibility = "visible";
+            } else {
+             document.getElementById("formulario").style.visibility = "hidden";
+            }
+        }
+
+    </script>
 </head>
 <body>
 <div class="row g-0 bg-blue300 full-height">
@@ -56,13 +66,15 @@
                 <h5 class="text-center"><span th:text="${usuario.fullName}" ></span></h5>
                 <h6 class="text-center"><span th:text="${usuario.rol}" ></span></h6>
                 <div class="d-grid gap-2 col-6 mx-auto py-4">
-
-                    <button class="btn btn-primary my-1" type="button">Nuevo Cliente</button>
-
-                    <button class="btn btn-primary my-1" type="button">Nuevo Caso</button>
-
-                    <button class="btn btn-primary my-1" type="button">Crear Usuario</button>
-
+                    <a class="my-1" th:href="@{/cliente/alta}" th:target="_blank">
+                        <button class="btn btn-primary " type="button">Nuevo Cliente</button>
+                    </a>
+                    <a class="" th:href="@{/caso/alta}" th:target="_blank">
+                        <button class="btn btn-primary my-1" type="button">Nuevo Caso</button>
+                    </a>
+                    <a class="" th:href="@{/usuario/registro}" th:target="_blank">
+                        <button class="btn btn-primary my-1" type="button">Crear Usuario</button>
+                    </a>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <form th:action="@{/usuario/logout}"  method="POST">
@@ -83,7 +95,7 @@
                     <h5 class="card-title text-center text-primary">Buscador por Cliente o Caso</h5>
                     -->
                     <div class="input-group">
-                        <form class="input-group" th:action="@{/buscar}" method="POST">
+                        <form class="input-group" th:action="@{/buscar}" th:target="_blank" method="POST">
                             <input type="text" th:name="valorABuscar" class="form-control text-primary bg-blue100" placeholder="Ingrese cliente o caso a buscar" required>
                             <button class="btn btn-outline-secondary" th:name="donde" value="cliente" type="submit">Cliente</button>
                             <button class="btn btn-outline-secondary" th:name="donde" value="caso" type="submit">Caso</button>
@@ -93,18 +105,24 @@
             </div>
 
         </div>
-        <div class="container" id="calendario-container">
-            <div class="row">
-                <div id="formulario-calendario" >
-                    <form th:action="@{/calendario/agregar}" method="post">
-                        <input type="text" th:name="title" id="title" placeholder="evento">
-                        <input type="date" th:name="start" id="start" >
-                        <input type="color" th:name="color" id="color">
-                        <button type="submit" class="btn btn-primary">
-                            Agregar cita
-                        </button>
+        <div class="container-fluid" id="calendario-container">
+            <div >
+                <div id="formulario-calendario" class="row mx-0 py-3 mt-2">
+                    <button type="button" class="btn btn-outline-light col-sm-3 ml-0" id="agregarCita" onclick="agregarCita()" >
+                        Agregar una cita >
+                    </button>
+                    <form th:action="@{/calendario/agregar}" id="formulario" style="visibility: hidden;" class="col-auto" method="post">
+                        <div class="input-group">
+                            <span class="input-group-text">Fecha y evento:</span>
+                            <input type="date" th:name="start" id="start" class="form-control" required>
+                            <input type="text" th:name="title" id="title" placeholder="evento" class="form-control" required>
+                            <input type="color" th:name="color" class="form-control form-control-color" id="color" value="#563d7c">
+                            <button type="submit" class="btn btn-outline-light">
+                                Agregar
+                            </button>
+                        </div>
                     </form>
-                    <div id='calendar' ></div>
+                    <div id='calendar' class="py-3" style="color: white;, background-color: green;"></div>
                 </div>
             </div>
         </div>
@@ -125,17 +143,20 @@
                 </form>
 
                 <ul class="list-group" th:each="tarea: ${tareas}">
-                    <!--traer ID para li y para img-->
-                    <!--dentro de la etiqueta "a" hay que pasar la prioridad en la función-->
-                    <li  id="idDeBDDdeTarea" class="list-group-item bg-dark text-light">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        <span onclick="cambiarPrioridad(0)" th:text="${tarea.tarea}" />
-                        <img id="i_idDeBDDdeTarea" th:src="@{/img/square-xmark-solid.png}" onclick="eliminarTarea()" class="icon-x">
+                    <li  id="idDeBDDdeTarea" class="list-group-item bg-dark text-light row" >
+                        <div class="row justify-content-between">
+                            <div class="col-md-6">
+                                <input class="form-check-input me-1 " type="checkbox" value="" aria-label="...">
+                                <span  onclick="cambiarPrioridad(0)" th:text="${tarea.tarea}" />
+                            </div>
+                            <div class="col-md-1 offset-md-4">
+                                <form th:action="@{/listaDeTareas/eliminar}" method="post">
+                                    <button type="submit" class="btn-close btn-close-white form-control form-control-sm" aria-label="Close"></button>
+                                    <input type="hidden" th:name="idTarea" th:value="${tarea.idDetalleTarea}">
+                                </form>
+                            </div>
 
-                        <form th:action="@{/listaDeTareas/eliminar}" method="post">
-                            <button type="submit"> x </button>
-                            <input type="hidden" th:name="idTarea" th:value="${tarea.idDetalleTarea}">
-                        </form>
+                        </div>
                     </li>
 
                 </ul>
@@ -148,25 +169,6 @@
 
 <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
 <script>
-    function editarCita(){
-      let texto = document.getElementById("idDeLaBDD").textContent;
-      document.getElementById("editDate").style.display="block";
-      document.getElementById("input-edit-calendar").value = texto;
-    };
-
-    function guardarCambios(){
-      let newText = document.getElementById("input-edit-calendar").value;
-      document.getElementById("idDeLaBDD").textContent=newText;
-      document.getElementById("editDate").style.display="none";
-    }
-
-    function eliminarCita(){
-      let div = document.getElementById("idDeLaBDD");
-      let form = document.getElementById("editDate");
-      div.remove();
-      form.remove();
-    };
-
     function eliminarTarea(){
       let li = document.getElementById("idDeBDDdeTarea");
       li.remove();
@@ -194,9 +196,7 @@
           imgColor.src="images/square-xmark-solid.png";
         }
       }
-
     }
-
   </script>
 </body>
 </html>
