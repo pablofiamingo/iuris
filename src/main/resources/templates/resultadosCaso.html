@@ -50,12 +50,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr th:if="${#lists.isEmpty(resultados)}">
-                  <td colspan="12" align="center">
-                    No hay resultados
-                  </td>
-                </tr>
                 <tr th:each="caso: ${resultados}">
+                  <td th:if="${resultados} == null">
+                    <span th:if="${resultados == null}">No hay resultados.</span>
+                  </td>
                   <td scope="row" th:text="${caso.caratula}"></td>
                   <td th:text="${caso.materia}"></td>
                   <td th:text="${caso.fuero}"></td>
@@ -63,10 +61,10 @@
                   <td th:text="${caso.juzgado}"></td>
                   <td th:text="${caso.cliente.nombre + ' ' + caso.cliente.apellido}"><a href="">Ver</a></td>
                   <td><button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#idDELCASO1" aria-controls="offcanvasBottom">Ver</button></td>
-                  <td th:text="${caso.descripcion}"></td>
-                  <td th:text="${caso.representante}"></td>
+                  <td th:text="${caso.descripcion}">Descripcion del caso y bla bla bla, sarasa, bla</td>
+                  <td th:text="${caso.representante}">Pato Cerrado</td>
                   <td ><a href=""> Pagos Pendiente</a></td>
-                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}">Ver archivos ></a></td>
+                  <td ><a href="">Ver archivos (pendiente)</a></td>
                   <td>
                     <a href=""><img src="square-pen-solid.png" class="icon"></a>
                     <a href=""><img src="square-xmark-solid.png" class="icon"></a>

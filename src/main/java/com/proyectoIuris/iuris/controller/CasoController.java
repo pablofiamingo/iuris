@@ -35,22 +35,13 @@ public class CasoController {
 
         List<Caso> casos = casoService.list(user.getIdUsuario());
 
-        model.addAttribute("resultados", casos);
-        return "resultadosCaso";
-    }
+        if (casos==null) {
+            model.addAttribute("error", "No se encontraron casos.");
+            return "listadoCasos";
+        }
 
-    @GetMapping("/lista/{cliente}")
-    public String getCasosCliente(Model model,
-                                  HttpSession session,
-                                  @PathVariable("cliente") int idCliente) {
-
-        if (!Util.isLogged(session)) return "redirect:/usuario/login";
-        Usuario user = (Usuario) session.getAttribute("user");
-
-        List<Caso> casos = casoService.findCasoByIdCliente(idCliente);
-        System.out.println(casos);
-        model.addAttribute("resultados", casos);
-        return "resultadosCaso";
+        model.addAttribute("listaDeCasos", casos);
+        return "listadoCasos";
     }
 
     @GetMapping("/alta")

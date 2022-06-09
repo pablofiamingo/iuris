@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-public interface ArchivoRepository extends JpaRepository<Archivo, Integer> {
-    @Query("SELECT file FROM Archivo file WHERE file.caso.idCaso = :idCaso AND file.caso.cliente.usuario.idUsuario = :idUser")
-    public List<Archivo> list(@Param("idUser") int idUser, @Param("idCaso")int idCaso);
+public interface ArchivoRepository extends JpaRepository<Archivo, Long> {
 
-    public Archivo findById(int id);
+    @Query("SELECT file FROM Archivo file WHERE file.caso.cliente.usuario.idUsuario = :idUser")
+    public List<Archivo> list(@Param("idUser") int idUser);
+
+    public Archivo findById(int id); //para abrirlo
+
 }

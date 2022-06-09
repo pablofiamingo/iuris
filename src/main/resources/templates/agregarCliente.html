@@ -26,8 +26,7 @@
         }
     </style>
     <br><br>
-    <h1 class="h1" align="center" th:if="${accion == 'agregar'}">Agregar un nuevo cliente</h1>
-    <h1 class="h1" align="center" th:if="${accion == 'editar'}">Editar un cliente</h1>
+    <h1 class="h1" align="center">Agregar un nuevo cliente</h1>
     <br> <br>
     <div class="container py-3 card" id="tarjeta" style="width:35%">
         <form th:action="@{/cliente/alta}" th:object="${cliente}" method="post">
@@ -58,8 +57,7 @@
                 </div>
             </div>
             <div id="btnAgregarCliente">
-                <input th:if="${accion == 'agregar'}" class="btn btn-info" type="submit" value="Agregar" th:name="accion">
-                <input th:if="${accion == 'editar'}" class="btn btn-info" type="submit" value="Editar" th:name="accion">
+                <input class="btn btn-info" type="submit" value="Agregar Cliente">
             </div>
         </form>
     </div>
