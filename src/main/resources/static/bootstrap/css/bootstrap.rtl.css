@@ -203,10 +203,9 @@ sup {
 
 a {
   color: #0d6efd;
-  text-decoration: underline;
 }
 a:hover {
-  color: #0a58ca;
+  color: #2892D7;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -7295,7 +7294,7 @@ textarea.form-control-lg {
   white-space: nowrap !important;
 }
 .text-primary {
-  color: #0d6efd !important;
+  color: #2892D7 !important;
 }
 
 .text-secondary {
