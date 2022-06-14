@@ -13,11 +13,11 @@ body{
 }
 
 .bg-blue900{
-    background-color: #031633;
+    background-color: #173753;
 }
 
 .bg-blue800{
-    background-color: #052c65;
+    background-color: #1B4353;
 }
 
 .bg-blue700{
@@ -25,11 +25,11 @@ body{
 }
 
 .bg-blue600{
-    background-color: #0a58ca;
+    background-color: #2892D7;
 }
 
 .bg-blue300{
-    background-color: #6ea8fe;
+    background-color: #6DAEDB;
 }
 
 .bg-blue200{
@@ -62,12 +62,38 @@ body{
     right: 35px;
 }
 
+.icon{
+    width: 25px;
+    height: 25px;
+}
+
 #calendario-container {
     background-color: white;
+    border-radius: 0.25rem;
 }
 
 #formulario-calendario {
-    background-color: #031633;
     width: 100%;
     justify-content: space-evenly;
+    border-radius: 0.25rem;
+}
+
+.form-h{
+    height: 30px;
+}
+
+.border-1st{
+    border-radius: 5px 0px 0px 0px;
+}
+
+.border-last{
+    border-radius: 0px 5px 0px 0px;
+}
+
+.t-center{
+    text-align: center;
+}
+
+.button-panel {
+    width: 150px;
 }
