@@ -1,12 +1,7 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Archivo;
-import com.proyectoIuris.iuris.model.Caso;
-import com.proyectoIuris.iuris.model.Cliente;
-import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
-import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
-import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
+import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.service.Interfaces.*;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

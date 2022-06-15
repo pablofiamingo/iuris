@@ -21,91 +21,95 @@ public class ClienteController {
     private IArchivoService fileService;
 
     //GET MAPPING-----------------------------------------------------------------------------------------------------
-    @GetMapping("/alta/{id}")
+    @GetMapping("/alta")
     public String getAltaCliente(Model model,
-                                 HttpSession session,
-                                 @PathVariable(value = "id", required = false) int id) {
+                                 HttpSession session) {
+
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
 
-        Integer idObj = id;
-        Cliente cliente;
-
-        if (idObj != 0) {
-            cliente = clienteService.findById(id);
-            model.addAttribute("accion", "editar");
-        } else {
-            cliente = new Cliente();
-            cliente.setUsuario(usuario);
-            model.addAttribute("accion", "agregar");
-        }
+        Cliente cliente = new Cliente();
+        cliente.setUsuario(usuario);
 
         model.addAttribute("cliente", cliente);
         return "agregarCliente";
     }
 
-    @GetMapping("/lista")
-    public String getListaClientes(HttpSession session, Model model) {
+    @GetMapping("/editar/{id}")
+    public String getEditarCliente(Model model,
+                                 HttpSession session,
+                                 @PathVariable("id") int id) {
+
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
+
+        Cliente cliente = clienteService.findById(id);
+
+        model.addAttribute("cliente", cliente);
+        return "editarCliente";
+    }
+
+    @GetMapping("/lista")
+    public String getListaClientes(HttpSession session,
+                                   Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario usuario = (Usuario) session.getAttribute("user");
+
         List<Cliente> clientes = clienteService.list(usuario.getIdUsuario());
-        model.addAttribute("clientes", clientes);
-        return "listaClientes";
+        model.addAttribute("resultados", clientes);
+
+        return "resultadosCliente";
     }
 
     //POST MAPPING-----------------------------------------------------------------------------------------------
-    /**
-     * Este es el supermétodo para agregar y editar
-     * @param cliente
-     * @param accion
-     * @param session
-     * @param model
-     * @return
-     */
     @PostMapping("/alta")
-    public String agregarEditarCliente(@Validated Cliente cliente,
-                                 @RequestParam("accion") String accion,
+    public String agregarCliente(@Validated Cliente cliente,
                                  HttpSession session,
                                  Model model) {
-        String resultado = "", mensaje = "";
-
+        String estado = "";
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
-        switch(accion.toLowerCase()) {
-            case "agregar":
-                if (clienteService.findByDni(cliente.getDni()) != null){
-                    resultado = "error";
-                    mensaje = "El DNI ingresado ya existe en los registros.";
-                } else {
-                    clienteService.save(cliente);
-                    fileService.crearDir(System.getenv("APPDATA") + "\\IURIS\\Archivos\\Clientes\\" + cliente.getIdCliente());
-                    resultado = "exito";
-                    mensaje = "El cliente se agregó con éxito.";
-                }
-                break;
-            case "editar":
-                Cliente cli = clienteService.findByDni(cliente.getDni());
-                cliente.setIdCliente(cli.getIdCliente());
-                if (clienteService.save(cliente)) {
-                    resultado = "exito";
-                    mensaje = "El cliente se editó con éxito.";
-                } else {
-                    resultado = "error";
-                    mensaje = "Hubo un error al editar al cliente. Inténtelo nuevamente.";
-                }
+        if (clienteService.findByDni(cliente.getDni()) != null){
+            estado = "error";
+        } else {
+            clienteService.save(cliente);
+            fileService.crearDir(System.getenv("APPDATA") + "\\IURIS\\Archivos\\Clientes\\" + cliente.getIdCliente());
+            estado = "exito";
         }
-        model.addAttribute(resultado,mensaje);
+
+        model.addAttribute("estado", estado);
         return "agregarCliente";
     }
 
+    @PostMapping("/editar")
+    public String editarCliente(@Validated Cliente cliente,
+                                HttpSession session,
+                                Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        String estado = "";
+
+        Cliente cli = clienteService.findByDni(cliente.getDni());
+        cliente.setIdCliente(cli.getIdCliente());
+
+        if (clienteService.save(cliente)) {
+            estado = "exito";
+        } else {
+            estado = "error";
+        }
+
+        model.addAttribute("estado",estado);
+        return "editarCliente";
+    }
+
     @PostMapping("/baja")
-    public String eliminarCliente(@RequestParam(value = "id", required = true) int id, Model model) {
+    public String eliminarCliente(@RequestParam(value = "id", required = true) int id,
+                                  Model model) {
        if (clienteService.delete(id)) {
-           model.addAttribute("exito", true);
-           return "inicio";
+           model.addAttribute("exito", "Cliente eliminado.");
+           return "redirect:/cliente/lista";
        } else {
-           model.addAttribute("exito", false);
-           return "vistaCliente";
+           model.addAttribute("error", "Hubo un error.");
+           return "redirect:/cliente/lista";
        }
     }
 }
