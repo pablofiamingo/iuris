@@ -27,7 +27,15 @@ public class UsuarioController {
 
     //Métodos por GET
     @GetMapping("/registro")
-    public String getRegistro(Model model) {
+    public String getRegistro(Model model,
+                              HttpSession session) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+
+        Usuario usuarioActivo = (Usuario) session.getAttribute("user");
+        if (usuarioActivo.getRol() != "admin") {
+            return "redirect:/inicio";
+        }
+
         model.addAttribute("usuario", new Usuario());
         return "agregarUsuario";
     }
@@ -48,13 +56,6 @@ public class UsuarioController {
     public String insertUser(@Validated Usuario usuario,
                              Model model,
                              HttpSession session) {
-        //para registrar, me fijo si es admin primero
-        //parece al cuete la validacion pero por las dudas la dejo
-        Usuario usuarioActivo = (Usuario) session.getAttribute("user");
-        /*if (usuarioActivo.getRol() != "admin") {
-            return "redirect:/inicio";
-            //esta validacion iria mas bien en el get
-        }*/
         //después paso a registrar al usuario
         if(usuario != null) {
             if(usuario.getRol().equals("abogado") || usuario.getRol().equals("empleado")) {
@@ -62,9 +63,8 @@ public class UsuarioController {
                     model.addAttribute("error", "true");
                     return "agregarUsuario";
                 }
-                Usuario usuarioInsertado = usuarioService.insert(usuario); //aca el metodo save del repository te devuelve la entidad insertada, segun la documentacion
-                //por lo tanto, el return lo guardo en usuarioInsertado para tener el usuario pero con el id que se le puso en al bd
-                //para poder poner este valor en la lista de tareas
+                Usuario usuarioInsertado = usuarioService.insert(usuario);
+
                 ListaDeTareas listaDeTareas = new ListaDeTareas();
                 listaDeTareas.setUsuario(usuarioInsertado);
                 usuarioInsertado.setListaDeTareas(listaDeTareas);
@@ -87,6 +87,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
         Usuario usuario = usuarioService.findByUsername(u.getUser());
+
         if(usuario != null) {
             if(usuario.getPass().equals(u.getPass())) {
                 httpSession.setAttribute("user", usuario);

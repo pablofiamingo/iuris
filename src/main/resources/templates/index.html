@@ -72,7 +72,7 @@
                     <a class="" th:href="@{/caso/alta}" th:target="_blank">
                         <button class="btn btn-primary my-1 button-panel" type="button">Nuevo Caso</button>
                     </a>
-                    <a class="" th:href="@{/usuario/registro}" th:target="_blank">
+                    <a class="" th:href="@{/usuario/registro}" th:target="_blank" th:if="${usuario.rol == 'admin'}" >
                         <button class="btn btn-primary my-1 button-panel" type="button">Crear Usuario</button>
                     </a>
                 </div>
