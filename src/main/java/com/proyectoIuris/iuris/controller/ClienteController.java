@@ -105,10 +105,10 @@ public class ClienteController {
     public String eliminarCliente(@RequestParam(value = "id", required = true) int id,
                                   Model model) {
        if (clienteService.delete(id)) {
-           model.addAttribute("exito", "Cliente eliminado.");
+           model.addAttribute("baja", "exito");
            return "redirect:/cliente/lista";
        } else {
-           model.addAttribute("error", "Hubo un error.");
+           model.addAttribute("baja", "error");
            return "redirect:/cliente/lista";
        }
     }
