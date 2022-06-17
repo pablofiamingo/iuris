@@ -29,7 +29,7 @@ body{
 }
 
 .bg-blue300{
-    background-color: #6DAEDB;
+    background-color: #A8DADC;
 }
 
 .bg-blue200{
@@ -96,4 +96,8 @@ body{
 
 .button-panel {
     width: 150px;
+}
+
+#username, #rol, #tituloTareas {
+    color: #A8DADC !important;
 }

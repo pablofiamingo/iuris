@@ -23,13 +23,6 @@ public class InicioController {
     @Autowired
     private IListaDeTareasService listaDeTareasService;
 
-    /**
-     * Cuando se le pega a este método por get, primero verifica si existe un usuario en la sesión, si existe lo carga en el Model y lo envia
-     * al inicio, para obtener datos como el nombre completo y el rol
-     * @param session obtiene la sesión activa
-     * @param model modelo por el cual envia luego el usuario activo
-     * @return la vista index
-     */
     @GetMapping("/inicio")
     public String index(HttpSession session, Model model) {
 
@@ -42,22 +35,9 @@ public class InicioController {
         if(!tareas.isEmpty()) {
             model.addAttribute("tareas", tareas);
         }
-
         return "index";
     }
 
-    /**
-     * Método buscar accedido por POST, recibe un valor y una indicacion de donde debe buscar dicho valor.
-     * El primer condicional verifica que no se hayan ingresado carácteres inválidos, de ser asi, retorna un error.
-     * El segundo condicional se encarga de buscar el caracter o la palabra indicada, evaluando si el tipo es caso o cliente.
-     * Una vez que ingresa en una de las dos rutas del condicional, crea una lista con los datos solicitados.
-     * Si se ingresó un caracter o palabra, se devolvera una lista de todos los resultados que lo contengan, en la ubicación que sea.
-     *
-     * @param keyword String not null, es el valor que debe buscar
-     * @param donde String que indica desde el index si es caso o cliente
-     * @param model el modelo por donde se van a pasar los datos hacia la vista
-     * @return devuelve index si hay un error, o una vista con los resultados, de haberlos.
-     */
     @PostMapping("/buscar")
     public String buscar(@RequestParam(value="valorABuscar") @NotNull String keyword,
                          @RequestParam(value="donde")String donde,

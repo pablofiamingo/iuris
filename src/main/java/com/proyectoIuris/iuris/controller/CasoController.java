@@ -1,12 +1,7 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Archivo;
-import com.proyectoIuris.iuris.model.Caso;
-import com.proyectoIuris.iuris.model.Cliente;
-import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.Interfaces.IArchivoService;
-import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
-import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
+import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.service.Interfaces.*;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,8 +64,10 @@ public class CasoController {
         return "agregarCaso";
     }
 
-    @GetMapping(value = "/editar/{idCaso}")
-    public String getEditarCaso(@PathVariable("idCaso") int idCaso, Model model, HttpSession session ) {
+    @GetMapping("/editar/{idCaso}")
+    public String getEditarCaso(@PathVariable("idCaso") int idCaso,
+                                Model model,
+                                HttpSession session ) {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
@@ -80,7 +77,9 @@ public class CasoController {
     }
 
     @GetMapping("/ver/{idCaso}")
-    public String getCaso(@PathVariable("idCaso") int idCaso, Model model, HttpSession session) {
+    public String getCaso(@PathVariable("idCaso") int idCaso,
+                          Model model,
+                          HttpSession session) {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
@@ -115,9 +114,17 @@ public class CasoController {
         } else return "agregarCaso";
     }
 
-    @PostMapping("/eliminar")
-    public void eliminarCaso(@RequestParam("idCaso") int idCaso) {
-        casoService.delete(idCaso);
+    @PostMapping("/baja")
+    public String eliminarCaso(@RequestParam("id") int idCaso,
+                               Model model) {
+        if(casoService.delete(idCaso)) {
+            model.addAttribute("baja", "exito");
+            return "redirect:/caso/lista";
+        } else {
+            model.addAttribute("baja", "error");
+            return "redirect:/caso/lista";
+        }
+
     }
 
 }

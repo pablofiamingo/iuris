@@ -63,16 +63,16 @@
             <div class="text-center">
                 <img th:src="@{/img/logoIuris2.png}" class="round-img my-4">
                 <!-- th:src="@{~/billing-app/images/Invoice.png}"-->
-                <h5 class="text-center"><span th:text="${usuario.fullName}" ></span></h5>
-                <h6 class="text-center"><span th:text="${usuario.rol}" ></span></h6>
+                <h5 class="text-center" id="username"><span th:text="${usuario.fullName}" ></span></h5>
+                <h6 class="text-center" id="rol"><span th:text="${usuario.rol}" ></span></h6>
                 <div class="d-grid gap-2 col-6 mx-auto py-4">
-                    <a class="my-1 " th:href="@{/cliente/alta/0}" th:target="_blank">
+                    <a class="my-1 " th:href="@{/cliente/alta}" th:target="_blank">
                         <button class="btn btn-primary button-panel" type="button">Nuevo Cliente</button>
                     </a>
                     <a class="" th:href="@{/caso/alta}" th:target="_blank">
                         <button class="btn btn-primary my-1 button-panel" type="button">Nuevo Caso</button>
                     </a>
-                    <a class="" th:href="@{/usuario/registro}" th:target="_blank">
+                    <a class="" th:href="@{/usuario/registro}" th:target="_blank" th:if="${usuario.rol == 'admin'}" >
                         <button class="btn btn-primary my-1 button-panel" type="button">Crear Usuario</button>
                     </a>
                 </div>
@@ -97,8 +97,8 @@
                     <div class="input-group">
                         <form class="input-group" th:action="@{/buscar}" th:target="_blank" method="POST">
                             <input type="text" th:name="valorABuscar" class="form-control text-primary bg-blue100" placeholder="Ingrese cliente o caso a buscar" required>
-                            <button class="btn btn-outline-secondary" th:name="donde" value="cliente" type="submit">Cliente</button>
-                            <button class="btn btn-outline-secondary" th:name="donde" value="caso" type="submit">Caso</button>
+                            <button class="btn btn-outline-light" th:name="donde" value="cliente" type="submit">Cliente</button>
+                            <button class="btn btn-outline-light" th:name="donde" value="caso" type="submit">Caso</button>
                         </form>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
         </div>
         <div class="container-fluid" id="calendario-container">
             <div >
-                <div id="formulario-calendario" class="row mx-0 py-3 mt-2 mb-1 bg-blue900">
+                <div id="formulario-calendario" class="row mx-0 py-3 mt-2 mb-1 bg-blue800">
                     <button type="button" class="btn btn-outline-light col-sm-3 ml-0" id="agregarCita" onclick="agregarCita()" >
                         Agregar una cita >
                     </button>
@@ -122,7 +122,7 @@
                             </button>
                         </div>
                     </form>
-                    <div id='calendar' class="py-3" style="color: white;, background-color: green;"></div>
+                    <div id='calendar' class="py-3 " style="color: white;"></div>
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
     <div class="col-md-3 px-1 py-1 bg-blue300">
         <div class="card bg-blue800 full-height">
             <div class="card-body">
-                <h5 class="card-title text-center text-primary py-2">TAREAS</h5>
+                <h5 class="card-title text-center text-primary py-2" id="tituloTareas">TAREAS</h5>
                 <!-- form de agregar tarea -->
                 <form class="row g-2" th:action="@{/listaDeTareas/agregar}" method="post">
                     <div class="col-md-8">
