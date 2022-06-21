@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>IURIS | Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body class="bg-blue900">
+    <div>
+        <div class="container my-4">
+            <div class="row">
+              <!-- lado izquierdo -->
+                <div class="col-md-6 align-self-center" style="height: 800px; overflow: hidden;">
+                    <img th:src="@{/img/lady-justice-g11.png}" alt="" style="height: 1100px; ">
+                </div>
+            
+                <!-- lado derecho -->
+            
+                <div class="col-md-6 align-self-center text-light">
+                    <h1 style="font-size: 90px;">404</h1>
+                    <h3>OH NO! Esta página es una caso perdido.</h3>
+                    <h6>
+                        La página a la que intentas acceder no existe.
+                        De alguna manera llegaste, pero no te preocupes, 
+                        podés volver haciendo clic en el botón INICIO.
+                    </h6>
+                    <p>Que la luz de la justicia siempre te ilumine.</p>
+                    <button class="btn btn-dark">INICIO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+</body>
+</html>
