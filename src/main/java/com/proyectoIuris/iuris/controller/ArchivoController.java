@@ -20,12 +20,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/archivo")
 public class ArchivoController {
-
     @Autowired
     private IArchivoService fileService;
     @Autowired
     private ICasoService casoService;
-
 
     @GetMapping("/lista/{idCaso}")
     public String listarArchivosCaso(HttpSession session,
@@ -44,14 +42,6 @@ public class ArchivoController {
         return "resultadosArchivos";
     }
 
-    /**
-     * Con este metodo, cuando se le pegue a la ruta /ver/{id} va a visualizar el archivo que tenga el id indicado. </br>
-     *
-     * @param id identificador del archivo. tipo int
-     * @param session recibe la sesion actual para ... todavia no sé para qué.
-     * @return vista del pdf en el navegador
-     * @throws FileNotFoundException si no encuentra el archivo
-     */
     @GetMapping(value = "/ver/{id}")
     public ResponseEntity<InputStreamResource> getTermsConditions(@PathVariable("id") int id, HttpSession session) throws FileNotFoundException {
         //tengo que restringir el acceso a pdf que no son propios del usuario.
@@ -72,16 +62,6 @@ public class ArchivoController {
     }
 
     //POSTMAPPING-------------------------------------------------------------------------------------------------------
-
-    /**
-     * Con este método de tipo POST, el usuario va a poder cargar un archivo nuevo para el caso deseado. <br>
-     * Recibe un objeto de tipo MultipartFile, el archivo en cuestión, junto con el id del caso.<br>
-     * Con estos datos, se procede a crear un directorio para almacenar el archivo recibido por formulario, siguiendo el siguiente patrón: Archivos>Usuario>Cliente>Caso>Archivo <br>
-     * @param file de tipo MultipartFile
-     * @param idCaso el id del caso para almacenar el archivo
-     * @param session de tipo HttpSession, obtiene la sesión actual
-     * @return pendiente
-     */
     @PostMapping("/subir")
     public String fileHandler(@RequestParam("file") MultipartFile file,
                               @RequestParam("idCaso") int idCaso,
@@ -105,10 +85,6 @@ public class ArchivoController {
         return "redirect:/archivo/lista/" + caso.getIdCaso();
     }
 
-    /**
-     *Método POST para eliminar el archivo deseado, requiriendo el parametro "id" para especificar que archivo es.
-     * @param id tipo int, identificador del archivo
-     */
     @PostMapping("/eliminar")
     public String eliminarArchivo(@RequestParam("idArc") int id) {
         Archivo arc = fileService.findById(id);
