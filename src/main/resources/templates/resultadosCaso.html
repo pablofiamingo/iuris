@@ -94,7 +94,18 @@
                   <td th:text="${caso.juzgado}"></td>
                   <td th:text="${caso.cliente.nombre + ' ' + caso.cliente.apellido}"></td>
                   <!-- ver datos de la otra parte, falta hacer -->
-                  <td><button class="btn btn-secondary" type="button" th:onclick="" >Ver</button></td>
+                  <td>
+                      <button
+                              class="btn btn-secondary"
+                              type="button"
+                              th:id="${caso.idCaso}"
+                              onclick="mostrar(this)"
+                              th:value="${caso.caratula}"
+                              th:title="${caso.datoOtraParte}"
+                      >
+                          Ver
+                      </button>
+                  </td>
                   <td th:text="${caso.descripcion}"></td>
                   <td th:text="${caso.representante}"></td>
                   <!-- ver los pagos, falta hacer -->
@@ -113,6 +124,20 @@
           </div>
         </div>
       </div>
+
+      <!--la emergente-->
+      <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <strong class="me-auto">Datos de la otra parte</strong>
+            <small id="caratula">Caratula: </small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div id="datos" class="toast-body">
+            Ruuummmarioooo. Su telefono es un celular lindo. Vive en algún lado.
+          </div>
+        </div>
+      </div>
 <!--
                     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO1" aria-labelledby="offcanvasBottomLabel">
                       <div class="offcanvas-header">
@@ -122,5 +147,18 @@
                     </div>
                     data-bs-toggle="offcanvas" data-bs-target="#idDELCASO1" aria-controls="offcanvasBottom"
                     -->
+      <script>
+          function mostrar(caso){
+              let toastTrigger = document.getElementById(caso.id);
+              let toastLiveExample = document.getElementById('liveToast');
+              let toast = new bootstrap.Toast(toastLiveExample);
+
+              document.getElementById('caratula').innerText = "Caso: "+caso.value;
+              document.getElementById('datos').innerText = caso.title;
+
+              toast.show();
+          }
+
+      </script>
 </body>
 </html>
