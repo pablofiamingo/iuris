@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/listaDeTareas")
 public class ListaDeTareasController {
-
     @Autowired
     private IListaDeTareasService listaDeTareasService;
 
@@ -33,30 +32,25 @@ public class ListaDeTareasController {
 
         listaDeTareasService.guardarTarea(tarea);
 
-        //redirige al controller, no a la vista
         return "redirect:/inicio";
 
     }
 
-    /*@PostMapping("/editar")
-    public String editarTarea(@RequestParam("textohtml") String texto,
-                              @RequestParam("idTarea")int idTarea,
-                              Model model) {
-
-        if (tarea!=null) {
-            listaDeTareasService.save(tarea);
-            model.addAttribute("exito", "tarea editada.");
-            return "inicio";
-        } else return "agregarTarea";
-    }*/
+    @PostMapping("/check")
+    public String tacharTarea(@RequestParam("id")int id,
+                              @RequestParam("check")boolean check) {
+        DetalleTarea tarea = listaDeTareasService.getTarea(id);
+        if(check) {
+            tarea.setEnabled(false);
+        } else {
+            tarea.setEnabled(true);
+        }
+        listaDeTareasService.guardarTarea(tarea);
+        return "redirect:/inicio";
+    }
 
     @PostMapping("/eliminar")
     public String eliminarTarea(@RequestParam("idTarea") int idTarea) {
-        /*
-        * @RequestParam("nombre que le pusiste en el html") tipodedato nombre de la variable
-        * y esta variable es para usar el dato que trajiste desde el html
-        * en el metodo del controlador
-        * */
         listaDeTareasService.deleteTarea(idTarea);
         return "redirect:/inicio";
     }

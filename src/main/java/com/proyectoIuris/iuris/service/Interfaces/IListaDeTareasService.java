@@ -13,6 +13,7 @@ public interface IListaDeTareasService {
     public boolean delete(int id);
 
     //detalles
+    public DetalleTarea getTarea(int id);
     public List<DetalleTarea> getTareas(int id);
     public void guardarTarea(DetalleTarea tarea);
     public void deleteTarea(int id);
