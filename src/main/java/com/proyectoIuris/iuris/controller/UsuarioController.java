@@ -41,11 +41,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    String getLogin(Model model, HttpSession httpSession) {
+    String getLogin(Model model,
+                    HttpSession httpSession) {
         Usuario user = (Usuario) httpSession.getAttribute("user");
         if(httpSession.getAttribute("user") != null) {
             model.addAttribute("nombre", user);
-            return "inicio";
+            return "redirect:/inicio";
         }
         model.addAttribute("usuario", new Usuario());
         return "login";
