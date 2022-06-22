@@ -42,6 +42,11 @@ public class CListaDeTareasService implements IListaDeTareasService {
     }
 
     @Override
+    public DetalleTarea getTarea(int id) {
+        return detalleRepo.findById(id);
+    }
+
+    @Override
     public List<DetalleTarea> getTareas(int id) {
         return detalleRepo.getTareas(id);
     }

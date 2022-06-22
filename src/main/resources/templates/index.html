@@ -134,7 +134,7 @@
                 <!-- form de agregar tarea -->
                 <form class="row g-2" th:action="@{/listaDeTareas/agregar}" method="post">
                     <div class="col-md-8">
-                        <input class="form-control bg-blue200" th:name="tareaNueva" placeholder="Ingrese tarea" required>
+                        <input class="form-control bg-blue100" th:name="tareaNueva" placeholder="Ingrese tarea" required>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary mb-3">Agregar</button>
@@ -143,9 +143,13 @@
                 <ul class="list-group" th:each="tarea: ${tareas}">
                     <li  id="idDeBDDdeTarea" class="list-group-item bg-dark text-light row" >
                         <div class="row justify-content-between">
-                            <div class="col-md-6">
-                                <input class="form-check-input me-1 " type="checkbox" value="" aria-label="...">
-                                <span  onclick="cambiarPrioridad(0)" th:text="${tarea.tarea}" />
+                            <div th:if="${tarea.enabled == true}" class="col-md-6 pt-2">
+                                <input class="form-check-input me-1" type="checkbox" checked onchange="tachar(this)" th:value="${tarea.idDetalleTarea}" aria-label="...">
+                                <span style="text-decoration-line: line-through;" onclick="cambiarPrioridad(0)" th:id="${tarea.idDetalleTarea}" th:text="${tarea.tarea}" class=""></span>
+                            </div>
+                            <div th:if="${tarea.enabled == false}" class="col-md-6 pt-2">
+                                <input class="form-check-input me-1" type="checkbox" onchange="tachar(this)" th:value="${tarea.idDetalleTarea}" aria-label="...">
+                                <span onclick="cambiarPrioridad(0)" th:text="${tarea.tarea}" th:id="${tarea.idDetalleTarea}" class=""></span>
                             </div>
                             <div class="col-md-1 offset-md-4">
                                 <form th:action="@{/listaDeTareas/eliminar}" method="post">
@@ -190,6 +194,28 @@
           imgColor.src="images/square-xmark-solid.png";
         }
       }
+    }
+
+    function tachar(tarea){
+        let textoTarea = document.getElementById(tarea.value);
+
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "http://localhost:8080/listaDeTareas/check");
+        var formData = new FormData();
+        formData.append("id", tarea.value);
+        var checked;
+
+        if (tarea.checked){
+            //textoTarea.className += " text-decoration-line-through";
+            textoTarea.style.textDecoration = "line-through";
+            checked = false;
+        } else {
+            //textoTarea.className -= " text-decoration-line-through";
+            textoTarea.style.textDecoration = "none";
+            checked = true;
+        }
+        formData.append("check", checked);
+        oReq.send(formData);
     }
   </script>
 </body>

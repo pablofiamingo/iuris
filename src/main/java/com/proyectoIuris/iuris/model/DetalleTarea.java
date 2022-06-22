@@ -21,7 +21,7 @@ public class DetalleTarea {
     private String tarea;
 
     @Column( columnDefinition = "TINYINT(1)")
-    private boolean enabled = true;
+    private boolean enabled;
 
     @ManyToOne
     @JoinColumn(name = "id_to_do")

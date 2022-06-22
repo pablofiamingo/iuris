@@ -12,6 +12,8 @@ public interface DetalleTareaRepository extends CrudRepository<DetalleTarea, Int
     @Query("SELECT detalles FROM DetalleTarea detalles WHERE listaDeTareas.idToDo = :idLista")
     public List<DetalleTarea> getTareas(@Param("idLista")int idLista);
 
+    @Query("SELECT detalles FROM DetalleTarea detalles WHERE idDetalleTarea = :idTarea")
+    public DetalleTarea findById(@Param("idTarea")int id);
     public DetalleTarea save(DetalleTarea tarea);
 
 }
