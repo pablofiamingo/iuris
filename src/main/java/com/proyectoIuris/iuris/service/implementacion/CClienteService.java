@@ -14,7 +14,7 @@ public class CClienteService implements IClienteService {
     private ClienteRepository clienteRepo;
 
     @Override
-    public List<Cliente> list(int id) {
+    public List<Cliente> listPermisoAbogado(int id) {
         List<Cliente> listaDeClientes = clienteRepo.findByIdUsuario(id);
         return listaDeClientes;
     }
@@ -26,9 +26,19 @@ public class CClienteService implements IClienteService {
     }
 
     @Override
-    public List<Cliente> findByNombreOApellido(String keyword, int id) {
+    public List<Cliente> buscadorPermisoAbogado(String keyword, int id) {
         List<Cliente> clientes = clienteRepo.findByNombreOApellido(keyword, id);
         return clientes;
+    }
+
+    @Override
+    public List<Cliente> list() {
+        return clienteRepo.list();
+    }
+
+    @Override
+    public List<Cliente> buscadorGeneral(String keyword) {
+        return clienteRepo.findByNombreOApellidoGeneral(keyword);
     }
 
     @Override

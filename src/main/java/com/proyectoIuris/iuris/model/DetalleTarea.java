@@ -18,7 +18,7 @@ public class DetalleTarea {
     private int idDetalleTarea;
 
     @Column(nullable = false, length = 50)
-    private String tarea = "Esta es tu lista de tareas.";
+    private String tarea;
 
     @Column( columnDefinition = "TINYINT(1)")
     private boolean enabled = true;

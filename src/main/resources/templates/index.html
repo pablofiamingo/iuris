@@ -37,7 +37,6 @@
               }
           },
           dateClick: function(info) {
-            console.log(info)
             document.getElementById("start").value = info['dateStr']
           }
         });
@@ -141,7 +140,6 @@
                         <button type="submit" class="btn btn-primary mb-3">Agregar</button>
                     </div>
                 </form>
-
                 <ul class="list-group" th:each="tarea: ${tareas}">
                     <li  id="idDeBDDdeTarea" class="list-group-item bg-dark text-light row" >
                         <div class="row justify-content-between">
@@ -155,15 +153,11 @@
                                     <input type="hidden" th:name="idTarea" th:value="${tarea.idDetalleTarea}">
                                 </form>
                             </div>
-
                         </div>
                     </li>
-
                 </ul>
             </div>
-
         </div>
-
     </div>
 </div>
 

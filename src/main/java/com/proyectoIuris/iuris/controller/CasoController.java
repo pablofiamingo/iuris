@@ -28,7 +28,7 @@ public class CasoController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario user = (Usuario) session.getAttribute("user");
 
-        List<Caso> casos = casoService.list(user.getIdUsuario());
+        List<Caso> casos = casoService.listPermisoAbogado(user.getIdUsuario());
 
         model.addAttribute("resultados", casos);
         return "resultadosCaso";
@@ -54,7 +54,7 @@ public class CasoController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario user = (Usuario) session.getAttribute("user");
-        List<Cliente> clientes = clienteService.list(user.getIdUsuario());
+        List<Cliente> clientes = clienteService.listPermisoAbogado(user.getIdUsuario());
 
         caso.setRepresentante(user.getFullName());
         model.addAttribute("caso", caso);

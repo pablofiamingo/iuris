@@ -55,7 +55,7 @@ public class ClienteController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
 
-        List<Cliente> clientes = clienteService.list(usuario.getIdUsuario());
+        List<Cliente> clientes = clienteService.listPermisoAbogado(usuario.getIdUsuario());
         model.addAttribute("resultados", clientes);
 
         return "resultadosCliente";
