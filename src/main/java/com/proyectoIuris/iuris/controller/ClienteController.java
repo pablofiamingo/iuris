@@ -54,10 +54,13 @@ public class ClienteController {
                                    Model model) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
-
-        List<Cliente> clientes = clienteService.list(usuario.getIdUsuario());
+        List<Cliente>clientes;
+        if(usuario.getRol().toLowerCase().equals("abogado")){
+            clientes = clienteService.listPermisoAbogado(usuario.getIdUsuario());
+        } else {
+            clientes = clienteService.list();
+        }
         model.addAttribute("resultados", clientes);
-
         return "resultadosCliente";
     }
 
@@ -106,10 +109,9 @@ public class ClienteController {
                                   Model model) {
        if (clienteService.delete(id)) {
            model.addAttribute("baja", "exito");
-           return "redirect:/cliente/lista";
        } else {
            model.addAttribute("baja", "error");
-           return "redirect:/cliente/lista";
        }
+        return "redirect:/cliente/lista";
     }
 }

@@ -41,11 +41,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    String getLogin(Model model, HttpSession httpSession) {
+    String getLogin(Model model,
+                    HttpSession httpSession) {
         Usuario user = (Usuario) httpSession.getAttribute("user");
         if(httpSession.getAttribute("user") != null) {
             model.addAttribute("nombre", user);
-            return "inicio";
+            return "redirect:/inicio";
         }
         model.addAttribute("usuario", new Usuario());
         return "login";
@@ -56,7 +57,6 @@ public class UsuarioController {
     public String insertUser(@Validated Usuario usuario,
                              Model model,
                              HttpSession session) {
-        //después paso a registrar al usuario
         if(usuario != null) {
             if(usuario.getRol().equals("abogado") || usuario.getRol().equals("empleado")) {
                 if(Util.containsIllegals(usuario.getUser()) || Util.containsIllegals(usuario.getFullName())) {
@@ -85,7 +85,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
+    public String login(@Validated Usuario u,
+                        Model model,
+                        HttpSession httpSession) {
         Usuario usuario = usuarioService.findByUsername(u.getUser());
 
         if(usuario != null) {

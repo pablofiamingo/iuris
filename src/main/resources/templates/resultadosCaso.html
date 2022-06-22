@@ -57,6 +57,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
+      <!-- Agregar caso  -->
+      <div class="d-grid gap-2 col-6 mx-auto py-4">
+        <a class="" th:href="@{/caso/alta}" th:target="_blank">
+          <button class="btn btn-primary my-1 button-panel" type="button">Nuevo Caso</button>
+        </a>
+      </div>
       <!-- La lista -->
       <div class="row g-0">
         <div class="col">
@@ -103,7 +109,7 @@
                   <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}">Ver archivos ></a></td>
                   <td>
                     <!-- editar y eliminar -->
-                    <a th:href="@{'/editar/' + ${caso.idCaso}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a th:href="@{'/caso/editar/' + ${caso.idCaso}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
                     <img th:src="@{/img/square-xmark-solid.png}" th:onclick=" 'cambiarConfirmacion(' + ${caso.idCaso} + ')'" class="icon">
                     <!-- -->
                   </td>

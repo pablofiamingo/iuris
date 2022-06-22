@@ -14,8 +14,18 @@ public class CCasoService implements ICasoService {
     private CasoRepository casoRepo;
 
     @Override
-    public List<Caso> list(int id) {
-        return casoRepo.findCasoByIdUsuario(id);
+    public List<Caso> listPermisoAbogado(int id) {
+        return casoRepo.listPermisoAbogado(id);
+    }
+
+    @Override
+    public List<Caso> buscadorGeneral(String keyword) {
+       return casoRepo.buscadorGeneral(keyword);
+    }
+
+    @Override
+    public List<Caso> list() {
+        return casoRepo.list();
     }
 
     @Override
@@ -46,8 +56,8 @@ public class CCasoService implements ICasoService {
     }
 
     @Override
-    public List<Caso> buscador(String keyword, int id) {
-        return casoRepo.buscador(keyword, id);
+    public List<Caso> buscadorPermisoAbogado(String keyword, int id) {
+        return casoRepo.buscadorPermisoAbogado(keyword, id);
     }
 
     @Override

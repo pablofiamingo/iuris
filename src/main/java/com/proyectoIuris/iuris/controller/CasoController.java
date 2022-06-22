@@ -27,9 +27,12 @@ public class CasoController {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario user = (Usuario) session.getAttribute("user");
-
-        List<Caso> casos = casoService.list(user.getIdUsuario());
-
+        List<Caso> casos;
+        if(user.getRol().toLowerCase().equals("abogado")) {
+            casos = casoService.listPermisoAbogado(user.getIdUsuario());
+        } else {
+            casos = casoService.list();
+        }
         model.addAttribute("resultados", casos);
         return "resultadosCaso";
     }
@@ -41,9 +44,7 @@ public class CasoController {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario user = (Usuario) session.getAttribute("user");
-
         List<Caso> casos = casoService.findCasoByIdCliente(idCliente);
-        System.out.println(casos);
         model.addAttribute("resultados", casos);
         return "resultadosCaso";
     }
@@ -54,13 +55,16 @@ public class CasoController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario user = (Usuario) session.getAttribute("user");
-        List<Cliente> clientes = clienteService.list(user.getIdUsuario());
-
+        List<Cliente> clientes;
+        if(user.getRol().toLowerCase().equals("abogado")) {
+            clientes = clienteService.listPermisoAbogado(user.getIdUsuario());
+        } else {
+            clientes = clienteService.list();
+        }
         caso.setRepresentante(user.getFullName());
         model.addAttribute("caso", caso);
         model.addAttribute("user", user);
         model.addAttribute("clientes", clientes);
-
         return "agregarCaso";
     }
 
@@ -76,21 +80,6 @@ public class CasoController {
         return "editarCaso";
     }
 
-    @GetMapping("/ver/{idCaso}")
-    public String getCaso(@PathVariable("idCaso") int idCaso,
-                          Model model,
-                          HttpSession session) {
-
-        if (!Util.isLogged(session)) return "redirect:/usuario/login";
-
-        Caso caso = casoService.findCasoById(idCaso);
-        List<Archivo> archivos = caso.getArchivos();
-        model.addAttribute("caso", caso);
-        model.addAttribute("archivos", archivos);
-
-        return "";
-    }
-
     //POSTMAPPING-----------------------------------------------------------------------------------------------------
     @PostMapping("/agregar")
     public String agregarCaso(@Validated Caso caso,
@@ -100,18 +89,22 @@ public class CasoController {
             Cliente cli = clienteService.findById(id);
             caso.setCliente(cli);
             casoService.save(caso);
-            model.addAttribute("exito", "Caso agregado con éxito.");
-            return "redirect:/caso/alta";
-        } else return "redirect:/caso/alta";
+            model.addAttribute("exito", "true");
+        } else {
+            model.addAttribute("error", "true");
+        }
+        return "redirect:/caso/alta";
     }
 
     @PostMapping("/editar")
     public String editarCaso(@Validated Caso caso, Model model) {
         if (caso!=null) {
             casoService.save(caso);
-            model.addAttribute("exito", "Caso editado con éxito.");
-            return "inicio";
-        } else return "agregarCaso";
+            model.addAttribute("exito", "true");
+        } else {
+            model.addAttribute("error", "true");
+        }
+        return "editarCaso";
     }
 
     @PostMapping("/baja")
@@ -119,12 +112,10 @@ public class CasoController {
                                Model model) {
         if(casoService.delete(idCaso)) {
             model.addAttribute("baja", "exito");
-            return "redirect:/caso/lista";
         } else {
             model.addAttribute("baja", "error");
-            return "redirect:/caso/lista";
         }
-
+        return "redirect:/caso/lista";
     }
 
 }
