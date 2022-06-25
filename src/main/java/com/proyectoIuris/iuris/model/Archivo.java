@@ -18,6 +18,7 @@ public class Archivo {
     private int id;
     private String ruta;
     private String nombre;
+    private String tipo;
     @ManyToOne
     @JoinColumn(name="id_caso")
     private Caso caso;
