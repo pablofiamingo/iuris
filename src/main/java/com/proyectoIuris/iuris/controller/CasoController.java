@@ -81,6 +81,12 @@ public class CasoController {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
+        String redirected = (String) session.getAttribute("editarCaso");
+        if(redirected!=null) {
+            model.addAttribute(redirected,true);
+            session.removeAttribute("editarCaso");
+        }
+
         Caso caso = casoService.findCasoById(idCaso);
         model.addAttribute("caso", caso);
         return "editarCaso";
@@ -105,14 +111,17 @@ public class CasoController {
     }
 
     @PostMapping("/editar")
-    public String editarCaso(@Validated Caso caso, Model model) {
+    public String editarCaso(@Validated Caso caso, Model model, HttpSession session) {
         if (caso!=null) {
-            casoService.save(caso);
-            model.addAttribute("exito", "true");
+            if(casoService.save(caso)){
+                session.setAttribute("editarCaso","exito");
+            } else {
+                session.setAttribute("editarCaso","error");
+            }
         } else {
-            model.addAttribute("error", "true");
+            session.setAttribute("editarCaso","error");
         }
-        return "editarCaso";
+        return "redirect:/caso/editar/" + caso.getIdCaso();
     }
 
     @PostMapping("/baja")
