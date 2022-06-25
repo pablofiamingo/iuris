@@ -19,28 +19,6 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/inicio}">
-            <img th:src="@{/img/balance.png}" class="d-inline-block align-top" width="30" height="25" alt="">
-            <span> IURIS </span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"> &#8962; Inicio</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                <button class="btn btn-primary" type="submit">Buscar</button>
-            </form>
-        </div>
-    </div>
-</nav>
 <br><br>
 <h1 class="h1" align="center">Agregar un nuevo caso</h1>
 
@@ -49,7 +27,7 @@
         <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${exito == true}">
+    <div class="alert alert-success alert-dismissible fade show"  th:if="${exito == true}">
         El caso se ha creado correctamente.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

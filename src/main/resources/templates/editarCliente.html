@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IURIS | EDITAR CASO</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
+    <title>IURIS | EDITAR CLIENTE</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" >
     <style>
         body {
             background-color: #133C55;
@@ -64,10 +64,7 @@
                     <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
                     <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="text" required>
                 </div>
-
-                <div  class="form-group" id="btnEditarCliente">
-                    <input class="btn btn-info" type="submit" value="Confirmar cambios">
-                </div>
+                <button id="btnEditarCliente" class="btn btn-info" type="submit" value="Confirmar cambios">
             </div>
         </form>
     </div>

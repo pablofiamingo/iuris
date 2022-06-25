@@ -35,7 +35,7 @@ public class CCasoService implements ICasoService {
 
     @Override
     public boolean delete(int idCaso) {
-        casoRepo.deleteByIdCaso(idCaso);
+        casoRepo.deleteById(idCaso);
         return false;
     }
 
