@@ -27,7 +27,7 @@ public class ListaDeTareasController {
 
         DetalleTarea tarea = new DetalleTarea();
         tarea.setTarea(tareaNueva);
-        tarea.setEnabled(true);
+        tarea.setEnabled(false);
         tarea.setListaDeTareas(usuario.getListaDeTareas());
 
         listaDeTareasService.guardarTarea(tarea);

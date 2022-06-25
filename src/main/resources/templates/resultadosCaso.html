@@ -117,10 +117,10 @@
                   <!-- ver los pagos, falta hacer -->
                   <td ><a href=""> Ir a Pagos ></a></td>
                   <!-- ver los archivos del caso -->
-                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}">Ver archivos ></a></td>
+                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}" target="_blank">Ver archivos ></a></td>
                   <td>
                     <!-- editar y eliminar -->
-                    <a th:href="@{'/caso/editar/' + ${caso.idCaso}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a th:href="@{'/caso/editar/' + ${caso.idCaso}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
                     <img th:src="@{/img/square-xmark-solid.png}" th:onclick=" 'cambiarConfirmacion(' + ${caso.idCaso} + ')'" class="icon">
                     <!-- -->
                   </td>
@@ -132,7 +132,7 @@
       </div>
 
       <!--la emergente-->
-      <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div class="toast-container position-fixed top-0 start-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
             <strong class="me-auto">Datos de la otra parte</strong>

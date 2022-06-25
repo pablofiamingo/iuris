@@ -15,10 +15,6 @@
             background-color: #386FA4;
             color: #EEEEEE;
         }
-        #btnAgregarCliente {
-            padding-top: 15px;
-            padding-left: 35%;
-        }
     </style>
 </head>
 <body>
@@ -65,8 +61,8 @@
                     <input id="usuario" maxlength="50" class="form-control" th:field="*{usuario.idUsuario}" type="text" required>
                 </div>
             </div>
-            <div id="btnAgregarCliente">
-                <input  class="btn btn-info" type="submit" value="Agregar">
+            <div class="row justify-content-center">
+                <button id="btnAgregarCliente" class="btn btn-info mb-2 col-sm-4" type="submit">Agregar Cliente</button>
             </div>
         </form>
     </div>

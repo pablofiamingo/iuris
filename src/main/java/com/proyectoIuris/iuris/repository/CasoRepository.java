@@ -24,7 +24,8 @@ public interface CasoRepository extends CrudRepository<Caso, Integer> {
     List<Caso> buscadorGeneral(@Param("keyword")String keyword);
     @Query("SELECT c from Caso c")
     public List<Caso> list();
-    void deleteByIdCaso(int idCaso);
+    @Override
+    void deleteById(Integer integer);
     Caso findByIdCaso(int idCaso);
     @Query("SELECT c FROM Caso c WHERE c.cliente.idCliente = :idCliente")
     List<Caso> findCasoByIdCliente(@Param("idCliente") int idCliente);

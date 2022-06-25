@@ -62,6 +62,12 @@ public class CasoController {
             clientes = clienteService.list();
         }
         caso.setRepresentante(user.getFullName());
+
+        String redirected = (String) session.getAttribute("agregarCaso");
+        if(redirected!=null) {
+            model.addAttribute(redirected,true);
+            session.removeAttribute("agregarCaso");
+        }
         model.addAttribute("caso", caso);
         model.addAttribute("user", user);
         model.addAttribute("clientes", clientes);
@@ -84,14 +90,16 @@ public class CasoController {
     @PostMapping("/agregar")
     public String agregarCaso(@Validated Caso caso,
                               Model model,
-                              @RequestParam("cliente")int id) {
+                              @RequestParam("cliente")int id,
+                              HttpSession session) {
+        String estado = "";
         if (caso!=null) {
             Cliente cli = clienteService.findById(id);
             caso.setCliente(cli);
             casoService.save(caso);
-            model.addAttribute("exito", "true");
+            session.setAttribute("agregarCaso","exito");
         } else {
-            model.addAttribute("error", "true");
+            session.setAttribute("agregarCaso","error");
         }
         return "redirect:/caso/alta";
     }
