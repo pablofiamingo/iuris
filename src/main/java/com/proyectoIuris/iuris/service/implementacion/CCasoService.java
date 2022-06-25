@@ -1,6 +1,7 @@
 package com.proyectoIuris.iuris.service.implementacion;
 
 import com.proyectoIuris.iuris.model.Caso;
+import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.repository.CasoRepository;
 import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,8 @@ public class CCasoService implements ICasoService {
     public List<Caso> buscadorPermisoAbogado(String keyword, int id) {
         return casoRepo.buscadorPermisoAbogado(keyword, id);
     }
+
+
 
     @Override
     public List<Caso> findCasoByIdCliente(int idCliente) {

@@ -80,7 +80,7 @@ public class ClienteController {
             estado = "exito";
         }
 
-        model.addAttribute("estado", estado);
+        model.addAttribute(estado, true);
         return "agregarCliente";
     }
 
@@ -89,18 +89,16 @@ public class ClienteController {
                                 HttpSession session,
                                 Model model) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario user = (Usuario) session.getAttribute("user");
         String estado = "";
 
-        Cliente cli = clienteService.findByDni(cliente.getDni());
-        cliente.setIdCliente(cli.getIdCliente());
-
+        cliente.setUsuario(user);
         if (clienteService.save(cliente)) {
             estado = "exito";
         } else {
             estado = "error";
         }
-
-        model.addAttribute("estado",estado);
+        model.addAttribute(estado,true);
         return "editarCliente";
     }
 
