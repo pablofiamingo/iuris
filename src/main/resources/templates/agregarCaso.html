@@ -81,62 +81,10 @@
             <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
             <input id="descripcion" maxlength="50" class="form-control" th:field="*{descripcion}" type="text" required>
         </div>
-
-        <div class="container py-10" align="center">
-            <div class="form-group row">
-                <div class="col" style="margin:18px">
-                    <input class="btn btn-info" type="submit" value="Agregar Caso">
-                </div>
-                <div class="col" style="margin:18px">
-                    <a href="/caso/lista">
-                        <button class="btn btn-info" type="button">Ver listado</button>
-                    </a>
-                </div>
-            </div>
+        <div class="row justify-content-center">
+            <button id="btnAgregarCaso" class="btn btn-info my-3 col-sm-4" type="submit">Agregar Caso</button>
         </div>
     </form>
 </div>
-
-</body>
-
-</html>
-<!--
-<!DOCTYPE html >
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IURIS | Agregar Caso</title>
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"  >
-</head>
-<body>
-    <h1 class="h1">Agregar un nuevo caso</h1>
-    <br> <br>
-
-    <form th:action="@{/caso/agregar}" th:object="${caso}" method="post">
-        <input class="form-control" placeholder="Carátula " th:field="*{caratula}" type="text" required><br>
-        <input class="form-control" placeholder="Materia" th:field="*{materia}" type="text" required><br>
-        <input class="form-control" placeholder="Fuero" th:field="*{fuero}" type="text" required><br>
-        <input class="form-control" placeholder="Estado" th:field="*{estado}" type="text" required><br>
-        <input class="form-control" placeholder="Juzgado" th:field="*{juzgado}" type="text" required><br>
-        <input class="form-control" placeholder="Datos de la otra parte" th:field="*{datoOtraParte}" type="text" required><br>
-        <input class="form-control" placeholder="Descripcion" th:field="*{descripcion}" type="text" required><br><br>
-        <input class="form-control" placeholder="Representante" th:field="*{representante}" type="text" readonly required><br>
-        <select th:name="cliente" required>
-            <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.idCliente + ' | ' + cliente.nombre + ' ' + cliente.apellido +' | ' + cliente.dni}">
-            </option>
-        </select>
-        <div class="form-group row">
-            <div class="col">
-                <input class="btn btn-info" type="submit" value="Agregar Caso"><br>
-            </div>
-            <div class="col">
-                <a href="/caso/lista"><button class="btn btn-info" type="button">Ver listado</button></a>
-            </div>
-        </div>
-        <span th:text="${exito}"></span>
-    </form>
 </body>
 </html>
--->
