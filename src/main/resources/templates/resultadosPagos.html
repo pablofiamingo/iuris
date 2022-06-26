@@ -9,14 +9,14 @@
   <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
-    <!-- boton home -->
+    <!-- boton agregar & home -->
     <div class="text-end">
         <a th:href="@{'/pago/alta/' + ${caso.idCaso}}" class="no-underline"  th:target="_blank">
             <div class="div-home text-center my-3 p-1 bg-secondary">
-                <img class="home" th:src="@{/img/new.png}" alt="">
+                <img class="home" th:src="@{/img/addmoney.png}" alt="">
             </div>
         </a>
-        <a th:href="@{/inicio}" class="mx-3 no-underline">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
             <div class="div-home text-center my-3 p-1 bg-secondary">
                 <img class="home" th:src="@{/img/home.png}" alt="">
             </div>
@@ -48,8 +48,8 @@
                   <td th:text="${pago.fecha}">800</td>
                   <td th:text="${pago.formaPago}">2022-04-06</td>
                   <td>
-                    <a href=""><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
-                    <a href=""><img src="@{/img/square-xmark-solid.png}" class="icon"></a>
+                    <a th:href="@{'/pago/editar/' + ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a href="#"><img src="@{/img/square-xmark-solid.png}" class="icon"></a>
                   </td>
                 </tr>
               </tbody>
