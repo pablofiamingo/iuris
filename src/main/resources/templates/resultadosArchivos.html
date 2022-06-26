@@ -9,6 +9,14 @@
   <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
+<!-- boton home -->
+    <div class="text-end">
+        <a href="" class="mx-3 no-underline">
+            <div class="div-home text-center my-3 p-1 bg-secondary">
+                <img class="home" th:src="@{/img/home.png}" alt="">
+            </div>
+        </a>
+    </div>
       <div class="row g-0">
         <h1 class="text-center text-light my-4 py-4" th:text="${'Archivos del Caso ' + caso.Caratula + ' de '+ caso.cliente.nombre + ' ' + caso.cliente.apellido}"></h1>
         <div class="col-md-3">

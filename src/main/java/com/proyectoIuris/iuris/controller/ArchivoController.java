@@ -57,7 +57,7 @@ public class ArchivoController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(file.length())
-                .contentType(MediaType.parseMediaType("application/pdf"))
+                .contentType(MediaType.valueOf(archivo.getTipo()))
                 .body(resource);
     }
 
@@ -78,6 +78,7 @@ public class ArchivoController {
 
         Archivo archivo = new Archivo();
         archivo.setCaso(caso);
+        archivo.setTipo(file.getContentType());
         archivo.setNombre(file.getOriginalFilename());
         archivo.setRuta(ruta+file.getOriginalFilename());
         fileService.insert(archivo);

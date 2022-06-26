@@ -10,18 +10,38 @@
   <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
   <script>
     function cambiarConfirmacion(e) {
-      if (document.getElementById("confirmacion").style.visibility == "visible") {
-        document.getElementById("confirmacion").style.visibility = "hidden";
+      if (document.getElementById("confirmacion").style.display == "block") {
+        document.getElementById("confirmacion").style.display = "none";
       } else {
         document.getElementById("idcliente").value = e;
-        document.getElementById("confirmacion").style.visibility = "visible";
+        document.getElementById("confirmacion").style.display = "block";
       }
     }
   </script>
 </head>
 <body class="bg-blue900">
+<!-- boton home -->
+    <div class="text-end">
+      <a href="" class="no-underline" th:href="@{/cliente/alta}" th:target="_blank">
+        <div class="div-home text-center my-3 p-1 bg-secondary">
+          <img class="home" th:src="@{/img/new.png}" alt="">
+        </div>
+      </a>
+      <a href="" class="mx-3 no-underline">
+        <div class="div-home text-center my-3 p-1 bg-secondary">
+          <img class="home" th:src="@{/img/home.png}" alt="">
+        </div>
+      </a>
+    </div>
 
-      <div class="alert alert-danger mx-4 mt-4" id="confirmacion" style="visibility: hidden;" role="alert">
+<!-- Agregar un cliente  --><!--
+<div class="d-grid gap-2 col-6 mx-auto py-4">
+  <a class="my-1 " th:href="@{/cliente/alta}" th:target="_blank">
+    <button class="btn btn-primary button-panel" type="button">Nuevo Cliente</button>
+  </a>
+</div>-->
+
+      <div class="alert alert-danger mx-4 mt-4" id="confirmacion" style="display: none;" role="alert">
         <div class="row g-0">
           <div class="col-md-6 pt-1 px-3">
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -52,13 +72,6 @@
       <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${baja == 'error'}" role="alert">
         <strong>Ha ocurrido un error al intentar eliminar el cliente.</strong> Por favor, intente nuevamente.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-
-      <!-- Agregar un cliente  -->
-      <div class="d-grid gap-2 col-6 mx-auto py-4">
-        <a class="my-1 " th:href="@{/cliente/alta}" th:target="_blank">
-          <button class="btn btn-primary button-panel" type="button">Nuevo Cliente</button>
-        </a>
       </div>
 
       <!-- La lista -->
