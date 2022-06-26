@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuariosRepository extends CrudRepository<Usuario, Integer> {
+    public Usuario findByIdUsuario(int id);
+    public Usuario save(Usuario usuario);
 }

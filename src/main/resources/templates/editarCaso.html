@@ -16,14 +16,9 @@
             background-color: #386FA4;
             color: #EEEEEE;
         }
-        #btnEditarCliente {
-            padding-top: 15px;
-            padding-left: 25%;
-        }
     </style>
 </head>
 <body>
-    <br> <br>
     <div class=" col-sm-12">
         <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
             <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
@@ -34,9 +29,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
-
+    <br> <br>
     <h1 class="h1" align="center">Editar datos de un caso</h1>
-
+    <br> <br>
     <div class="container py-3 card" id="tarjeta" style="width:35%">
         <form th:action="@{/caso/editar}" th:object="${caso}" method="post">
             <div style="padding-left: 10%; padding-right: 10%;">
@@ -70,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
-                    <input id="descripcion" maxlength="50" class="form-control" th:field="*{descripcion}" type="text" required>
+                    <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="representante" class="col-sm-4 control-label">Representante:</label>

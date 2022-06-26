@@ -28,13 +28,14 @@
                 <tr>
                     <th>ID</th>
                   <th scope="col" class="border-1st">Nombre</th>
-                  <th scope="col">Link</th>
+                  <th scope="col">Visualizar</th>
+                    <th scope="col">Descarga</th>
                   <th scope="col" class="border-last">Edición</th>
                 </tr>
               </thead>
               <tbody>
                   <tr>
-                      <td colspan="4" >
+                      <td colspan="5" >
                           <form th:action="@{/archivo/subir}" method="POST" class="input-group"  enctype="multipart/form-data">
                               <input class="form-control form-control-sm col" style="color: white;" type="file" th:name="file" required>
                               <input type="hidden" th:value="${caso.idCaso}" th:name="idCaso">
@@ -43,7 +44,7 @@
                       </td>
                   </tr>
                   <tr th:if="${#lists.isEmpty(resultados)}">
-                      <td colspan="4" align="center">
+                      <td colspan="5" align="center">
                           No hay resultados
                       </td>
                   </tr>
@@ -52,6 +53,9 @@
                       <td scope="row" th:text="${arc.nombre}"></td>
                       <td>
                           <a th:href="@{'/archivo/ver/' + ${arc.id}}" th:target="_blank">Abrir ></a>
+                      </td>
+                      <td>
+                          <a th:href="@{'/archivo/descargar/' + ${arc.id}}" th:target="_blank">Descargar ></a>
                       </td>
                       <td>
                           <form th:action="@{/archivo/eliminar}" method="post">

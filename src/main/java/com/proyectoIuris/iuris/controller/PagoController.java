@@ -72,16 +72,16 @@ public class  PagoController {
     public String agregarPago(@Validated Pago pago,
                               HttpSession session) {
 
-        if (pago!=null){
-            if(pagoService.save(pago)) {
-                session.setAttribute("agregarPago","exito");
+        if (pago != null) {
+            if (pagoService.save(pago)) {
+                session.setAttribute("agregarPago", "exito");
             } else {
-                session.setAttribute("agregarPago","error");
+                session.setAttribute("agregarPago", "error");
             }
         } else {
-            session.setAttribute("agregarPago","error");
+            session.setAttribute("agregarPago", "error");
         }
-        return "redirect:/pago/alta/" + pago.getCaso().getIdCaso() ;
+        return "redirect:/pago/alta/" + pago.getCaso().getIdCaso();
     }
 
     @PostMapping("/editar")
@@ -94,7 +94,6 @@ public class  PagoController {
         }
         return "editarPago";
     }
-
     @PostMapping("/baja")
     public String eliminarPago(@RequestParam("id") int idPago,
                                Model model) {
@@ -105,6 +104,4 @@ public class  PagoController {
         }
         return "redirect:/Pago/lista";
     }
-
-
 }

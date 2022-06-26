@@ -49,7 +49,7 @@
                   <td th:text="${pago.formaPago}">2022-04-06</td>
                   <td>
                     <a th:href="@{'/pago/editar/' + ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
-                    <a href="#"><img src="@{/img/square-xmark-solid.png}" class="icon"></a>
+                    <a href="#"><img th:src="@{/img/square-xmark-solid.png}" class="icon"></a>
                   </td>
                 </tr>
               </tbody>
