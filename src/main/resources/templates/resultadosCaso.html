@@ -10,11 +10,11 @@
   <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
   <script>
       function cambiarConfirmacion(e) {
-        if (document.getElementById("confirmacion").style.visibility == "visible") {
-          document.getElementById("confirmacion").style.visibility = "hidden";
+        if (document.getElementById("confirmacion").style.display == "block") {
+          document.getElementById("confirmacion").style.display = "none";
         } else {
           document.getElementById("idcaso").value = e;
-          document.getElementById("confirmacion").style.visibility = "visible";
+          document.getElementById("confirmacion").style.display = "block";
         }
       }
       function mostrarDatos() {
@@ -24,7 +24,7 @@
 </head>
 <body class="bg-blue900">
       <!--confirmacion para eliminar-->
-      <div class="alert alert-danger mx-4 mt-4" id="confirmacion" style="visibility: hidden;" role="alert">
+      <div class="alert alert-danger mx-4 mt-2" id="confirmacion" style="display: none;" role="alert">
         <div class="row g-0">
           <div class="col-md-6 pt-1 px-3">
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -57,16 +57,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
-      <!-- Agregar caso  -->
-      <div class="d-grid gap-2 col-6 mx-auto py-4">
-        <a class="" th:href="@{/caso/alta}" th:target="_blank">
-          <button class="btn btn-primary my-1 button-panel" type="button">Nuevo Caso</button>
-        </a>
-      </div>
+
       <!-- La lista -->
       <div class="row g-0">
         <div class="col">
-          <div class="rounded bg-blue800 px-3 py-3 mt-3">
+          <div class="rounded bg-blue800 px-3 py-3 my-3 mt-1">
             <table class="table table-dark table-striped my-2">
               <thead>
                 <tr>
@@ -121,7 +116,8 @@
                   <td>
                     <!-- editar y eliminar -->
                     <a th:href="@{'/caso/editar/' + ${caso.idCaso}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
-                    <img th:src="@{/img/square-xmark-solid.png}" th:onclick=" 'cambiarConfirmacion(' + ${caso.idCaso} + ')'" class="icon">
+                    <a href="#"><img th:src="@{/img/square-xmark-solid.png}" th:onclick=" 'cambiarConfirmacion(' + ${caso.idCaso} + ')'" class="icon"></a>
+
                     <!-- -->
                   </td>
                 </tr>
