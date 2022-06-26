@@ -2,19 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>IurisFront</title>
+  <title>IURIS | PAGOS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="styles.css">
-  <link href="dist/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
     <!-- boton home -->
     <div class="text-end">
-        <!-- rutear el botón de agregar acaaaaaaaa -->
-        <a href="" class="no-underline" th:href="#" th:target="_blank">
+        <a href="" class="no-underline" th:href="@{/inicio}" th:target="_blank">
             <div class="div-home text-center my-3 p-1 bg-secondary">
-                <img class="home" th:src="@{/img/addmoney.png}" alt="">
+                <img class="home" th:src="@{/img/new.png}" alt="">
             </div>
         </a>
         <a href="" class="mx-3 no-underline">
@@ -27,48 +26,31 @@
         <div class="col-md-2">
         </div>
         <div class="col-md-8">
-          <h1 class="text-center text-light my-4 py-4">Pagos del Caso XXX de -cliente-</h1>
+          <h1 class="text-center text-light my-4 py-4" th:text="'Pagos del caso ' + ${caso.caratula} + ' del cliente ' + ${caso.cliente.nombre} + ' ' + ${caso.cliente.apellido}"></h1>
           <div class="rounded bg-blue800 px-3 py-3 mt-3">
             <table class="table table-dark table-striped my-2">
               <thead>
                 <tr>
                   <th scope="col" class="border-1st">Cantidad abonada</th>
-                  <th scope="col">Total acumulada</th>
                   <th scope="col">Fecha</th>
                   <th scope="col">Forma de pago</th>
                   <th scope="col" class="border-last">Edición</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">800</th>
-                  <td>800</td>
-                  <td>2022-04-06</td>
-                  <td>Efectivo</td>
+                  <tr th:if="${#lists.isEmpty(resultados)}">
+                      <td colspan="4" align="center">
+                          No hay resultados
+                      </td>
+                  </tr>
+                <tr th:each="pago: ${resultados}">
+                  <th th:text="${pago.cantAbonada}">800</th>
+                  <td th:text="${pago.fecha}">800</td>
+                  <td th:text="${pago.formaPago}">2022-04-06</td>
                   <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
+                    <a href=""><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a href=""><img src="@{/img/square-xmark-solid.png}" class="icon"></a>
                   </td>
-                </tr>
-                <tr>
-                    <th scope="row">2500</th>
-                    <td>3300</td>
-                    <td>2022-05-12</td>
-                    <td>Transferencia</td>
-                    <td>
-                      <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                      <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1700</th>
-                    <td>5000</td>
-                    <td>2022-06-04</td>
-                    <td>Efectivo</td>
-                    <td>
-                      <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                      <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                    </td>
                 </tr>
               </tbody>
             </table>
@@ -80,12 +62,6 @@
       </div>
 
   <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
-  <!-- borrar el siguiente script antes de entregar... a chiquita -->
-  <script>
-    function hacerAlgo(){
-      return "Proximamente";
-    };
 
-  </script>
 </body>
 </html>

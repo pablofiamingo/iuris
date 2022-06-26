@@ -32,7 +32,7 @@ public class UsuarioController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
-        if (usuarioActivo.getRol() != "admin") {
+        if (!usuarioActivo.getRol().equals("admin")) {
             return "redirect:/inicio";
         }
 
@@ -54,9 +54,7 @@ public class UsuarioController {
 
     //Métodos por POST
     @PostMapping("/registro")
-    public String insertUser(@Validated Usuario usuario,
-                             Model model,
-                             HttpSession session) {
+    public String insertUser(@Validated Usuario usuario, Model model, HttpSession session) {
         if(usuario != null) {
             if(usuario.getRol().equals("abogado") || usuario.getRol().equals("empleado")) {
                 if(Util.containsIllegals(usuario.getUser()) || Util.containsIllegals(usuario.getFullName())) {
@@ -78,16 +76,15 @@ public class UsuarioController {
                 usuarioService.insert(usuarioInsertado);
 
                 model.addAttribute("exito","true");
+            } else {
+                model.addAttribute("error", "true");
             }
-            model.addAttribute("error", "true");
         }
         return "agregarUsuario";
     }
 
     @PostMapping("/login")
-    public String login(@Validated Usuario u,
-                        Model model,
-                        HttpSession httpSession) {
+    public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
         Usuario usuario = usuarioService.findByUsername(u.getUser());
 
         if(usuario != null) {

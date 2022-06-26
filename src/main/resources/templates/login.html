@@ -21,17 +21,12 @@
             </div>
             <div th:if="${error != null}" class="row" >
                 <div class="col mx-5">
-                    <div class="alert alert-warning text-center" role="alert"  th:text="${error}">
+                    <div class="alert alert-warning text-center" role="alert"  th:text="'Los datos son incorrectos, inténtelo nuevamente.'">
                     </div>
                 </div>
             </div>
             <form th:action="@{/usuario/login}" th:object="${usuario}" method="POST">
                 <div class="row mx-5">
-                    <!--
-
-                    <div class="col-md-2">
-                      <img src="user-solid.svg" alt="" class="icon">
-                    </div>-->
                     <div class="col form-floating">
                         <input type="text" th:field="*{user}" class="form-control form-h" id="staticEmail" placeholder="name@example.com" value="">
                         <label class="mx-1" for="staticEmail">Usuario</label>
@@ -64,12 +59,5 @@
 </div>
 
 <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
-<!-- borrar el siguiente script antes de entregar... a chiquita -->
-<script>
-        function hacerAlgo(){
-          return "Proximamente";
-        };
-
-      </script>
 </body>
 </html>
