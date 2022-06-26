@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>IurisFront</title>
+  <title>IURIS | USUARIOS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="styles.css">
-  <link th:href="@{/static/bootstrap/css/bootstrap.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
     <!-- boton home -->
@@ -31,7 +31,7 @@
               </symbol>
             </svg>
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-            Desea eliminar el usuario "USAURIO"?
+            ¿Desea eliminar el usuario?
           </div>
           <div class="col-md-6">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
@@ -49,46 +49,29 @@
             <table class="table table-dark table-striped my-2">
               <thead>
                 <tr>
+                  <th scope="col">Rol</th>
                   <th scope="col" class="border-1st">Usuario</th>
                   <th scope="col">Clave</th>
                   <th scope="col">Email</th>
                   <th scope="col">Nombre completo</th>
-                  <th scope="col">Rol</th>
                   <th scope="col" class="border-last">Edición</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">larobertaaa</th>
-                  <td>1234</td>
-                  <td>robistar@gmail.com</td>
-                  <td>Roberta Estrella</td>
-                  <td>empleade</td>
-                  <td>
-                    <a href=""><img th:src="/static/img/square-pen-solid.png" class="icon"></a>
-                    <a href=""><img th:src="/static/img/square-xmark-solid.png" class="icon"></a>
+                <tr th:if="${#lists.isEmpty(resultados)}">
+                  <td colspan="6" align="center">
+                    No hay resultados
                   </td>
                 </tr>
-                <tr>
-                  <th scope="row">usaurio</th>
-                  <td>secreta</td>
-                  <td>usaurio@gmail.com</td>
-                  <td>Dino Usaurio</td>
-                  <td>abogade</td>
+                <tr th:each="usuario: ${resultados}">
+                  <td th:text="${usuario.rol}">larobertaaa</td>
+                  <td th:text="${usuario.user}">1234</td>
+                  <td th:text="${usuario.pass}">robistar@gmail.com</td>
+                  <td th:text="${usuario.email}">Roberta Estrella</td>
+                  <td th:text="${usuario.fullName}">empleade</td>
                   <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">pompoko</th>
-                  <td>boleadoras</td>
-                  <td>vivalarevolucion@gmail.com</td>
-                  <td>Mapache Tomcat</td>
-                  <td>pasante</td>
-                  <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
+                    <a th:href="@{'/usuario/editar/' + ${usuario.idUsuario}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a href=""><img th:src="@{/img/square-xmark-solid.png}" class="icon"></a>
                   </td>
                 </tr>
               </tbody>
