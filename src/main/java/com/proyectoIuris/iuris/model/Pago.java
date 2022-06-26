@@ -22,9 +22,6 @@ public class Pago {
     @Column(nullable = false, length = 30)
     private double cantAbonada;
 
-    @Column(nullable = false, length = 30)
-    private double totalAcumulado;
-
     @Column(nullable = false, length = 50)
     @Temporal(TemporalType.DATE)
     private Date fecha;
