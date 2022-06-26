@@ -11,12 +11,12 @@
 <body class="bg-blue900">
     <!-- boton home -->
     <div class="text-end">
-      <a href="" class="no-underline" th:href="@{/cliente/alta}" th:target="_blank">
+      <a  class="no-underline" th:href="@{/usuario/registro}" th:target="_blank">
         <div class="div-home text-center my-3 p-1 bg-secondary">
-          <img class="home" th:src="@{/img/new.png}" alt="">
+          <img class="home" th:src="@{/img/new.png}" alt="INICIO">
         </div>
       </a>
-      <a href="" class="mx-3 no-underline">
+      <a th:href="@{/inicio}" class="mx-3 no-underline">
         <div class="div-home text-center my-3 p-1 bg-secondary">
           <img class="home" th:src="@{/img/home.png}" alt="">
         </div>
@@ -99,14 +99,6 @@
         <div class="col-md-1">
         </div>
       </div>
-
   <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
-  <!-- borrar el siguiente script antes de entregar... a chiquita -->
-  <script>
-    function hacerAlgo(){
-      return "Proximamente";
-    };
-
-  </script>
 </body>
 </html>
