@@ -103,11 +103,15 @@ body{
 }
 
 .div-home{
-    border-radius:10px;
+    border-radius:5px;
     display:inline-block;
 }
 
 .home{
     width:35px;
     height:35px;
+}
+
+.no-underline{
+    text-decoration: none;
 }
