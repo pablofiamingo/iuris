@@ -19,5 +19,4 @@ public interface IClienteService {
     public Cliente findByDni(String dni);
     public boolean save(Cliente cliente);
     public boolean update(Cliente cliente);
-    public boolean delete(int id);
 }

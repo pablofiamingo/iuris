@@ -102,14 +102,4 @@ public class ClienteController {
         return "editarCliente";
     }
 
-    @PostMapping("/baja")
-    public String eliminarCliente(@RequestParam(value = "id", required = true) int id,
-                                  Model model) {
-       if (clienteService.delete(id)) {
-           model.addAttribute("baja", "exito");
-       } else {
-           model.addAttribute("baja", "error");
-       }
-        return "redirect:/cliente/lista";
-    }
 }
