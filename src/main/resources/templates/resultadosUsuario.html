@@ -9,14 +9,15 @@
   <link th:href="@{/static/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body class="bg-blue900">
-    <!-- boton home -->
+    <!-- boton agregar & home -->
     <div class="text-end">
-      <a href="" class="no-underline" th:href="@{/cliente/alta}" th:target="_blank">
+      <!-- rutear el botón de agregar acaaaaa -->
+      <a href="" class="no-underline" th:href="#" th:target="_blank">
         <div class="div-home text-center my-3 p-1 bg-secondary">
-          <img class="home" th:src="@{/img/new.png}" alt="">
+          <img class="home" th:src="@{/img/adduser.png}" alt="">
         </div>
       </a>
-      <a href="" class="mx-3 no-underline">
+      <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
         <div class="div-home text-center my-3 p-1 bg-secondary">
           <img class="home" th:src="@{/img/home.png}" alt="">
         </div>
