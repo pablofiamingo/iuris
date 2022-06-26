@@ -2,62 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>IURIS | Login</title>
+    <title>IURIS | LOGIN</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
 </head>
 <body class="bg-blue900">
-<div class="row g-0">
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-blue800 my-5 py-4 text-primary text-center"  >
-            <div class="row g-0 text-center">
-                <div class="col">
-                    <img th:src="@{/img/logoIuris2.png}" class="round-img mb-4">
-                </div>
-            </div>
-            <div th:if="${error != null}" class="row" >
-                <div class="col mx-5">
-                    <div class="alert alert-warning text-center" role="alert"  th:text="'Los datos son incorrectos, inténtelo nuevamente.'">
-                    </div>
-                </div>
-            </div>
-            <form th:action="@{/usuario/login}" th:object="${usuario}" method="POST">
-                <div class="row mx-5">
-                    <div class="col form-floating">
-                        <input type="text" th:field="*{user}" class="form-control form-h" id="staticEmail" placeholder="name@example.com" value="">
-                        <label class="mx-1" for="staticEmail">Usuario</label>
-                    </div>
-                </div>
-                <div class="row my-2 mx-5">
-                    <div class="col form-floating">
-                        <input type="password" th:field="*{pass}" class="form-control" id="inputPassword" placeholder="example" value="">
-                        <label class="mx-1" for="inputPassword">Password</label>
-                    </div>
-                </div>
-                <div class="row my-2 mx-5">
+    <div class="row g-0">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-blue800 my-5 py-4 text-primary text-center"  >
+                <div class="row g-0 text-center">
                     <div class="col">
-                        <div class="d-grid gap-2 py-1">
-                            <button class="btn btn-primary my-1" type="submit">Ingresar</button>
+                        <img th:src="@{/img/logoIuris2.png}" class="round-img mb-4">
+                    </div>
+                </div>
+                <div th:if="${error != null}" class="row" >
+                    <div class="col mx-5">
+                        <div class="alert alert-warning text-center" role="alert"  th:text="'Los datos son incorrectos, inténtelo nuevamente.'"></div>
+                    </div>
+                </div>
+                <form th:action="@{/usuario/login}" th:object="${usuario}" method="POST">
+                    <div class="row mx-5">
+                        <div class="col form-floating">
+                            <input type="text" th:field="*{user}" class="form-control form-h" id="staticEmail" value="">
+                            <label class="mx-1" for="staticEmail">Usuario</label>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="d-grid gap-2 py-1">
-                            <button class="btn btn-primary my-1" type="button">Olvide mi clave</button>
+                    <div class="row my-2 mx-5">
+                        <div class="col form-floating">
+                            <input type="password" th:field="*{pass}" class="form-control" id="inputPassword" value="">
+                            <label class="mx-1" for="inputPassword">Password</label>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="row my-2 mx-5">
+                        <div class="col">
+                            <div class="d-grid gap-2 py-1">
+                                <button class="btn btn-primary my-1" type="submit">Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-md-4">
-</div>
-</div>
-
-<script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+    <div class="col-md-4">
+    </div>
 </body>
 </html>

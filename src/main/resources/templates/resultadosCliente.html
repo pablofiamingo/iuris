@@ -24,20 +24,13 @@
       </a>
     </div>
 
-<!-- Agregar un cliente  --><!--
-<div class="d-grid gap-2 col-6 mx-auto py-4">
-  <a class="my-1 " th:href="@{/cliente/alta}" th:target="_blank">
-    <button class="btn btn-primary button-panel" type="button">Nuevo Cliente</button>
-  </a>
-</div>-->
       <!-- La lista -->
       <div class="row g-0">
-        <div class="col-md-1">
-        </div>
+        <div class="col-md-1"></div>
         <div class="col-md-10">
           <div class="rounded bg-blue800 px-3 py-3 mt-3">
-            <table class="table table-dark table-striped my-2" >
-              <thead >
+            <table class="table table-dark table-striped my-2">
+              <thead>
                 <tr>
                   <th scope="col" class="border-1st"> ID</th>
                   <th scope="col" >Apellido</th>
@@ -52,9 +45,7 @@
               <tbody>
                 <!-- Mensaje por si no hay resultados -->
                 <tr th:if="${#lists.isEmpty(resultados)}">
-                  <td colspan="12" align="center">
-                    No hay resultados
-                  </td>
+                  <td colspan="12" align="center">No hay resultados</td>
                 </tr>
                 <!-- Resultados -->
                 <tr th:each="cliente: ${resultados}">
@@ -66,17 +57,14 @@
                   <td th:text="${cliente.email}"></td>
                   <!-- ver la lista de casos del cliente -->
                   <td><a th:href="@{'/caso/lista/' + ${cliente.idCliente}}">Ver ></a></td>
-                  <td>
-                    <!-- editar -->
-                    <a th:href="@{'/cliente/editar/' + ${cliente.idCliente}}"><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a>
-                  </td>
+                  <!-- Editar  -->
+                  <td><a th:href="@{'/cliente/editar/' + ${cliente.idCliente}}"><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="col-md-1">
-        </div>
+        <div class="col-md-1"></div>
       </div>
 </body>
 </html>

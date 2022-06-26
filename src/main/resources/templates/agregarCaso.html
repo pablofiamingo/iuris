@@ -19,70 +19,70 @@
     </style>
 </head>
 <body>
-<div class=" col-sm-12">
-    <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
-        <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class=" col-sm-12">
+        <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
+            <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show"  th:if="${exito == true}">
+            El caso se ha creado correctamente.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </div>
-    <div class="alert alert-success alert-dismissible fade show"  th:if="${exito == true}">
-        El caso se ha creado correctamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <br><br>
+    <h1 class="h1" align="center">Agregar un nuevo caso</h1>
+    <br> <br>
+    <div class="container py-10 card" id="tarjeta">
+
+        <form class="row" th:action="@{/caso/agregar}" th:object="${caso}" method="post">
+            <div class="col">
+                <div class="form-group">
+                    <label for="caratula" class="col-sm-4 control-label">Carátula:</label>
+                    <input id="caratula" maxlength="50" class="form-control" th:field="*{caratula}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="materia" class="col-sm-4 control-label">Materia:</label>
+                    <input id="materia" maxlength="50" class="form-control" th:field="*{materia}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="fuero" class="col-sm-4 control-label">Fuero:</label>
+                    <input id="fuero" maxlength="50" class="form-control" th:field="*{fuero}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado" class="col-sm-4 control-label">Estado:</label>
+                    <input id="estado" maxlength="50" class="form-control" th:field="*{estado}" type="text" required>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="juzgado" class="col-sm-4 control-label">Juzgado:</label>
+                    <input id="juzgado" maxlength="50" class="form-control" th:field="*{juzgado}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="datosParte" class="col-sm-4 control-label">Datos de la otra parte:</label>
+                    <input id="datosParte" maxlength="50" class="form-control" th:field="*{datoOtraParte}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="representante" class="col-sm-4 control-label">Representante:</label>
+                    <input id="representante" maxlength="50" class="form-control" th:field="*{representante}" type="text" readonly required>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Cliente:</label>
+                    <select class="form-select" th:name="cliente" required>
+                        <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.idCliente + ' | ' + cliente.nombre + ' ' + cliente.apellido +' | ' + cliente.dni}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
+                <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
+            </div>
+            <div class="row justify-content-center">
+                <button id="btnAgregarCaso" class="btn btn-info my-3 col-sm-4" type="submit">Agregar Caso</button>
+            </div>
+        </form>
     </div>
-</div>
-<br><br>
-<h1 class="h1" align="center">Agregar un nuevo caso</h1>
-<br> <br>
-<div class="container py-10 card" id="tarjeta">
-
-    <form class="row" th:action="@{/caso/agregar}" th:object="${caso}" method="post">
-        <div class="col">
-            <div class="form-group">
-                <label for="caratula" class="col-sm-4 control-label">Carátula:</label>
-                <input id="caratula" maxlength="50" class="form-control" th:field="*{caratula}" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="materia" class="col-sm-4 control-label">Materia:</label>
-                <input id="materia" maxlength="50" class="form-control" th:field="*{materia}" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="fuero" class="col-sm-4 control-label">Fuero:</label>
-                <input id="fuero" maxlength="50" class="form-control" th:field="*{fuero}" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="estado" class="col-sm-4 control-label">Estado:</label>
-                <input id="estado" maxlength="50" class="form-control" th:field="*{estado}" type="text" required>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="form-group">
-                <label for="juzgado" class="col-sm-4 control-label">Juzgado:</label>
-                <input id="juzgado" maxlength="50" class="form-control" th:field="*{juzgado}" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="datosParte" class="col-sm-4 control-label">Datos de la otra parte:</label>
-                <input id="datosParte" maxlength="50" class="form-control" th:field="*{datoOtraParte}" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="representante" class="col-sm-4 control-label">Representante:</label>
-                <input id="representante" maxlength="50" class="form-control" th:field="*{representante}" type="text" readonly required>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Cliente:</label>
-                <select class="form-select" th:name="cliente" required>
-                    <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.idCliente + ' | ' + cliente.nombre + ' ' + cliente.apellido +' | ' + cliente.dni}">
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
-            <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
-        </div>
-        <div class="row justify-content-center">
-            <button id="btnAgregarCaso" class="btn btn-info my-3 col-sm-4" type="submit">Agregar Caso</button>
-        </div>
-    </form>
-</div>
 </body>
 </html>

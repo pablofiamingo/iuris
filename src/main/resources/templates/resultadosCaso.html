@@ -17,13 +17,9 @@
           document.getElementById("confirmacion").style.display = "block";
         }
       }
-      function mostrarDatos() {
-
-      }
   </script>
 </head>
 <body class="bg-blue900">
-
 <!-- boton agregar & home -->
   <div class="text-end">
     <a  class="no-underline" th:href="@{/caso/alta}" th:target="_blank">
@@ -37,47 +33,39 @@
       </div>
     </a>
   </div>
-  <!-- Agregar caso  --> <!--
-  <div class="mx-auto text-center">
-    <a class="" th:href="@{/caso/alta}" th:target="_blank">
-      <button class="btn btn-primary my-1 button-panel" type="button">Nuevo Caso</button>
-    </a>
-  </div> -->
-  <!-- advertencia -->
-
       <!--confirmacion para eliminar-->
-      <div class="alert alert-danger mx-4 mt-2" id="confirmacion" style="display: none;" role="alert">
-        <div class="row g-0">
-          <div class="col-md-6 pt-1 px-3">
-            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-              <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-              </symbol>
-            </svg>
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-            ¿Desea eliminar el caso?
-          </div>
-          <div class="col-md-6">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
-              <form th:action="@{/caso/baja}" method="post">
-                <input th:name="id" type="hidden" id="idcaso" value="">
-                <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
-              </form>
-              <button class="btn btn-outline-danger" type="button" onclick="cambiarConfirmacion()">No</button>
-            </div>
-          </div>
+  <div class="alert alert-danger mx-4 mt-2" id="confirmacion" style="display: none;" role="alert">
+    <div class="row g-0">
+      <div class="col-md-6 pt-1 px-3">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+          <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </symbol>
+        </svg>
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        ¿Desea eliminar el caso?
+      </div>
+      <div class="col-md-6">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
+          <form th:action="@{/caso/baja}" method="post">
+            <input th:name="id" type="hidden" id="idcaso" value="">
+            <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
+          </form>
+          <button class="btn btn-outline-danger" type="button" onclick="cambiarConfirmacion()">No</button>
         </div>
       </div>
+    </div>
+  </div>
 
       <!-- Alertas de baja del caso -->
-      <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${baja == 'exito'}" >
-        El caso se ha eliminado correctamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${baja == 'error'}" role="alert">
-        <strong>Ha ocurrido un error al intentar eliminar el caso.</strong> Por favor, intente nuevamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+  <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${baja == 'exito'}" >
+    El caso se ha eliminado correctamente.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${baja == 'error'}" role="alert">
+    <strong>Ha ocurrido un error al intentar eliminar el caso.</strong> Por favor, intente nuevamente.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
 
       <!-- La lista -->
@@ -138,8 +126,6 @@
                     <!-- editar y eliminar -->
                     <a th:href="@{'/caso/editar/' + ${caso.idCaso}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
                     <a href="#"><img th:src="@{/img/square-xmark-solid.png}" th:onclick=" 'cambiarConfirmacion(' + ${caso.idCaso} + ')'" class="icon"></a>
-
-                    <!-- -->
                   </td>
                 </tr>
               </tbody>
@@ -147,7 +133,6 @@
           </div>
         </div>
       </div>
-
       <!--la emergente-->
       <div class="toast-container position-fixed top-0 start-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -161,15 +146,7 @@
           </div>
         </div>
       </div>
-<!--
-                    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="idDELCASO1" aria-labelledby="offcanvasBottomLabel">
-                      <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Aca van a aparecer los datos de la OTRA PARTE visteee? del caso 1</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                      </div>
-                    </div>
-                    data-bs-toggle="offcanvas" data-bs-target="#idDELCASO1" aria-controls="offcanvasBottom"
-                    -->
+
       <script>
           function mostrar(caso){
               let toastTrigger = document.getElementById(caso.id);
@@ -181,7 +158,6 @@
 
               toast.show();
           }
-
       </script>
 </body>
 </html>
