@@ -19,9 +19,6 @@
     </style>
 </head>
 <body>
-<br><br>
-<h1 class="h1" align="center">Agregar un nuevo caso</h1>
-
 <div class=" col-sm-12">
     <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
         <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
@@ -32,7 +29,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </div>
-
+<br><br>
+<h1 class="h1" align="center">Agregar un nuevo caso</h1>
 <br> <br>
 <div class="container py-10 card" id="tarjeta">
 
@@ -79,7 +77,7 @@
         </div>
         <div class="form-group">
             <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
-            <input id="descripcion" maxlength="50" class="form-control" th:field="*{descripcion}" type="text" required>
+            <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
         </div>
         <div class="row justify-content-center">
             <button id="btnAgregarCaso" class="btn btn-info my-3 col-sm-4" type="submit">Agregar Caso</button>

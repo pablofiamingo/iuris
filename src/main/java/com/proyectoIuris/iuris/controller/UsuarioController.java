@@ -96,6 +96,35 @@ public class UsuarioController {
         return "agregarUsuario";
     }
 
+    @GetMapping("/editar/{idUsuario}")
+    public String getEditarUsuario(HttpSession session, Model model, @PathVariable("idUsuario")int idUsuario) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario user = (Usuario) session.getAttribute("user");
+        if (!user.getRol().equals("admin")) {
+            return "redirect:/inicio";
+        }
+        Usuario usuario = usuarioService.findByIdUsuario(idUsuario);
+        model.addAttribute("usuario", usuario);
+        return "editarUsuario";
+    }
+
+
+    @PostMapping("/editar")
+    public String editarUsuario(HttpSession session, Model model, @Validated Usuario usuario) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario user = (Usuario) session.getAttribute("user");
+        if (!user.getRol().equals("admin")) {
+            return "redirect:/inicio";
+        }
+        if(usuario!=null) {
+            usuarioService.insert(usuario);
+            model.addAttribute("exito", true);
+        } else {
+            model.addAttribute("error", true);
+        }
+        return "editarUsuario";
+    }
+
     @PostMapping("/login")
     public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
         Usuario usuario = usuarioService.findByUsername(u.getUser());

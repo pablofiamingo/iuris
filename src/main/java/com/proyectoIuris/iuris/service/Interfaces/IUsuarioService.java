@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface IUsuarioService {
     public List<Usuario> list();
     public Usuario findByUsername(String username);
-    public Optional<Usuario> findById(int id);
+    public Usuario findByIdUsuario(int id);
     public Usuario insert(Usuario u);
 }

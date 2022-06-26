@@ -22,7 +22,7 @@
 <h1 class="h1" align="center">Agregar un nuevo usuario</h1>
 <br> <br>
 <div class="container py-3 card" id="tarjeta" style="width:35%">
-    <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post">
+    <form th:action="@{/usuario/editar}" th:object="${usuario}" method="post">
 		<div style="padding-left: 10%; padding-right: 10%;">
             <div class="form-group">
                 <label for="id_usuario" class="col-sm-4 control-label">ID:</label>

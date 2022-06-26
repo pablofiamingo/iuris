@@ -3,29 +3,27 @@
 <head>
   <meta charset="utf-8">
   <title>IURIS | USUARIOS</title>
-  <title>IurisFront</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" th:href="@{/css/styles.css}">
   <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link th:href="@{/static/bootstrap/css/bootstrap.css}" rel="stylesheet">
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
 </head>
 <body class="bg-blue900">
     <!-- boton agregar & home -->
     <div class="text-end">
-      <!-- rutear el botón de agregar acaaaaa -->
       <a  class="no-underline" th:href="@{/usuario/registro}" th:target="_blank">
         <div class="div-home text-center my-3 p-1 bg-secondary">
           <img class="home" th:src="@{/img/adduser.png}" alt="">
         </div>
       </a>
-      <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+      <a  class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
         <div class="div-home text-center my-3 p-1 bg-secondary">
           <img class="home" th:src="@{/img/home.png}" alt="">
         </div>
       </a>
     </div>
+
       <div class="alert alert-danger mx-4 mt-4" role="alert">
         <div class="row g-0">
           <div class="col-md-6 pt-1 px-3">
@@ -36,7 +34,6 @@
             </svg>
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
             ¿Desea eliminar el usuario?
-            Desea eliminar el usuario "USAURIO"?
           </div>
           <div class="col-md-6">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
@@ -46,6 +43,7 @@
           </div>
         </div>
       </div>
+
       <div class="row g-0">
         <div class="col-md-1">
         </div>
@@ -59,7 +57,6 @@
                   <th scope="col">Clave</th>
                   <th scope="col">Email</th>
                   <th scope="col">Nombre completo</th>
-                  <th scope="col">Rol</th>
                   <th scope="col" class="border-last">Edición</th>
                 </tr>
               </thead>
@@ -67,15 +64,6 @@
                 <tr th:if="${#lists.isEmpty(resultados)}">
                   <td colspan="6" align="center">
                     No hay resultados
-                <tr>
-                  <th scope="row">larobertaaa</th>
-                  <td>1234</td>
-                  <td>robistar@gmail.com</td>
-                  <td>Roberta Estrella</td>
-                  <td>empleade</td>
-                  <td>
-                    <a href=""><img th:src="/static/img/square-pen-solid.png" class="icon"></a>
-                    <a href=""><img th:src="/static/img/square-xmark-solid.png" class="icon"></a>
                   </td>
                 </tr>
                 <tr th:each="usuario: ${resultados}">
@@ -84,46 +72,18 @@
                   <td th:text="${usuario.pass}">robistar@gmail.com</td>
                   <td th:text="${usuario.email}">Roberta Estrella</td>
                   <td th:text="${usuario.fullName}">empleade</td>
-                <tr>
-                  <th scope="row">usaurio</th>
-                  <td>secreta</td>
-                  <td>usaurio@gmail.com</td>
-                  <td>Dino Usaurio</td>
-                  <td>abogade</td>
                   <td>
                     <a th:href="@{'/usuario/editar/' + ${usuario.idUsuario}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
                     <a href=""><img th:src="@{/img/square-xmark-solid.png}" class="icon"></a>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">pompoko</th>
-                  <td>boleadoras</td>
-                  <td>vivalarevolucion@gmail.com</td>
-                  <td>Mapache Tomcat</td>
-                  <td>pasante</td>
-                  <td>
-                    <a href=""><img src="square-pen-solid.png" class="icon"></a>
-                    <a href=""><img src="square-xmark-solid.png" class="icon"></a>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
         </div>
         <div class="col-md-1">
         </div>
       </div>
 
-  <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
-  <!-- borrar el siguiente script antes de entregar... a chiquita -->
-  <script>
-    function hacerAlgo(){
-      return "Proximamente";
-    };
-
-  </script>
 </body>
 </html>

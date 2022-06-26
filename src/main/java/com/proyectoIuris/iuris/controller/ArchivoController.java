@@ -26,46 +26,44 @@ public class ArchivoController {
     private ICasoService casoService;
 
     @GetMapping("/lista/{idCaso}")
-    public String listarArchivosCaso(HttpSession session,
-                                     Model model,
-                                     @PathVariable("idCaso")int idCaso) {
+    public String listarArchivosCaso(HttpSession session, Model model, @PathVariable("idCaso")int idCaso) {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-
         Usuario usuario = (Usuario) session.getAttribute("user");
         Caso caso = casoService.findCasoById(idCaso);
         List<Archivo> archivos = fileService.list(usuario.getIdUsuario(), idCaso);
-
         model.addAttribute("resultados", archivos);
         model.addAttribute("caso", caso);
-
         return "resultadosArchivos";
     }
 
     @GetMapping(value = "/ver/{id}")
     public ResponseEntity<InputStreamResource> getTermsConditions(@PathVariable("id") int id, HttpSession session) throws FileNotFoundException {
-        //tengo que restringir el acceso a pdf que no son propios del usuario.
         Archivo archivo = fileService.findById(id);
         String filePath = archivo.getRuta();
         String fileName = archivo.getNombre() ;
         File file = new File(filePath);
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-disposition", "inline;filename=" +fileName);
-
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.valueOf(archivo.getTipo())).body(resource);
+    }
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(file.length())
-                .contentType(MediaType.valueOf(archivo.getTipo()))
-                .body(resource);
+    @GetMapping(value = "/descargar/{id}")
+    public ResponseEntity<InputStreamResource> getDownloadFle(@PathVariable("id") int id, HttpSession session) throws FileNotFoundException {
+        Archivo archivo = fileService.findById(id);
+        String filePath = archivo.getRuta();
+        String fileName = archivo.getNombre() ;
+        File file = new File(filePath);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-disposition", "attachment;filename=" +fileName);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.valueOf(archivo.getTipo())).body(resource);
     }
 
     //POSTMAPPING-------------------------------------------------------------------------------------------------------
     @PostMapping("/subir")
-    public String fileHandler(@RequestParam("file") MultipartFile file,
-                              @RequestParam("idCaso") int idCaso,
-                              HttpSession session){
+    public String fileHandler(@RequestParam("file") MultipartFile file, @RequestParam("idCaso") int idCaso, HttpSession session){
 
         Usuario user = (Usuario) session.getAttribute("user");
         Caso caso = casoService.findCasoById(idCaso);
@@ -82,7 +80,6 @@ public class ArchivoController {
         archivo.setNombre(file.getOriginalFilename());
         archivo.setRuta(ruta+file.getOriginalFilename());
         fileService.insert(archivo);
-
         return "redirect:/archivo/lista/" + caso.getIdCaso();
     }
 
