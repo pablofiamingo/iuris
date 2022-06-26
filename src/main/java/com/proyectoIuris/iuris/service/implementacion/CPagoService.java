@@ -7,39 +7,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CPagoService implements IPagoService {
 
     @Autowired
-    private PagoRepository pagoRepository;
+    private PagoRepository pagoRepo;
 
     @Override
-    public List<Pago> getAll(){
-        return (List<Pago>) pagoRepository.findAll();
-    }
-
-    @Override
-    public Pago insert(Pago pago) {
-        return pagoRepository.save(pago);
-    }
-
-    @Override
-    public Optional<Pago> findById(int id) {
-        return pagoRepository.findById(id);
+    public Pago findPagoById(int idPago) {
+        return pagoRepo.findByIdPago(idPago);
     }
 
     @Override
     public boolean delete(int idPago) {
-        pagoRepository.deleteById(idPago);
-        return true;
+        pagoRepo.deleteByIdPago(idPago);
+        return false;
     }
+
     @Override
     public boolean save(Pago pago) {
-        if (pago != null) {
-            pagoRepository.save(pago);
+        if(pago!=null) {
+            pagoRepo.save(pago);
             return true;
         } else return false;
+    }
+
+    @Override
+    public boolean update(Pago pago) {
+        if(pago!=null) {
+            pagoRepo.save(pago);
+            return true;
+        } else return false;
+    }
+
+   @Override
+    public List<Pago> findPagoByIdCaso(int idCaso) {
+        return pagoRepo.findPagoByIdCaso(idCaso);
     }
 }

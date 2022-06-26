@@ -131,8 +131,7 @@
                   </td>
                   <td th:text="${caso.descripcion}"></td>
                   <td th:text="${caso.representante}"></td>
-                  <!-- ver los pagos, falta hacer -->
-                  <td ><a href=""> Ir a Pagos ></a></td>
+                  <td ><a th:href="@{'/pago/lista/' + ${caso.idCaso}}" target="_blank"> Ir a Pagos ></a></td>
                   <!-- ver los archivos del caso -->
                   <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}" target="_blank">Ver archivos ></a></td>
                   <td>
