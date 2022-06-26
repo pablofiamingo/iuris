@@ -62,10 +62,5 @@ public class CClienteService implements IClienteService {
         } else return false;
     }
 
-    @Override
-    public boolean delete(int idCliente) {
-        clienteRepo.deleteByIdCliente(idCliente);
-        return true;
-    }
 }
 

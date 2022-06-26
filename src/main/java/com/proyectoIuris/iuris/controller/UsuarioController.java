@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/usuario")
@@ -38,6 +39,18 @@ public class UsuarioController {
 
         model.addAttribute("usuario", new Usuario());
         return "agregarUsuario";
+    }
+
+    @GetMapping("/lista")
+    public String getUsuarios(HttpSession session, Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario user = (Usuario) session.getAttribute("user");
+        if (!user.getRol().equals("admin")) {
+            return "redirect:/inicio";
+        }
+        List<Usuario> usuarios = usuarioService.list();
+        model.addAttribute("resultados", usuarios);
+        return "resultadosUsuario";
     }
 
     @GetMapping("/login")
