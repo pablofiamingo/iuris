@@ -71,11 +71,8 @@
                     <a class="my-1 " th:href="@{/cliente/lista}" th:target="_blank">
                         <button class="btn btn-primary button-panel" type="button">Ver Clientes</button>
                     </a>
-                    <a class="my-1 " th:href="@{/usuario/lista}" th:target="_blank">
-                        <button class="btn btn-primary button-panel" type="button">Ver Usuarios</button>
-                    </a>
                     <a class="" th:href="@{/usuario/registro}" th:target="_blank" th:if="${usuario.rol == 'admin'}" >
-                        <button class="btn btn-primary my-1 button-panel" th:href="@{/usuario/registro}" type="button">Crear Usuario</button>
+                        <button class="btn btn-primary my-1 button-panel" type="button">Crear Usuario</button>
                     </a>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
