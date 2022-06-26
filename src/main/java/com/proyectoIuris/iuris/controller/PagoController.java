@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/pago")
-public class PagoController {
+public class  PagoController {
     @Autowired
     private IPagoService pagoService;
 
@@ -28,21 +28,23 @@ public class PagoController {
     @Autowired
     private ICasoService casoService;
 
-    @GetMapping("/lista/{Caso}")
+    @GetMapping("/lista/{caso}")
     public String getPagosFindIdCaso(Model model,
                                   HttpSession session,
-                                  @PathVariable("caso") int idCaso) {
+                                  @PathVariable("caso") int caso) {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario user = (Usuario) session.getAttribute("user");
-        List<Pago> pagos = pagoService.findPagoByIdCaso(idCaso);
+        Caso caso1 = casoService.findCasoById(caso);
+        List<Pago> pagos = pagoService.findPagoByIdCaso(caso);
         model.addAttribute("resultados", pagos);
-        return "resultadosPagos"; //agregar html
+        model.addAttribute("caso", caso1);
+        return "resultadosPagos";
     }
 
     @GetMapping("/alta/{idCaso}")
     public String getAgregarPago(Pago pago, Model model, HttpSession session,
-                                 @PathVariable("idCaso") int idCaso) {
+                                 @PathVariable("idCaso") int idCaso)  {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario user = (Usuario) session.getAttribute("user");
@@ -68,8 +70,8 @@ public class PagoController {
     //POSTMAPPING-----------------------------------------------------------------------------------------------------
     @PostMapping("/agregar")
     public String agregarPago(@Validated Pago pago,
-                              Model model,
                               HttpSession session) {
+
         if (pago!=null){
             if(pagoService.save(pago)) {
                 session.setAttribute("agregarPago","exito");
@@ -79,7 +81,7 @@ public class PagoController {
         } else {
             session.setAttribute("agregarPago","error");
         }
-        return "redirect:/pago/alta/" + pago.getCaso().getIdCaso();
+        return "redirect:/pago/alta/" + pago.getCaso().getIdCaso() ;
     }
 
     @PostMapping("/editar")

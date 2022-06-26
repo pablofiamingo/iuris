@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -28,6 +30,14 @@ public class Pago {
 
     @Column(nullable = false, length = 50)
     private String formaPago;
+
+    public void setFecha(String date){
+        try {
+            this.fecha = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_caso")
