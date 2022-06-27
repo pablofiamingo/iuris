@@ -55,7 +55,7 @@
                 </div>
                 <div class="form-group">
                     <label for="forma" class="col-sm-4 control-label">Forma de pago:</label>
-                    <input id="forma" maxlength="50" class="form-control" th:field="*{formaPago}" type="text" required>
+                    <input id="forma" maxlength="50" class="form-control" th:field="*{formaPago}" type="text" pattern="[a-zA-Z0-9\s]" title="Solo se permiten letras y números"  required>
                 </div>
                 <div class="form-group">
                     <label for="caso" class="col-sm-4 control-label">Caso:</label>
