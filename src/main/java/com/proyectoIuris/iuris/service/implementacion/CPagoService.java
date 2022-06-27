@@ -21,9 +21,8 @@ public class CPagoService implements IPagoService {
     }
 
     @Override
-    public boolean delete(int idPago) {
-        pagoRepo.deleteByIdPago(idPago);
-        return false;
+    public void delete(int idPago) {
+       pagoRepo.deleteById(idPago);
     }
 
     @Override
