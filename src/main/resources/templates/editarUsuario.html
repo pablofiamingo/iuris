@@ -8,21 +8,25 @@
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" >
 	<style>
-        body {
-            background-color: #133C55;
-            color: #EEEEEE;
-        }
         #tarjeta {
             background-color: #386FA4;
             color: #EEEEEE;
         }
     </style>
 </head>
-<body>
+<body class="bg-blue900 text-light">
+<!-- boton home -->
+	<div class="text-end">
+		<a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+			<div class="div-home text-center my-3 p-1 bg-secondary">
+				<img class="home" th:src="@{/img/home.png}" alt="">
+			</div>
+		</a>
+	</div>
 	<br> <br>
 	<h1 class="h1" align="center">Agregar un nuevo usuario</h1>
 	<br> <br>
-	<div class="container py-3 card" id="tarjeta" style="width:35%">
+	<div class="container py-3 card bg-blue500" style="width:35%">
 		<form th:action="@{/usuario/editar}" th:object="${usuario}" method="post">
 			<div style="padding-left: 10%; padding-right: 10%;">
 				<div class="form-group">
@@ -51,7 +55,7 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<button id="btnEditarUsuario" class="btn btn-info mt-3 col-sm-4" type="submit">Confirmar cambios</button>
+				<button id="btnEditarUsuario" class="btn btn-primary mt-3 col-sm-4" type="submit">Confirmar cambios</button>
 			</div>
 		</form>
 	</div>
