@@ -14,7 +14,7 @@
         }
     </style>
 </head>
-<body class="bg-blue900 text-light">
+<body class="bg-dark text-light">
 <!-- boton home -->
 	<div class="text-end">
 		<a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
@@ -26,7 +26,7 @@
 	<br> <br>
 	<h1 class="h1" align="center">Agregar un nuevo usuario</h1>
 	<br> <br>
-	<div class="container py-3 card bg-blue500" style="width:35%">
+	<div class="container py-3 card bg-blue900" style="width:35%">
 		<form th:action="@{/usuario/editar}" th:object="${usuario}" method="post">
 			<div style="padding-left: 10%; padding-right: 10%;">
 				<div class="form-group">

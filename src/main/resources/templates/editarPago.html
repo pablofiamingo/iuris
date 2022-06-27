@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<body class="bg-blue900 text-light">
+<body class="bg-dark text-light">
     <!-- boton home -->
     <div class="text-end">
         <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
@@ -39,7 +39,7 @@
     <h1 class="text-center">Editar pago</h1>
     <br><br>
 
-    <div class="container py-10 card bg-blue500">
+    <div class="container py-10 card bg-blue900">
         <form class="row" th:action="@{/pago/editar}" th:object="${pago}" method="post">
             <div class="col">
                 <div class="form-group">

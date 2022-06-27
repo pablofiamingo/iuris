@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<body class="bg-blue900 text-light">
+<body class="bg-dark text-light">
     <!-- boton home -->
     <div class="text-end">
         <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
@@ -37,7 +37,7 @@
     <br><br>
     <h1 class="h1" align="center">Agregar un nuevo caso</h1>
     <br> <br>
-    <div class="container py-10 card bg-blue600">
+    <div class="container py-10 card bg-blue900">
 
         <form class="row" th:action="@{/caso/agregar}" th:object="${caso}" method="post">
             <div class="col">
@@ -85,7 +85,7 @@
                 <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
             </div>
             <div class="row justify-content-center">
-                <button id="btnAgregarCaso" class="btn btn-info my-3 col-sm-4" type="submit">Agregar Caso</button>
+                <button id="btnAgregarCaso" class="btn btn-primary my-3 col-sm-4" type="submit">Agregar Caso</button>
             </div>
         </form>
     </div>
