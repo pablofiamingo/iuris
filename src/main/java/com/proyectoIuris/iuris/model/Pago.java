@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -25,13 +24,14 @@ public class Pago {
     private double cantAbonada;
 
     @Column(nullable = false, length = 50)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date fecha;
 
     @Column(nullable = false, length = 50)
     private String formaPago;
 
-    public void setFecha(String date){
+    /*public void setFecha(String date){
         try {
             this.fecha = new SimpleDateFormat("yyyy-MM-dd").parse(date);
         }catch (ParseException e) {
@@ -39,9 +39,11 @@ public class Pago {
         }
     }
 
+    public void setFecha(Date date) {
+        this.fecha = date;
+    }
+*/
     @ManyToOne
     @JoinColumn(name = "id_caso")
     private Caso caso;
-
-    
 }

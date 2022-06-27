@@ -136,10 +136,11 @@
                             <div class="row justify-content-between">
                                 <div th:if="${tarea.enabled == true}" class="col-md-6 pt-2">
                                     <input class="form-check-input me-1" type="checkbox" checked onchange="tachar(this)" th:value="${tarea.idDetalleTarea}" aria-label="...">
-                                    <span style="text-decoration-line: line-through;" onclick="cambiarPrioridad(0)" th:id="${tarea.idDetalleTarea}" th:text="${tarea.tarea}" class=""></span>
+                                    <span style="text-decoration-line: line-through;" th:id="${tarea.idDetalleTarea}" th:text="${tarea.tarea}"></span>
                                 </div>
                                 <div th:if="${tarea.enabled == false}" class="col-md-6 pt-2">
                                     <input class="form-check-input me-1" type="checkbox" onchange="tachar(this)" th:value="${tarea.idDetalleTarea}" aria-label="...">
+                                    <span th:id="${tarea.idDetalleTarea}" th:text="${tarea.tarea}"></span>
                                 </div>
                                 <div class="col-md-1 offset-md-4">
                                     <form th:action="@{/listaDeTareas/eliminar}" method="post">

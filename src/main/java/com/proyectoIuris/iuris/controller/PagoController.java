@@ -14,6 +14,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -56,13 +59,17 @@ public class  PagoController {
     }
 
     @GetMapping("/editar/{idPago}")
-    public String getEditarPago(@PathVariable("idPago") int idPago,
+    public String getEditarPago(@PathVariable("idPago") String idPago,
                                 Model model,
                                 HttpSession session ) {
-
+        Integer id = Integer.parseInt(idPago);
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-
-        Pago pago = pagoService.findPagoById(idPago);
+        String redirected = (String) session.getAttribute("editarPago");
+        if(redirected!=null) {
+            model.addAttribute(redirected,true);
+            session.removeAttribute("editarPago");
+        }
+        Pago pago = pagoService.findPagoById(id);
         model.addAttribute("pago", pago);
         return "editarPago"; //agregar html
     }
@@ -85,14 +92,14 @@ public class  PagoController {
     }
 
     @PostMapping("/editar")
-    public String editarPago(@Validated Pago pago, Model model) {
+    public String editarPago(@Validated Pago pago, Model model, HttpSession session) {
         if (pago!=null) {
             pagoService.save(pago);
-            model.addAttribute("exito", "true");
+            session.setAttribute("editarPago", "exito");
         } else {
-            model.addAttribute("error", "true");
+            model.addAttribute("editarPago", "error");
         }
-        return "editarPago";
+        return  "redirect:/pago/editar/" + pago.getIdPago();
     }
     @PostMapping("/baja")
     public String eliminarPago(@RequestParam("id") int idPago,
