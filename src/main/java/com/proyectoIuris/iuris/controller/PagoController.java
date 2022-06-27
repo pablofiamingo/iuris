@@ -102,13 +102,11 @@ public class  PagoController {
         return  "redirect:/pago/editar/" + pago.getIdPago();
     }
     @PostMapping("/baja")
-    public String eliminarPago(@RequestParam("id") int idPago,
+    public String eliminarPago(@RequestParam("id") String idPago,
+                               @RequestParam("idcaso") String idCaso,
                                Model model) {
-        if(pagoService.delete(idPago)) {
-            model.addAttribute("baja", "exito");
-        } else {
-            model.addAttribute("baja", "error");
-        }
-        return "redirect:/Pago/lista";
+        Integer id = Integer.parseInt(idPago);
+        pagoService.delete(id);
+        return "redirect:/pago/lista/" + idCaso;
     }
 }

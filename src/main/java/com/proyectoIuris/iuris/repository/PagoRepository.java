@@ -10,8 +10,7 @@ import java.util.List;
 
 @Repository
 public interface PagoRepository extends CrudRepository<Pago, Integer> {
-
-    void deleteByIdPago(int idPago);
+    public void deleteById(Integer integer);
     Pago findByIdPago(int idPago);
     @Query("SELECT p FROM Pago p WHERE p.caso.idCaso = :idCaso")
     List<Pago> findPagoByIdCaso(@Param("idCaso") int idCaso);
