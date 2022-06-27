@@ -46,8 +46,14 @@
               <td th:text="${pago.fecha}">800</td>
               <td th:text="${pago.formaPago}">2022-04-06</td>
               <td>
-                <a th:href="@{'/pago/editar/' + ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
-                <a href="#"><img th:src="@{/img/square-xmark-solid.png}" class="icon"></a>
+                <div class="row">
+                    <a class="col" th:href="@{'/pago/editar/' + ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+
+                    <form th:action="@{/pago/baja}" class="px-0 mx-0 col" style="width: 10px;" method="post">
+                        <input th:name="id" type="hidden" id="id" value="">
+                        <button class="btn" type="submit"><img th:src="@{/img/square-xmark-solid.png}" class="icon"></button>
+                    </form>
+                </div>
               </td>
             </tr>
           </tbody>

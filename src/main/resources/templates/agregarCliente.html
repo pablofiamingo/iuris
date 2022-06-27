@@ -45,23 +45,23 @@
             <div style="padding-left: 10%; padding-right: 10%;">
                 <div class="form-group">
                     <label for="apellido" class="col-sm-4 control-label">Apellido:</label>
-                    <input id="apellido" maxlength="30" class="form-control" th:field="*{apellido}" type="text" pattern="[a-zA-Z\s]" title="Solo se permiten letras mayúsculas y minúsculas"  required>
+                    <input id="apellido" maxlength="30" class="form-control" th:field="*{apellido}" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="nombre" class="col-sm-4 control-label">Nombre:</label>
-                    <input id="nombre" maxlength="30" class="form-control" th:field="*{nombre}" type="text" pattern="[a-zA-Z\s]" title="Solo se permiten letras mayúsculas y minúsculas" required>
+                    <input id="nombre" maxlength="30" class="form-control" th:field="*{nombre}" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="dni" class="col-sm-4 control-label">DNI:</label>
-                    <input id="dni" maxlength="50" class="form-control" th:field="*{dni}" type="text" pattern="[0-9]" title="Solo se permite ingresar números" required>
+                    <input id="dni" maxlength="50" class="form-control" th:field="*{dni}" type="text" required>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-8 control-label">Correo electrónico:</label>
-                    <input id="email" maxlength="50" class="form-control" th:field="*{email}" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Algún caracter ingresado no es válido" required>
+                    <input id="email" maxlength="50" class="form-control" th:field="*{email}" type="email" required>
                 </div>
                 <div class="form-group">
                     <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
-                    <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="text" pattern="[0-9]" title="Solo se permite ingresar números"  required>
+                    <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="text" required>
                 </div>
                 <div class="form-group" style="visibility: hidden;">
                     <input id="usuario" maxlength="50" class="form-control" th:field="*{usuario.idUsuario}" type="text" required>
