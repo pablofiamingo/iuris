@@ -49,10 +49,10 @@
                 <div class="row">
                     <a class="col" th:href="@{'/pago/editar/' + ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
 
-                    <form th:action="@{/pago/baja}" class="px-0 mx-0 col" style="width: 10px;" method="post">
+                    <form th:action="@{/pago/baja}" class="px-0 mx-0 col acomodarX" style="width: 10px;" method="post">
                         <input th:name="id" type="hidden" id="id" th:value="${pago.idPago}">
                         <input th:name="idcaso" type="hidden" id="idcaso" th:value="${caso.idCaso}">
-                        <button class="btn" type="submit"><img th:src="@{/img/square-xmark-solid.png}" class="icon"></button>
+                        <button class="btn acomodarBotonX" type="submit"><img th:src="@{/img/square-xmark-solid.png}" class="icon"></button>
                     </form>
                 </div>
               </td>
