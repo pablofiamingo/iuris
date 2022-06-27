@@ -50,19 +50,19 @@
 			<div style="padding-left: 10%; padding-right: 10%;">
 				<div class="form-group">
 					<label for="email" class="col-sm-6 control-label">Correo electrónico:</label>
-					<input id="email" maxlength="50" class="form-control" th:field="*{email}" type="email" required>
+					<input id="email" maxlength="50" class="form-control" th:field="*{email}" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Algún caracter ingresado no es válido" required>
 				</div>
 				<div class="form-group">
 					<label for="full_name" class="col-sm-6 control-label">Nombre completo:</label>
-					<input id="full_name" maxlength="30" class="form-control" th:field="*{fullName}" type="text" required>
+					<input id="full_name" maxlength="30" class="form-control" th:field="*{fullName}" type="text" pattern="[a-zA-Z\s]" title="Solo se permiten letras y espacios en blanco"  required>
 				</div>
 				<div class="form-group">
 					<label for="password" class="col-sm-4 control-label">Contraseña:</label>
-					<input id="password" maxlength="50" class="form-control" th:field="*{pass}" type="text" required>
+					<input id="password" maxlength="50" class="form-control" th:field="*{pass}" type="text" pattern="[a-zA-Z0-9]+" title="Solo se permiten letras y números"  required>
 				</div>
 				<div class="form-group">
 					<label for="rol" class="col-sm-4 control-label">Rol:</label>
-					<input id="rol" maxlength="30" class="form-control" th:field="*{rol}" type="text" required>
+					<input id="rol" maxlength="30" class="form-control" th:field="*{rol}" type="text"  pattern="[a-zA-Z\s]+" title="Solo se permiten letras y espacios en blanco"  required>
 				</div>
 				<div class="form-group">
 					<label for="user" class="col-sm-4 control-label">User:</label>

@@ -42,4 +42,6 @@ public class Pago {
     @ManyToOne
     @JoinColumn(name = "id_caso")
     private Caso caso;
+
+    
 }
