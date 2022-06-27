@@ -10,28 +10,26 @@ body{
     height: 100vh;
     width: 100%;
     margin: 0%;
-    background-color: #173753;
-
 }
 
 .bg-blue900{
-    background-color: #173753;
+    background-color: #173753 !important;
 }
 
 .bg-blue800{
-    background-color: #1B4353;
+    background-color: #1B4353 !important;
 }
 
 .bg-blue700{
-    background-color: #084298;
+    background-color: #084298 !important;
 }
 
 .bg-blue600{
-    background-color: #2892D7;
+    background-color: #2892D7 !important;
 }
 
 .bg-blue500{
-    background-color: #6DAEDB;
+    background-color: #6DAEDB !important;
 }
 
 .bg-blue300{
