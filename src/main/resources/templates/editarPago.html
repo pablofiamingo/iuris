@@ -5,20 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IURIS | EDITAR PAGO</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
     <style>
-        body {
-            background-color: #133C55;
-            color: #EEEEEE;
-        }
         #tarjeta {
             background-color: #386FA4;
             color: #EEEEEE;
         }
     </style>
 </head>
-<body>
+<body class="bg-blue900 text-light">
+    <!-- boton home -->
+    <div class="text-end">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+            <div class="div-home text-center my-3 p-1 bg-secondary">
+                <img class="home" th:src="@{/img/home.png}" alt="">
+            </div>
+        </a>
+    </div>
     <div class=" col-sm-12">
         <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
             <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
@@ -34,7 +39,7 @@
     <h1 class="text-center">Editar pago</h1>
     <br><br>
 
-    <div class="container py-10 card" id="tarjeta">
+    <div class="container py-10 card bg-blue500">
         <form class="row" th:action="@{/pago/editar}" th:object="${pago}" method="post">
             <div class="col">
                 <div class="form-group">
@@ -59,7 +64,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button class="btn btn-info my-3 col-sm-4" type="submit">Editar Pago</button>
+                <button class="btn btn-primary my-3 col-sm-4" type="submit">Editar Pago</button>
             </div>
         </form>
     </div>
