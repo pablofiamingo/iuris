@@ -1,11 +1,7 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Calendario;
-import com.proyectoIuris.iuris.model.ListaDeTareas;
-import com.proyectoIuris.iuris.model.Usuario;
-import com.proyectoIuris.iuris.service.Interfaces.ICalendarioService;
-import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
-import com.proyectoIuris.iuris.service.Interfaces.IUsuarioService;
+import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.service.Interfaces.*;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +24,7 @@ public class UsuarioController {
 
     //Métodos por GET
     @GetMapping("/registro")
-    public String getRegistro(Model model,
-                              HttpSession session) {
+    public String getRegistro(Model model, HttpSession session) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
@@ -54,8 +49,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/login")
-    String getLogin(Model model,
-                    HttpSession httpSession) {
+    String getLogin(Model model, HttpSession httpSession) {
         Usuario user = (Usuario) httpSession.getAttribute("user");
         if(httpSession.getAttribute("user") != null) {
             model.addAttribute("nombre", user);

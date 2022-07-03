@@ -23,6 +23,11 @@ public class InicioController {
     @Autowired
     private IListaDeTareasService listaDeTareasService;
 
+    @GetMapping("/")
+    public String redirectIndex() {
+        return "redirect:/inicio";
+    }
+
     @GetMapping("/inicio")
     public String index(HttpSession session, Model model) {
 
@@ -39,10 +44,7 @@ public class InicioController {
     }
 
     @PostMapping("/buscar")
-    public String buscar(@RequestParam(value="valorABuscar") @NotNull String keyword,
-                         @RequestParam(value="donde")String donde,
-                         Model model,
-                         HttpSession session) {
+    public String buscar(@RequestParam(value="valorABuscar") @NotNull String keyword, @RequestParam(value="donde")String donde, Model model, HttpSession session) {
 
         Usuario user = (Usuario) session.getAttribute("user");
 

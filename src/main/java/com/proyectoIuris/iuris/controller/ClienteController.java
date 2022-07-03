@@ -66,16 +66,15 @@ public class ClienteController {
 
     //POST MAPPING-----------------------------------------------------------------------------------------------
     @PostMapping("/alta")
-    public String agregarCliente(@Validated Cliente cliente,
-                                 HttpSession session,
-                                 Model model) {
-        String estado = "";
+    public String agregarCliente(@Validated Cliente cliente, HttpSession session, Model model) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
+        String estado = "";
         if (clienteService.findByDni(cliente.getDni()) != null){
             estado = "error";
         } else {
             clienteService.save(cliente);
+            System.out.println(System.getenv());
             fileService.crearDir(System.getenv("APPDATA") + "\\IURIS\\Archivos\\Clientes\\" + cliente.getIdCliente());
             estado = "exito";
         }
@@ -85,10 +84,9 @@ public class ClienteController {
     }
 
     @PostMapping("/editar")
-    public String editarCliente(@Validated Cliente cliente,
-                                HttpSession session,
-                                Model model) {
+    public String editarCliente(@Validated Cliente cliente, HttpSession session, Model model) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
+
         Usuario user = (Usuario) session.getAttribute("user");
         String estado = "";
 

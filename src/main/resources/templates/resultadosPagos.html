@@ -4,10 +4,21 @@
     <meta charset="utf-8">
     <title>IURIS | PAGOS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
-    <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script>
+      function cambiarConfirmacion(pago, caso) {
+        if (document.getElementById("confirmacion").style.display == "block") {
+          document.getElementById("confirmacion").style.display = "none";
+        } else {
+          document.getElementById("idPago").value = pago;
+          document.getElementById("idCaso").value = caso;
+          document.getElementById("confirmacion").style.display = "block";
+        }
+      }
+  </script>
 </head>
 <body class="bg-blue900">
     <!-- boton agregar & home -->
@@ -34,17 +45,13 @@
                     </symbol>
                 </svg>
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                ¿Desea eliminar el caso?
+                ¿Desea eliminar el pago?
             </div>
             <div class="col-md-6">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3"><!--
-                    BORRAR ESTA LINEA ---- ACA HAY QUE MODIFICAR LAS ACCIONES
-                    <form th:action="@{/caso/baja}" method="post">
-                        <input th:name="id" type="hidden" id="idcaso" value="">
-                        <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
-                    </form>-->
-                    <form action="asd" method="post">
-                        <input name="id" type="hidden" id="idcaso" value="">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
+                    <form th:action="@{/pago/baja}" method="post">
+                        <input th:name="id" type="hidden" id="idPago" value="">
+                        <input th:name="idcaso" type="hidden" id="idCaso" value="">
                         <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
                     </form>
                     <button class="btn btn-outline-danger" type="button" onclick="cambiarConfirmacion()">No</button>
@@ -56,7 +63,7 @@
   <div class="row g-0">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-      <h1 class="text-center text-light my-4 py-4" th:text="'Pagos del caso ' + ${caso.caratula} + ' del cliente ' + ${caso.cliente.nombre} + ' ' + ${caso.cliente.apellido}"></h1>
+      <h1 class="text-center text-light my-4 py-4" th:text="'Pagos del caso '+ ${caso.caratula} +' del cliente '+ ${caso.cliente.nombre} +' '+ ${caso.cliente.apellido}"></h1>
       <div class="rounded bg-blue800 px-3 py-3 mt-3">
         <table class="table table-dark table-striped my-2">
           <thead>
@@ -72,18 +79,13 @@
                   <td colspan="4" align="center">No hay resultados</td>
               </tr>
             <tr th:each="pago: ${resultados}">
-              <th th:text="${pago.cantAbonada}">800</th>
-              <td th:text="${pago.fecha}">800</td>
-              <td th:text="${pago.formaPago}">2022-04-06</td>
+              <th th:text="${pago.cantAbonada}"></th>
+              <td th:text="${pago.fecha}"></td>
+              <td th:text="${pago.formaPago}"></td>
               <td>
                 <div class="row">
-                    <a class="col" th:href="@{'/pago/editar/' + ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
-
-                    <form th:action="@{/pago/baja}" class="px-0 mx-0 col acomodarX" style="width: 10px;" method="post">
-                        <input th:name="id" type="hidden" id="id" th:value="${pago.idPago}">
-                        <input th:name="idcaso" type="hidden" id="idcaso" th:value="${caso.idCaso}">
-                        <button class="btn acomodarBotonX" type="submit"><img th:src="@{/img/square-xmark-solid.png}" class="icon"></button>
-                    </form>
+                    <a class="col-sm-2" th:href="@{'/pago/editar/'+ ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a href="#" class="col-sm-2"><img th:src="@{/img/square-xmark-solid.png}" th:onclick="'cambiarConfirmacion('+ ${pago.idPago} +','+ ${caso.idCaso} +')'" class="icon"></a>
                 </div>
               </td>
             </tr>
@@ -93,16 +95,5 @@
     </div>
     <div class="col-md-2"></div>
   </div>
-
-    <script>
-      function cambiarConfirmacion(e) {
-        if (document.getElementById("confirmacion").style.display == "block") {
-          document.getElementById("confirmacion").style.display = "none";
-        } else {
-          document.getElementById("idcaso").value = e;
-          document.getElementById("confirmacion").style.display = "block";
-        }
-      }
-    </script>
 </body>
 </html>

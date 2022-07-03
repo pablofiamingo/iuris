@@ -6,7 +6,6 @@ import com.proyectoIuris.iuris.service.Interfaces.IListaDeTareasService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -19,9 +18,7 @@ public class ListaDeTareasController {
 
     //POST
     @PostMapping("/agregar")
-    public String agregarTarea(@NotNull @RequestParam("tareaNueva") String tareaNueva,
-                               HttpSession session,
-                               Model model) {
+    public String agregarTarea(@NotNull @RequestParam("tareaNueva") String tareaNueva, HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("user");
 
@@ -31,9 +28,7 @@ public class ListaDeTareasController {
         tarea.setListaDeTareas(usuario.getListaDeTareas());
 
         listaDeTareasService.guardarTarea(tarea);
-
         return "redirect:/inicio";
-
     }
 
     @PostMapping("/check")
