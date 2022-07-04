@@ -21,10 +21,13 @@ public class UsuarioController {
     private IListaDeTareasService listaDeTareasService;
     @Autowired
     private ICalendarioService calendarioService;
+    @Autowired
+    private ICasoService casoService;
 
     //Métodos por GET
     @GetMapping("/registro")
     public String getRegistro(Model model, HttpSession session) {
+        //chequeo que esté logueado
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
@@ -112,6 +115,13 @@ public class UsuarioController {
         }
         if(usuario!=null) {
             usuarioService.insert(usuario);
+            List<Caso> casos = casoService.listPermisoAbogado(usuario.getIdUsuario());
+
+            for (Caso caso : casos) {
+                caso.setRepresentante(usuario.getFullName());
+                casoService.save(caso);
+            }
+
             model.addAttribute("exito", true);
         } else {
             model.addAttribute("error", true);
