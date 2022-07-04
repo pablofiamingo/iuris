@@ -68,7 +68,7 @@ public class  PagoController {
         }
         Pago pago = pagoService.findPagoById(id);
         model.addAttribute("pago", pago);
-        return "editarPago"; //agregar html
+        return "editarPago";
     }
 
     //POSTMAPPING-----------------------------------------------------------------------------------------------------

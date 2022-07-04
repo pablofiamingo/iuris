@@ -74,7 +74,6 @@ public class ClienteController {
             estado = "error";
         } else {
             clienteService.save(cliente);
-            System.out.println(System.getenv());
             fileService.crearDir(System.getenv("APPDATA") + "\\IURIS\\Archivos\\Clientes\\" + cliente.getIdCliente());
             estado = "exito";
         }
@@ -88,14 +87,10 @@ public class ClienteController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
         Usuario user = (Usuario) session.getAttribute("user");
-        String estado = "";
 
         cliente.setUsuario(user);
-        if (clienteService.save(cliente)) {
-            estado = "exito";
-        } else {
-            estado = "error";
-        }
+        String estado = clienteService.save(cliente) ? "exito" : "error" ;
+
         model.addAttribute(estado,true);
         return "editarCliente";
     }
