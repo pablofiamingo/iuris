@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/archivo")
 public class ArchivoController {
     @Autowired
-    private IArchivoService fileService;
+    private IArchivoService archivoService;
     @Autowired
     private ICasoService casoService;
 
@@ -31,39 +31,39 @@ public class ArchivoController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
         Caso caso = casoService.findCasoById(idCaso);
-        List<Archivo> archivos = fileService.list(usuario.getIdUsuario(), idCaso);
+        List<Archivo> archivos = archivoService.list(usuario.getIdUsuario(), idCaso);
         model.addAttribute("resultados", archivos);
         model.addAttribute("caso", caso);
         return "resultadosArchivos";
     }
 
     @GetMapping(value = "/ver/{id}")
-    public ResponseEntity<InputStreamResource> getTermsConditions(@PathVariable("id") int id, HttpSession session) throws FileNotFoundException {
-        Archivo archivo = fileService.findById(id);
-        String filePath = archivo.getRuta();
-        String fileName = archivo.getNombre() ;
-        File file = new File(filePath);
+    public ResponseEntity<InputStreamResource> verArchivo(@PathVariable("id") int id) throws FileNotFoundException {
+        Archivo archivo = archivoService.findById(id);
+        String archivoRuta = archivo.getRuta();
+        String nombreArchivo = archivo.getNombre() ;
+        File file = new File(archivoRuta);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("content-disposition", "inline;filename=" +fileName);
+        headers.add("content-disposition", "inline;filename=" + nombreArchivo);
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.valueOf(archivo.getTipo())).body(resource);
     }
 
     @GetMapping(value = "/descargar/{id}")
-    public ResponseEntity<InputStreamResource> getDownloadFle(@PathVariable("id") int id, HttpSession session) throws FileNotFoundException {
-        Archivo archivo = fileService.findById(id);
-        String filePath = archivo.getRuta();
-        String fileName = archivo.getNombre() ;
-        File file = new File(filePath);
+    public ResponseEntity<InputStreamResource> descargarArchivo(@PathVariable("id") int id) throws FileNotFoundException {
+        Archivo archivo = archivoService.findById(id);
+        String rutaDeArchivo = archivo.getRuta();
+        String archivoNombre = archivo.getNombre() ;
+        File file = new File(rutaDeArchivo);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("content-disposition", "attachment;filename=" +fileName);
+        headers.add("content-disposition", "attachment;filename=" + archivoNombre);
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.valueOf(archivo.getTipo())).body(resource);
     }
 
     //POSTMAPPING-------------------------------------------------------------------------------------------------------
     @PostMapping("/subir")
-    public String fileHandler(@RequestParam("file") MultipartFile file, @RequestParam("idCaso") int idCaso, HttpSession session){
+    public String subirArchivo(@RequestParam("file") MultipartFile file, @RequestParam("idCaso") int idCaso, HttpSession session){
 
         Usuario user = (Usuario) session.getAttribute("user");
         Caso caso = casoService.findCasoById(idCaso);
@@ -71,22 +71,22 @@ public class ArchivoController {
                                                                             "\\Cliente_" + caso.getCliente().getIdCliente()+
                                                                             "\\Caso_" + caso.getIdCaso() + "\\";
 
-        fileService.crearDir(ruta);
-        fileService.uploadToLocal(file, ruta);
+        archivoService.crearDir(ruta);
+        archivoService.uploadToLocal(file, ruta);
 
         Archivo archivo = new Archivo();
         archivo.setCaso(caso);
         archivo.setTipo(file.getContentType());
         archivo.setNombre(file.getOriginalFilename());
         archivo.setRuta(ruta+file.getOriginalFilename());
-        fileService.insert(archivo);
+        archivoService.insert(archivo);
         return "redirect:/archivo/lista/" + caso.getIdCaso();
     }
 
     @PostMapping("/eliminar")
     public String eliminarArchivo(@RequestParam("idArc") int id) {
-        Archivo arc = fileService.findById(id);
-        fileService.delete(id);
-        return "redirect:/archivo/lista/" + arc.getCaso().getIdCaso();
+        Archivo archivo = archivoService.findById(id);
+        archivoService.delete(id);
+        return "redirect:/archivo/lista/" + archivo.getCaso().getIdCaso();
     }
 }

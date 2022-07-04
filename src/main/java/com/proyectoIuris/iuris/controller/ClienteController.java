@@ -66,12 +66,10 @@ public class ClienteController {
 
     //POST MAPPING-----------------------------------------------------------------------------------------------
     @PostMapping("/alta")
-    public String agregarCliente(@Validated Cliente cliente,
-                                 HttpSession session,
-                                 Model model) {
-        String estado = "";
+    public String agregarCliente(@Validated Cliente cliente, HttpSession session, Model model) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
 
+        String estado = "";
         if (clienteService.findByDni(cliente.getDni()) != null){
             estado = "error";
         } else {
@@ -85,19 +83,14 @@ public class ClienteController {
     }
 
     @PostMapping("/editar")
-    public String editarCliente(@Validated Cliente cliente,
-                                HttpSession session,
-                                Model model) {
+    public String editarCliente(@Validated Cliente cliente, HttpSession session, Model model) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
+
         Usuario user = (Usuario) session.getAttribute("user");
-        String estado = "";
 
         cliente.setUsuario(user);
-        if (clienteService.save(cliente)) {
-            estado = "exito";
-        } else {
-            estado = "error";
-        }
+        String estado = clienteService.save(cliente) ? "exito" : "error" ;
+
         model.addAttribute(estado,true);
         return "editarCliente";
     }

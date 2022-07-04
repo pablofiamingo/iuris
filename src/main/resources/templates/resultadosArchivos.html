@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>IURIS | ARCHIVO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
     <script src="dist/bootstrap/js/bootstrap.bundle.js"></script>
@@ -29,17 +29,12 @@
                     </symbol>
                 </svg>
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                ¿Desea eliminar el caso?
+                ¿Desea eliminar el archivo?
             </div>
             <div class="col-md-6">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3"><!--
-                    BORRAR ESTA LINEA ---- ACA HAY QUE MODIFICAR LAS ACCIONES
-                    <form th:action="@{/caso/baja}" method="post">
-                        <input th:name="id" type="hidden" id="idcaso" value="">
-                        <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
-                    </form>-->
-                    <form action="asd" method="post">
-                        <input name="id" type="hidden" id="idcaso" value="">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
+                    <form th:action="@{/archivo/eliminar}" method="post">
+                        <input th:name="idArc" type="hidden" id="idarchivo" value="">
                         <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
                     </form>
                     <button class="btn btn-outline-danger" type="button" onclick="cambiarConfirmacion()">No</button>
@@ -47,7 +42,6 @@
             </div>
         </div>
     </div>
-
 
       <div class="row g-0">
         <h1 class="text-center text-light my-4 py-4" th:text="${'Archivos del Caso ' + caso.Caratula + ' de '+ caso.cliente.nombre + ' ' + caso.cliente.apellido}"></h1>
@@ -83,19 +77,14 @@
                       <td><a th:href="@{'/archivo/ver/' + ${arc.id}}" th:target="_blank">Abrir ></a></td>
                       <td><a th:href="@{'/archivo/descargar/' + ${arc.id}}" th:target="_blank">Descargar ></a></td>
                       <td>
-                          <!-- ACÁ TAMBIÉN HAY QUE MODIFICAR LAS ACCIONES -->
-                          <form th:action="@{/archivo/eliminar}" method="post">
-                              <button type="submit" class="btn-close btn-close-white form-control form-control-sm" aria-label="Close"></button>
-                              <input type="hidden" th:name="idArc" th:value="${arc.id}">
-                          </form>
+                          <a href="#" class="col-sm-2"><img th:src="@{/img/square-xmark-solid.png}" th:onclick="'cambiarConfirmacion('+ ${arc.id} +')'" class="icon"></a>
                       </td>
                   </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="col-md-3">
-        </div>
+        <div class="col-md-3"></div>
       </div>
 
     <script>
@@ -103,7 +92,7 @@
         if (document.getElementById("confirmacion").style.display == "block") {
           document.getElementById("confirmacion").style.display = "none";
         } else {
-          document.getElementById("idcaso").value = e;
+          document.getElementById("idarchivo").value = e;
           document.getElementById("confirmacion").style.display = "block";
         }
       }

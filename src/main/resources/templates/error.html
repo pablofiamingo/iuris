@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>IURIS | Error</title>
+    <title>IURIS | 404</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
             <div class="row">
               <!-- lado izquierdo -->
                 <div class="col-md-6 align-self-center" style="height: 800px; overflow: hidden;">
-                    <img th:src="@{/img/lady-justice-g11.png}" alt="" style="height: 1100px; ">
+                    <img th:src="@{/img/lady-justice-g11.png}" alt="" style="height: 1100px;">
                 </div>
             
                 <!-- lado derecho -->
@@ -28,7 +28,9 @@
                         podés volver haciendo clic en el botón INICIO.
                     </h6>
                     <p>Que la luz de la justicia siempre te ilumine.</p>
-                    <button th:href="@{/inicio}" class="btn btn-dark">INICIO</button>
+                    <a th:href="@{/inicio}">
+                        <button class="btn btn-dark">INICIO</button>
+                    </a>
                 </div>
             </div>
         </div>

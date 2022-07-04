@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>IURIS | CLIENTES</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
   <link rel="stylesheet" th:href="@{/css/styles.css}">
   <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
   <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
@@ -56,9 +56,9 @@
                   <td th:text="${cliente.telefono}"></td>
                   <td th:text="${cliente.email}"></td>
                   <!-- ver la lista de casos del cliente -->
-                  <td><a th:href="@{'/caso/lista/' + ${cliente.idCliente}}">Ver ></a></td>
+                  <td><a th:href="@{'/caso/lista/' + ${cliente.idCliente}}" target="_blank">Ver ></a></td>
                   <!-- Editar  -->
-                  <td><a th:href="@{'/cliente/editar/' + ${cliente.idCliente}}"><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a></td>
+                  <td><a th:href="@{'/cliente/editar/' + ${cliente.idCliente}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a></td>
                 </tr>
               </tbody>
             </table>

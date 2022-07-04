@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>IURIS | CASOS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
   <link rel="stylesheet" th:href="@{/css/styles.css}">
   <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
   <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
@@ -67,7 +67,6 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 
-
       <!-- La lista -->
       <div class="row g-0">
         <div class="col">
@@ -104,16 +103,14 @@
                   <td th:text="${caso.estado}"></td>
                   <td th:text="${caso.juzgado}"></td>
                   <td th:text="${caso.cliente.nombre + ' ' + caso.cliente.apellido}"></td>
-                  <!-- ver datos de la otra parte, falta hacer -->
+                  <!-- ver datos de la otra parte -->
                   <td>
-                      <button
-                              class="btn btn-secondary"
+                      <button class="btn btn-secondary"
                               type="button"
                               th:id="${caso.idCaso}"
                               onclick="mostrar(this)"
                               th:value="${caso.caratula}"
-                              th:title="${caso.datoOtraParte}"
-                      >
+                              th:title="${caso.datoOtraParte}">
                           Ver
                       </button>
                   </td>
@@ -121,7 +118,7 @@
                   <td th:text="${caso.representante}"></td>
                   <td ><a th:href="@{'/pago/lista/' + ${caso.idCaso}}" target="_blank"> Ir a Pagos ></a></td>
                   <!-- ver los archivos del caso -->
-                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}" target="_blank">Ver archivos ></a></td>
+                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}" target="_blank"> Ver archivos ></a></td>
                   <td>
                     <!-- editar y eliminar -->
                     <a th:href="@{'/caso/editar/' + ${caso.idCaso}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
@@ -142,7 +139,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
           <div id="datos" class="toast-body">
-            Ruuummmarioooo. Su telefono es un celular lindo. Vive en algún lado.
+            Datos.
           </div>
         </div>
       </div>

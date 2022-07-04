@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:href="@{/fullcalendar/lib/main.css}" rel='stylesheet' />
     <script th:src="@{/fullcalendar/lib/main.js}"></script>
@@ -61,7 +61,7 @@
                 <div class="text-center">
                     <img th:src="@{/img/logoIuris2.png}" class="round-img my-4">
                     <!-- th:src="@{~/billing-app/images/Invoice.png}"-->
-                    <h5 class="text-center" id="username"><span th:text="${usuario.fullName}" ></span></h5>
+                    <h5 class="text-center" id="username"><span th:text="${usuario.fullName}"></span></h5>
                     <h6 class="text-center" id="rol"><span th:text="${usuario.rol}" ></span></h6>
                     <div class="d-grid gap-2 col-6 mx-auto py-4">
                         <a class="my-1 " th:href="@{/caso/lista}" th:target="_blank">

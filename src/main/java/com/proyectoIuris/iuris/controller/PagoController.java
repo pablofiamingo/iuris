@@ -14,9 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -71,13 +68,12 @@ public class  PagoController {
         }
         Pago pago = pagoService.findPagoById(id);
         model.addAttribute("pago", pago);
-        return "editarPago"; //agregar html
+        return "editarPago";
     }
 
     //POSTMAPPING-----------------------------------------------------------------------------------------------------
     @PostMapping("/agregar")
-    public String agregarPago(@Validated Pago pago,
-                              HttpSession session) {
+    public String agregarPago(@Validated Pago pago, HttpSession session) {
 
         if (pago != null) {
             if (pagoService.save(pago)) {
@@ -92,19 +88,17 @@ public class  PagoController {
     }
 
     @PostMapping("/editar")
-    public String editarPago(@Validated Pago pago, Model model, HttpSession session) {
+    public String editarPago(@Validated Pago pago, HttpSession session) {
         if (pago!=null) {
             pagoService.save(pago);
             session.setAttribute("editarPago", "exito");
         } else {
-            model.addAttribute("editarPago", "error");
+            session.setAttribute("editarPago", "error");
         }
         return  "redirect:/pago/editar/" + pago.getIdPago();
     }
     @PostMapping("/baja")
-    public String eliminarPago(@RequestParam("id") String idPago,
-                               @RequestParam("idcaso") String idCaso,
-                               Model model) {
+    public String eliminarPago(@RequestParam("id") String idPago, @RequestParam("idcaso") String idCaso) {
         Integer id = Integer.parseInt(idPago);
         pagoService.delete(id);
         return "redirect:/pago/lista/" + idCaso;
