@@ -1,0 +1,160 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>IURIS | CASOS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+  <script>
+      function cambiarConfirmacion(e) {
+        if (document.getElementById("confirmacion").style.display == "block") {
+          document.getElementById("confirmacion").style.display = "none";
+        } else {
+          document.getElementById("idcaso").value = e;
+          document.getElementById("confirmacion").style.display = "block";
+        }
+      }
+  </script>
+</head>
+<body class="bg-blue900">
+<!-- boton agregar & home -->
+  <div class="text-end">
+    <a  class="no-underline" th:href="@{/caso/alta}" th:target="_blank">
+      <div class="div-home text-center my-3 p-1 bg-secondary">
+        <img class="home" th:src="@{/img/new.png}" alt="">
+      </div>
+    </a>
+    <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+      <div class="div-home text-center my-3 p-1 bg-secondary">
+        <img class="home" th:src="@{/img/home.png}" alt="">
+      </div>
+    </a>
+  </div>
+      <!--confirmacion para eliminar-->
+  <div class="alert alert-danger mx-4 mt-2" id="confirmacion" style="display: none;" role="alert">
+    <div class="row g-0">
+      <div class="col-md-6 pt-1 px-3">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+          <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </symbol>
+        </svg>
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        ¿Desea eliminar el caso?
+      </div>
+      <div class="col-md-6">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
+          <form th:action="@{/caso/baja}" method="post">
+            <input th:name="id" type="hidden" id="idcaso" value="">
+            <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
+          </form>
+          <button class="btn btn-outline-danger" type="button" onclick="cambiarConfirmacion()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- Alertas de baja del caso -->
+  <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${baja == 'exito'}" >
+    El caso se ha eliminado correctamente.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${baja == 'error'}" role="alert">
+    <strong>Ha ocurrido un error al intentar eliminar el caso.</strong> Por favor, intente nuevamente.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+      <!-- La lista -->
+      <div class="row g-0">
+        <div class="col">
+          <div class="rounded bg-blue800 px-3 py-3 my-3 mt-1">
+            <table class="table table-dark table-striped my-2">
+              <thead>
+                <tr>
+                  <th scope="col" class="border-1st">Caratula</th>
+                  <th scope="col">Materia</th>
+                  <th scope="col">Fuero</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Juzgado</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Otra Parte</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Representante</th>
+                  <th scope="col">Pagos</th>
+                  <th scope="col">Archivos</th>
+                  <th scope="col" class="border-last">Edición</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- por si esta vacio-->
+                <tr th:if="${#lists.isEmpty(resultados)}">
+                  <td colspan="12" align="center">
+                    No hay resultados
+                  </td>
+                </tr>
+                <!--resultados-->
+                <tr th:each="caso: ${resultados}">
+                  <td scope="row" th:text="${caso.caratula}"></td>
+                  <td th:text="${caso.materia}"></td>
+                  <td th:text="${caso.fuero}"></td>
+                  <td th:text="${caso.estado}"></td>
+                  <td th:text="${caso.juzgado}"></td>
+                  <td th:text="${caso.cliente.nombre + ' ' + caso.cliente.apellido}"></td>
+                  <!-- ver datos de la otra parte -->
+                  <td>
+                      <button class="btn btn-secondary"
+                              type="button"
+                              th:id="${caso.idCaso}"
+                              onclick="mostrar(this)"
+                              th:value="${caso.caratula}"
+                              th:title="${caso.datoOtraParte}">
+                          Ver
+                      </button>
+                  </td>
+                  <td th:text="${caso.descripcion}"></td>
+                  <td th:text="${caso.representante}"></td>
+                  <td ><a th:href="@{'/pago/lista/' + ${caso.idCaso}}" target="_blank"> Ir a Pagos ></a></td>
+                  <!-- ver los archivos del caso -->
+                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}" target="_blank"> Ver archivos ></a></td>
+                  <td>
+                    <!-- editar y eliminar -->
+                    <a th:href="@{'/caso/editar/' + ${caso.idCaso}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a href="#"><img th:src="@{/img/square-xmark-solid.png}" th:onclick=" 'cambiarConfirmacion(' + ${caso.idCaso} + ')'" class="icon"></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--la emergente-->
+      <div class="toast-container position-fixed top-0 start-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <strong class="me-auto">Datos de la otra parte</strong>
+            <small id="caratula">Caratula: </small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div id="datos" class="toast-body">
+            Datos.
+          </div>
+        </div>
+      </div>
+
+      <script>
+          function mostrar(caso){
+              let toastTrigger = document.getElementById(caso.id);
+              let toastLiveExample = document.getElementById('liveToast');
+              let toast = new bootstrap.Toast(toastLiveExample);
+
+              document.getElementById('caratula').innerText = "Caso: "+caso.value;
+              document.getElementById('datos').innerText = caso.title;
+
+              toast.show();
+          }
+      </script>
+</body>
+</html>

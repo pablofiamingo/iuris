@@ -1,35 +1,98 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Cliente;
-//import com.proyectoIuris.iuris.service.IClienteService;
+import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.service.Interfaces.*;
+import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-
     @Autowired
     private IClienteService clienteService;
+    @Autowired
+    private IArchivoService fileService;
 
-    @GetMapping("/buscar")
-    public String getClientes() {
-        return "testClientes";
+    //GET MAPPING-----------------------------------------------------------------------------------------------------
+    @GetMapping("/alta")
+    public String getAltaCliente(Model model,
+                                 HttpSession session) {
+
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario usuario = (Usuario) session.getAttribute("user");
+
+        Cliente cliente = new Cliente();
+        cliente.setUsuario(usuario);
+
+        model.addAttribute("cliente", cliente);
+        return "agregarCliente";
     }
 
-    //no esta la interfaz de clienteService en el ultimo merge y rompe el programa
-    @PostMapping("/buscador")
-    public String buscarCliente(@RequestParam(value = "nombre",required = true) String keyword, Model model) {
-        //String keyword = (String) model.getAttribute("nombre");
-        List<Cliente> clientes = (List<Cliente>) clienteService.findByNombreOApellido(keyword);
-        model.addAttribute("listaClientes", clientes);
-        return "testClientes";
+    @GetMapping("/editar/{id}")
+    public String getEditarCliente(Model model,
+                                 HttpSession session,
+                                 @PathVariable("id") int id) {
+
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario usuario = (Usuario) session.getAttribute("user");
+
+        Cliente cliente = clienteService.findById(id);
+
+        model.addAttribute("cliente", cliente);
+        return "editarCliente";
     }
+
+    @GetMapping("/lista")
+    public String getListaClientes(HttpSession session,
+                                   Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+        Usuario usuario = (Usuario) session.getAttribute("user");
+        List<Cliente>clientes;
+        if(usuario.getRol().toLowerCase().equals("abogado")){
+            clientes = clienteService.listPermisoAbogado(usuario.getIdUsuario());
+        } else {
+            clientes = clienteService.list();
+        }
+        model.addAttribute("resultados", clientes);
+        return "resultadosCliente";
+    }
+
+    //POST MAPPING-----------------------------------------------------------------------------------------------
+    @PostMapping("/alta")
+    public String agregarCliente(@Validated Cliente cliente, HttpSession session, Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+
+        String estado = "";
+        if (clienteService.findByDni(cliente.getDni()) != null){
+            estado = "error";
+        } else {
+            clienteService.save(cliente);
+            fileService.crearDir(System.getenv("APPDATA") + "\\IURIS\\Archivos\\Clientes\\" + cliente.getIdCliente());
+            estado = "exito";
+        }
+
+        model.addAttribute(estado, true);
+        return "agregarCliente";
+    }
+
+    @PostMapping("/editar")
+    public String editarCliente(@Validated Cliente cliente, HttpSession session, Model model) {
+        if (!Util.isLogged(session)) return "redirect:/usuario/login";
+
+        Usuario user = (Usuario) session.getAttribute("user");
+
+        cliente.setUsuario(user);
+        String estado = clienteService.save(cliente) ? "exito" : "error" ;
+
+        model.addAttribute(estado,true);
+        return "editarCliente";
+    }
+
 }

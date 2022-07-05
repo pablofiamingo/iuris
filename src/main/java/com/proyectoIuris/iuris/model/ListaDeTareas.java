@@ -20,17 +20,11 @@ public class ListaDeTareas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idToDo;
 
-    @Column(nullable = false, length = 50)
-    private String tarea;
-
-    @Column(nullable = false, length = 250)
-    private String relevancia;
-
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean enabled;
-
     @OneToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "listaDeTareas")
+    private List<DetalleTarea> tareas;
 
 }

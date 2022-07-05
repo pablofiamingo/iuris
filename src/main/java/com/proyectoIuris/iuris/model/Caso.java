@@ -23,9 +23,6 @@ public class Caso {
     private String caratula;
 
     @Column(nullable = false, length = 50)
-    private String link;
-
-    @Column(nullable = false, length = 50)
     private String materia;
 
     @Column(nullable = false, length = 50)
@@ -37,10 +34,10 @@ public class Caso {
     @Column(nullable = false, length = 50)
     private String juzgado;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 80)
     private String datoOtraParte;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String descripcion;
 
     @Column(nullable = false, length = 50)
@@ -52,5 +49,9 @@ public class Caso {
 
     @OneToMany(mappedBy = "caso")
     private List<Pago> pagoList;
+
+    @OneToMany(mappedBy = "caso")
+    private List<Archivo> archivos;
+
 
 }

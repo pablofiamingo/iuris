@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,23 +16,14 @@ import java.util.Date;
 public class Calendario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int idCalendario;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
-
-    @Column(nullable = false, length = 100)
-    private String actividad;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date hora;
-
-    /*@OneToOne(mappedBy = "calendario", cascade = CascadeType.ALL)
-    private Usuario usuario;*/
     @OneToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "calendario")
+    private List<Evento> eventos;
+
 }

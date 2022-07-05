@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
+    <title>IURIS | EDITAR CLIENTE</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" >
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+    <style>
+        #tarjeta {
+            background-color: #386FA4;
+            color: #EEEEEE;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <!-- boton home -->
+    <div class="text-end">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+            <div class="div-home text-center my-3 p-1 bg-secondary">
+                <img class="home" th:src="@{/img/home.png}" alt="">
+            </div>
+        </a>
+    </div>
+    <div class=" col-sm-12">
+        <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
+            <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${exito == true}" >
+            El cliente se ha editado correctamente.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <br> <br>
+    <h1 class="h1" align="center">Editar datos de un cliente</h1>
+    <br> <br>
+    <div class="container py-3 card bg-blue900" style="width:35%">
+        <form th:action="@{/cliente/editar}" th:object="${cliente}" method="post">
+            <div style="padding-left: 10%; padding-right: 10%;">
+                <div class="form-group">
+                    <label for="id_cliente" class="col-sm-4 control-label">ID:</label>
+                    <input id="id_cliente" maxlength="50" class="form-control" th:field="*{idCliente}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="apellido" class="col-sm-4 control-label">Apellido:</label>
+                    <input id="apellido" maxlength="30" class="form-control" th:field="*{apellido}" type="text"  required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre" class="col-sm-4 control-label">Nombre:</label>
+                    <input id="nombre" maxlength="30" class="form-control" th:field="*{nombre}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="dni" class="col-sm-4 control-label">DNI:</label>
+                    <input id="dni" maxlength="50" class="form-control" th:field="*{dni}" type="text"   required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-8 control-label">Correo electrónico:</label>
+                    <input id="email" maxlength="50" class="form-control" th:field="*{email}" type="email"  required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
+                    <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="text" required>
+                </div>
+                <div class="row justify-content-center">
+                    <button id="btnEditarCliente" class="btn btn-primary mt-3 col-sm-4" type="submit">Confirmar cambios</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

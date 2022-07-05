@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IURIS | ALTA DE CASO</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+    <style>
+        #tarjeta {
+            background-color: #386FA4;
+            color: #EEEEEE;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <!-- boton home -->
+    <div class="text-end">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+            <div class="div-home text-center my-3 p-1 bg-secondary">
+                <img class="home" th:src="@{/img/home.png}" alt="">
+            </div>
+        </a>
+    </div>
+    <div class=" col-sm-12">
+        <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
+            <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show"  th:if="${exito == true}">
+            El caso se ha creado correctamente.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <br><br>
+    <h1 class="h1" align="center">Agregar un nuevo caso</h1>
+    <br> <br>
+    <div class="container py-10 card bg-blue900">
+
+        <form class="row" th:action="@{/caso/agregar}" th:object="${caso}" method="post">
+            <div class="col">
+                <div class="form-group">
+                    <label for="caratula" class="col-sm-4 control-label">Carátula:</label>
+                    <input id="caratula" maxlength="50" class="form-control" th:field="*{caratula}" type="text"  required>
+                </div>
+                <div class="form-group">
+                    <label for="materia" class="col-sm-4 control-label">Materia:</label>
+                    <input id="materia" maxlength="50" class="form-control" th:field="*{materia}" type="text"  required>
+                </div>
+                <div class="form-group">
+                    <label for="fuero" class="col-sm-4 control-label">Fuero:</label>
+                    <input id="fuero" maxlength="50" class="form-control" th:field="*{fuero}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado" class="col-sm-4 control-label">Estado:</label>
+                    <input id="estado" maxlength="50" class="form-control" th:field="*{estado}" type="text" required>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="juzgado" class="col-sm-4 control-label">Juzgado:</label>
+                    <input id="juzgado" maxlength="50" class="form-control" th:field="*{juzgado}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="datosParte" class="col-sm-4 control-label">Datos de la otra parte:</label>
+                    <input id="datosParte" maxlength="50" class="form-control" th:field="*{datoOtraParte}" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="representante" class="col-sm-4 control-label">Representante:</label>
+                    <input id="representante" maxlength="50" class="form-control" th:field="*{representante}" type="text" readonly required>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Cliente:</label>
+                    <select class="form-select" th:name="cliente" required>
+                        <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.idCliente + ' | ' + cliente.nombre + ' ' + cliente.apellido +' | ' + cliente.dni}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
+                <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
+            </div>
+            <div class="row justify-content-center">
+                <button id="btnAgregarCaso" class="btn btn-primary my-3 col-sm-4" type="submit">Agregar Caso</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

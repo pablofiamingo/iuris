@@ -1,0 +1,99 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>IURIS | PAGOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/scale.ico}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script>
+      function cambiarConfirmacion(pago, caso) {
+        if (document.getElementById("confirmacion").style.display == "block") {
+          document.getElementById("confirmacion").style.display = "none";
+        } else {
+          document.getElementById("idPago").value = pago;
+          document.getElementById("idCaso").value = caso;
+          document.getElementById("confirmacion").style.display = "block";
+        }
+      }
+  </script>
+</head>
+<body class="bg-blue900">
+    <!-- boton agregar & home -->
+    <div class="text-end">
+        <a th:href="@{'/pago/alta/' + ${caso.idCaso}}" class="no-underline"  th:target="_blank">
+            <div class="div-home text-center my-3 p-1 bg-secondary">
+                <img class="home" th:src="@{/img/addmoney.png}" alt="">
+            </div>
+        </a>
+        <a class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+            <div class="div-home text-center my-3 p-1 bg-secondary">
+                <img class="home" th:src="@{/img/home.png}" alt="">
+            </div>
+        </a>
+    </div>
+
+    <!--confirmacion para eliminar-->
+    <div class="alert alert-danger mx-4 mt-2" id="confirmacion" style="display: none;" role="alert">
+        <div class="row g-0">
+            <div class="col-md-6 pt-1 px-3">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </symbol>
+                </svg>
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                ¿Desea eliminar el pago?
+            </div>
+            <div class="col-md-6">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end px-3">
+                    <form th:action="@{/pago/baja}" method="post">
+                        <input th:name="id" type="hidden" id="idPago" value="">
+                        <input th:name="idcaso" type="hidden" id="idCaso" value="">
+                        <button class="btn btn-outline-danger me-md-2" type="submit">Si</button>
+                    </form>
+                    <button class="btn btn-outline-danger" type="button" onclick="cambiarConfirmacion()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <div class="row g-0">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <h1 class="text-center text-light my-4 py-4" th:text="'Pagos del caso '+ ${caso.caratula} +' del cliente '+ ${caso.cliente.nombre} +' '+ ${caso.cliente.apellido}"></h1>
+      <div class="rounded bg-blue800 px-3 py-3 mt-3">
+        <table class="table table-dark table-striped my-2">
+          <thead>
+            <tr>
+              <th scope="col" class="border-1st">Cantidad abonada</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Forma de pago</th>
+              <th scope="col" class="border-last">Edición</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr th:if="${#lists.isEmpty(resultados)}">
+                  <td colspan="4" align="center">No hay resultados</td>
+              </tr>
+            <tr th:each="pago: ${resultados}">
+              <th th:text="${pago.cantAbonada}"></th>
+              <td th:text="${pago.fecha}"></td>
+              <td th:text="${pago.formaPago}"></td>
+              <td>
+                <div class="row">
+                    <a class="col-sm-2" th:href="@{'/pago/editar/'+ ${pago.idPago}}"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>
+                    <a href="#" class="col-sm-2"><img th:src="@{/img/square-xmark-solid.png}" th:onclick="'cambiarConfirmacion('+ ${pago.idPago} +','+ ${caso.idCaso} +')'" class="icon"></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</body>
+</html>

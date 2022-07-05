@@ -1,0 +1,145 @@
+.no-padding {
+    padding: 0px 0px;
+}
+
+html{
+    height: 100vh;
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    margin: 0%;
+}
+
+.bg-blue900{
+    background-color: #173753 !important;
+}
+
+.bg-blue800{
+    background-color: #1B4353 !important;
+}
+
+.bg-blue700{
+    background-color: #084298 !important;
+}
+
+.bg-blue600{
+    background-color: #2892D7 !important;
+}
+
+.bg-blue500{
+    background-color: #6DAEDB !important;
+}
+
+.bg-blue300{
+    background-color: #A8DADC;
+}
+
+.bg-blue200{
+    background-color: #9ec5fe;
+}
+
+.bg-blue100{
+    background-color: #cfe2ff;
+}
+
+.text-blue500{
+    color: #6DAEDB !important;
+}
+
+.full-height{
+    height:100%;
+}
+
+.round-img{
+    width:220px;
+    height:220px;
+    border-radius:150px;
+}
+
+.icon-x{
+    width: 30px;
+    height: 30px;
+    right: 0px;
+}
+
+.icon-pen{
+    width: 30px;
+    height: 30px;
+    right: 35px;
+}
+
+.icon{
+    width: 25px;
+    height: 25px;
+}
+
+#calendario-container {
+    background-color: white;
+    border-radius: 0.25rem;
+}
+
+#formulario-calendario {
+    width: 100%;
+    justify-content: space-evenly;
+    border-radius: 0.25rem;
+}
+
+.form-h{
+    height: 30px;
+}
+
+.border-1st{
+    border-radius: 5px 0px 0px 0px;
+}
+
+.border-last{
+    border-radius: 0px 5px 0px 0px;
+}
+
+.t-center{
+    text-align: center;
+}
+
+.button-panel {
+    width: 150px;
+}
+
+#username, #rol, #tituloTareas {
+    color: #6DAEDB !important;
+}
+
+.div-home{
+    border-radius:5px;
+    display:inline-block;
+}
+
+.home{
+    width:35px;
+    height:35px;
+}
+
+.no-underline{
+    text-decoration: none;
+}
+
+.acomodarX{
+    padding-right: 0 !important;
+    --bs-gutter-x: 0 !important;
+}
+
+.acomodarBotonX{
+    padding: 0 !important;
+    font-family: serif !important;
+}
+
+.acomodarX{
+    padding-right: 0 !important;
+    --bs-gutter-x: 0 !important;
+}
+
+.acomodarBotonX{
+    padding: 0 !important;
+    font-family: serif !important;
+}
