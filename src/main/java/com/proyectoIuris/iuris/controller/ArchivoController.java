@@ -25,16 +25,15 @@ public class ArchivoController {
     @Autowired
     private ICasoService casoService;
 
-    @GetMapping("/lista/{idCaso}")
-    public String listarArchivosCaso(HttpSession session, Model model, @PathVariable("idCaso")int idCaso) {
-
+    @GetMapping("/lista/{idUsuario}/{idCaso}")
+    public String listarArchivosCaso(HttpSession session, Model model, @PathVariable("idCaso")int idCaso, @PathVariable("idUsuario")int idUsuario) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-        Usuario usuario = (Usuario) session.getAttribute("user");
-        Caso caso = casoService.findCasoById(idCaso);
-        List<Archivo> archivos = archivoService.list(usuario.getIdUsuario(), idCaso);
+
+        List<Archivo> archivos = archivoService.list(idUsuario, idCaso);
         model.addAttribute("resultados", archivos);
-        model.addAttribute("caso", caso);
+        model.addAttribute("caso", casoService.findCasoById(idCaso));
         return "resultadosArchivos";
+
     }
 
     @GetMapping(value = "/ver/{id}")
@@ -80,7 +79,7 @@ public class ArchivoController {
         archivo.setNombre(file.getOriginalFilename());
         archivo.setRuta(ruta+file.getOriginalFilename());
         archivoService.insert(archivo);
-        return "redirect:/archivo/lista/" + caso.getIdCaso();
+        return "redirect:/archivo/lista/" + caso.getCliente().getUsuario().getIdUsuario() + "/" + caso.getIdCaso();
     }
 
     @PostMapping("/eliminar")

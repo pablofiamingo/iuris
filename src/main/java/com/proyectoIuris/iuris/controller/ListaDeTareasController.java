@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 public class ListaDeTareasController {
     @Autowired
     private IListaDeTareasService listaDeTareasService;
-
     //POST
     @PostMapping("/agregar")
     public String agregarTarea(@NotNull @RequestParam("tareaNueva") String tareaNueva, HttpSession session) {
@@ -32,14 +31,10 @@ public class ListaDeTareasController {
     }
 
     @PostMapping("/check")
-    public String tacharTarea(@RequestParam("id")int id,
-                              @RequestParam("check")boolean check) {
+    public String tacharTarea(@RequestParam("id")int id, @RequestParam("check")boolean check) {
         DetalleTarea tarea = listaDeTareasService.getTarea(id);
-        if(check) {
-            tarea.setEnabled(false);
-        } else {
-            tarea.setEnabled(true);
-        }
+        tarea.setEnabled(!check);
+
         listaDeTareasService.guardarTarea(tarea);
         return "redirect:/inicio";
     }

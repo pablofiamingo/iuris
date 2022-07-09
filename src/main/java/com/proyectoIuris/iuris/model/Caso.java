@@ -47,10 +47,10 @@ public class Caso {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "caso")
+    @OneToMany(mappedBy = "caso", cascade = CascadeType.ALL)
     private List<Pago> pagoList;
 
-    @OneToMany(mappedBy = "caso")
+    @OneToMany(mappedBy = "caso", cascade = CascadeType.ALL)
     private List<Archivo> archivos;
 
 

@@ -9,10 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EventoRepository extends CrudRepository<Evento, Integer> {
-
-    public @NotNull Evento save(Evento e);
-
+     @NotNull Evento save(Evento e);
     @Query("SELECT eventos FROM Evento eventos WHERE calendario.idCalendario = :idCal")
-    public List<Evento> getEventos(@Param("idCal")int idCal);
-    //traer eventos segun id
+     List<Evento> getEventos(@Param("idCal")int idCal);
+
 }

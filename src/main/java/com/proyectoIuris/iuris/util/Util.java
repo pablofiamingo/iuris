@@ -25,5 +25,4 @@ public interface Util {
             session.removeAttribute(template);
         }
     }
-
 }
