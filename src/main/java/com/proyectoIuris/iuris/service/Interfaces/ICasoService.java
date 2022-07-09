@@ -16,7 +16,7 @@ public interface ICasoService {
     public List<Caso> buscadorGeneral(String keyword);
     public List<Caso> list();
     public Caso findCasoById(int idCaso);
-    public boolean delete(int idCaso);
+    public void delete(int idCaso);
     public boolean save(Caso caso);
     public boolean update(Caso caso);
     public List<Caso> findCasoByIdCliente(int idCliente);
