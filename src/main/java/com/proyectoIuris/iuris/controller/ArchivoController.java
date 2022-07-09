@@ -87,6 +87,8 @@ public class ArchivoController {
     public String eliminarArchivo(@RequestParam("idArc") int id) {
         Archivo archivo = archivoService.findById(id);
         archivoService.delete(id);
+        File file = new File(archivo.getRuta());
+        file.delete();
         return "redirect:/archivo/lista/" + archivo.getCaso().getIdCaso();
     }
 }

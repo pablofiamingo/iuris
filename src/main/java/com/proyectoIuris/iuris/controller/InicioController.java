@@ -71,24 +71,30 @@ public class InicioController {
         }
 
         if(donde.equals("cliente") ) {
+
             List<Cliente> clientes;
-            if (user.getRol().toLowerCase().equals("abogado")) {
+            if (user.getRol().equalsIgnoreCase("abogado")) {
                 clientes = clienteService.buscadorPermisoAbogado(keyword, user.getIdUsuario());
             } else {
                 clientes = clienteService.buscadorGeneral(keyword);
             }
+
             model.addAttribute("resultados", clientes);
             return "resultadosCliente";
+
         } else if (donde.equals("caso") ) {
+
             List<Caso> casos;
-            if (user.getRol().toLowerCase().equals("abogado")) {
+            if (user.getRol().equalsIgnoreCase("abogado")) {
                 casos = casoService.buscadorPermisoAbogado(keyword, user.getIdUsuario());
             } else {
                 casos = casoService.buscadorGeneral(keyword);
             }
+
             model.addAttribute("resultados", casos);
             return "resultadosCaso";
         }
+
         return "redirect:/inicio";
     }
 
