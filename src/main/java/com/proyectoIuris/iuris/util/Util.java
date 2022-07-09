@@ -1,5 +1,7 @@
 package com.proyectoIuris.iuris.util;
 
+import org.springframework.ui.Model;
+
 import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +16,14 @@ public interface Util {
 
     static boolean isLogged(HttpSession session) {
         return (session.getAttribute("user") != null);
+    }
+
+    static void mostrarAlertas(Model model, HttpSession session, String template) {
+        String redirected = (String) session.getAttribute(template);
+        if(redirected!=null) {
+            model.addAttribute(redirected,true);
+            session.removeAttribute(template);
+        }
     }
 
 }

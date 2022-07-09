@@ -45,7 +45,6 @@
     <!--Formulario-->
 
     <div class="container py-10 card bg-blue900">
-
         <form class="row" th:action="@{/caso/agregar}" th:object="${caso}" method="post">
             <div class="col">
                 <div class="form-group">
@@ -65,7 +64,6 @@
                     <input id="estado" maxlength="50" class="form-control" th:field="*{estado}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
             </div>
-
             <div class="col">
                 <div class="form-group">
                     <label for="juzgado" class="col-sm-4 control-label">Juzgado:</label>
@@ -75,9 +73,16 @@
                     <label for="datosParte" class="col-sm-4 control-label">Datos de la otra parte:</label>
                     <input id="datosParte" maxlength="50" class="form-control" th:field="*{datoOtraParte}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:if="${abogado == true}">
                     <label for="representante" class="col-sm-4 control-label">Representante:</label>
                     <input id="representante" maxlength="50" class="form-control" th:field="*{representante}" type="text" readonly required>
+                </div>
+                <div class="form-group" th:if="${notabogado == true}">
+                    <label for="repr" class="col-sm-4 control-label">Representante:</label>
+                    <select class="form-select" id="repr" th:name="repr" required>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.idUsuario}" th:text="${usuario.fullName}">
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Cliente:</label>

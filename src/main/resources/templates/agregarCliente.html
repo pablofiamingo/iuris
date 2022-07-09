@@ -64,12 +64,19 @@
                     <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
                     <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="tel" pattern="[0-9_- ]{1,50}" title="Sólo se permite ingresar números, guiones altos y bajos y espacios en blanco" required>
                 </div>
-                <div class="form-group" style="visibility: hidden;">
-                    <input id="usuario" maxlength="50" class="form-control" th:field="*{usuario.idUsuario}" type="text"  required>
+                <div class="form-group" style="visibility: hidden;" th:if="${abogado == true}">
+                    <input id="usuario" maxlength="50" class="form-control" th:field="*{usuario.idUsuario}" type="text" required>
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                <button id="btnAgregarCliente" class="btn btn-primary mb-2 col-sm-4" type="submit">Agregar Cliente</button>
+                <div class="form-group" th:if="${abogado == false}">
+                    <label for="repr" class="col-sm-4 control-label">Representante:</label>
+                    <select class="form-select" id="repr" th:name="repr" required>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.idUsuario}" th:text="${usuario.fullName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="row justify-content-center">
+                    <button id="btnAgregarCliente" class="btn btn-primary mb-2 col-sm-4" type="submit">Agregar Cliente</button>
+                </div>
             </div>
         </form>
     </div>

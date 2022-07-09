@@ -41,7 +41,7 @@
     <div class="container py-3 card bg-blue900" style="width:35%">
         <form th:action="@{/caso/editar}" th:object="${caso}" method="post">
             <div style="padding-left: 10%; padding-right: 10%;">
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label for="id_cliente" class="col-sm-4 control-label">ID:</label>
                     <input id="id_cliente" maxlength="50" class="form-control" th:field="*{idCaso}"  readonly>
                 </div>
@@ -73,10 +73,22 @@
                     <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
                     <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,150}" title="Solo se permiten letras, números y espacios" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:if="${abogado == true}">
                     <label for="representante" class="col-sm-4 control-label">Representante:</label>
                     <input id="representante" maxlength="50" class="form-control" th:field="*{representante}" type="text" readonly required>
                 </div>
+                <div class="form-group" th:if="${abogado == false}">
+                    <label for="repr" class="col-sm-4 control-label">Representante:</label>
+                    <select class="form-select" id="repr" th:name="repr" required>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.idUsuario}" th:text="${usuario.fullName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-4 control-label">Cliente:</label>
+                    <select class="form-select" th:name="cliente" required>
+                        <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.idCliente + ' | ' + cliente.nombre + ' ' + cliente.apellido +' | ' + cliente.dni}" th:selected="${cliente.idCliente == caso.cliente.idCliente}"></option>
+                    </select>
                 <div class="form-group">
                     <label for="cliente" class="col-sm-4 control-label">Cliente:</label>
                     <input id="cliente" maxlength="50" class="form-control" th:field="*{cliente.idCliente}" type="text" readonly required>
@@ -84,6 +96,7 @@
                 <div class="row justify-content-center">
                     <button id="btnEditarCaso" class="btn btn-primary mt-3 col-sm-4" type="submit">Confirmar cambios</button>
                 </div>
+            </div>
             </div>
         </form>
     </div>
