@@ -30,7 +30,7 @@ public class Usuario {
     @Column(nullable = false, length = 30)
     private String rol;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Cliente> cliente;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)

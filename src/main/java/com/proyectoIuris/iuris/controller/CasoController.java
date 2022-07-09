@@ -10,6 +10,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -112,12 +114,13 @@ public class CasoController {
         * Luego el mismo se verifica que el representante corresponda al cliente elegido, de ser asi se guarda y se redirecciona al controller bajo la ruta /caso/alta
         * Estado es para alertar del exito o el error
         * */
+        Usuario usuarioActivo = (Usuario) session.getAttribute("user");
         String estado = "";
         Cliente cli = clienteService.findById(id);
 
         if(repr != 0) caso.setRepresentante(usuarioService.findByIdUsuario(repr).getFullName());
 
-        if (cli.getUsuario().equals(usuarioService.findByIdUsuario(repr))) {
+        if ( ( cli.getUsuario().getIdUsuario() == repr ) || (cli.getUsuario().getIdUsuario() == usuarioActivo.getIdUsuario()) ) {
             caso.setCliente(clienteService.findById(id));
             estado = casoService.save(caso) ? "exito" : "error";
         } else {

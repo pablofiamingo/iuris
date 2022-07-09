@@ -31,18 +31,6 @@ public class Pago {
     @Column(nullable = false, length = 50)
     private String formaPago;
 
-    /*public void setFecha(String date){
-        try {
-            this.fecha = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-        }catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setFecha(Date date) {
-        this.fecha = date;
-    }
-*/
     @ManyToOne
     @JoinColumn(name = "id_caso")
     private Caso caso;

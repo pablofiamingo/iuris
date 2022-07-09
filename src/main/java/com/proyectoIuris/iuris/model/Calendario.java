@@ -23,7 +23,7 @@ public class Calendario {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "calendario")
+    @OneToMany(mappedBy = "calendario", cascade = CascadeType.ALL)
     private List<Evento> eventos;
 
 }
