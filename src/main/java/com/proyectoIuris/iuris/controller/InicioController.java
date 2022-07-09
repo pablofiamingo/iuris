@@ -22,6 +22,10 @@ public class InicioController {
     private ICasoService casoService;
     @Autowired
     private IListaDeTareasService listaDeTareasService;
+    @Autowired
+    private IUsuarioService usuarioService;
+    @Autowired
+    private ICalendarioService calendarioService;
 
     @GetMapping("/")
     public String redirectIndex() {
@@ -33,13 +37,26 @@ public class InicioController {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuario = (Usuario) session.getAttribute("user");
-        model.addAttribute("usuario", usuario);
+
+        if(usuario.getCalendario() == null) {
+            Calendario calendario = new Calendario();
+            calendario.setUsuario(usuario);
+            calendarioService.save(calendario);
+            usuario.setCalendario(calendario);
+            usuarioService.insert(usuario);
+        }
+        if (usuario.getListaDeTareas() == null) {
+            ListaDeTareas lista = new ListaDeTareas();
+            lista.setUsuario(usuario);
+            listaDeTareasService.save(lista);
+            usuario.setListaDeTareas(lista);
+            usuarioService.insert(usuario);
+        }
 
         List<DetalleTarea> tareas = listaDeTareasService.getTareas(usuario.getListaDeTareas().getIdToDo());
 
-        if(!tareas.isEmpty()) {
-            model.addAttribute("tareas", tareas);
-        }
+        if(!tareas.isEmpty()) model.addAttribute("tareas", tareas);
+        model.addAttribute("usuario", usuario);
         return "index";
     }
 
