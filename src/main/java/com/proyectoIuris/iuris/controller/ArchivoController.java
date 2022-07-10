@@ -66,8 +66,7 @@ public class ArchivoController {
 
         Usuario user = (Usuario) session.getAttribute("user");
         Caso caso = casoService.findCasoById(idCaso);
-        String ruta = System.getenv("APPDATA") + "\\IURIS\\Archivos\\Usuario_" + user.getIdUsuario() +
-                                                                            "\\Cliente_" + caso.getCliente().getIdCliente()+
+        String ruta = Util.RUTA_CARPETA_IURIS + "Archivos\\Usuario_" + user.getIdUsuario() + "\\Cliente_" + caso.getCliente().getIdCliente()+
                                                                             "\\Caso_" + caso.getIdCaso() + "\\";
 
         archivoService.crearDir(ruta);

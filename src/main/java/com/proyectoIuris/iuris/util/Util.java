@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public interface Util {
 
+    static final String RUTA_CARPETA_IURIS = System.getenv("APPDATA") + "\\IURIS\\"; //aca va a ir el nombre del dispositivo para la carpeta compartida
     static boolean containsIllegals(String toExamine) {
         Pattern pattern = Pattern.compile("[~#@*+%{}!$&/:;¬°()=?¡´¨<`^>\\[\\]|\"]");
         Matcher matcher = pattern.matcher(toExamine);
