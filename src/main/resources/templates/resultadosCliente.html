@@ -39,6 +39,7 @@
                   <th scope="col">Telefono</th>
                   <th scope="col">Email</th>
                   <th scope="col">Casos</th>
+                  <th scope="col">Representante</th>
                   <th scope="col" class="border-last">Edición</th>
                 </tr>
               </thead>
@@ -57,6 +58,7 @@
                   <td th:text="${cliente.email}"></td>
                   <!-- ver la lista de casos del cliente -->
                   <td><a th:href="@{'/caso/lista/' + ${cliente.idCliente}}" target="_blank">Ver ></a></td>
+                  <td th:text="${cliente.usuario.fullName}"></td>
                   <!-- Editar  -->
                   <td><a th:href="@{'/cliente/editar/' + ${cliente.idCliente}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon-pen"></a></td>
                 </tr>
