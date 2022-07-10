@@ -24,8 +24,6 @@ public class CasoController {
     private IClienteService clienteService;
     @Autowired
     private IUsuarioService usuarioService;
-    @Autowired
-    private IPagoService pagoService;
 
     @GetMapping("/lista")
     public String getCasos(Model model, HttpSession session) {
