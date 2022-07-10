@@ -34,7 +34,6 @@ public class ListaDeTareasController {
     public String tacharTarea(@RequestParam("id")int id, @RequestParam("check")boolean check) {
         DetalleTarea tarea = listaDeTareasService.getTarea(id);
         tarea.setEnabled(!check);
-
         listaDeTareasService.guardarTarea(tarea);
         return "redirect:/inicio";
     }
