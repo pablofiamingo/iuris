@@ -44,7 +44,6 @@ public class CArchivoService implements IArchivoService {
     public boolean crearDir(String directorioCaso) {
         boolean success = false;
         File path = new File(directorioCaso);
-        System.out.println(path);
         if (!path.exists()) {
             success = path.mkdirs();
         }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,7 +32,7 @@ public class CasoController {
         Usuario user = (Usuario) session.getAttribute("user"); //obtiene el user de la sesion
         Util.mostrarAlertas(model,session,"eliminarCaso"); //muestra alerta de exito o error si existe alguna
         List<Caso> casos;
-        if(user.getRol().toLowerCase().equals("abogado")) {
+        if(user.getRol().equalsIgnoreCase("abogado")) {
             casos = casoService.listPermisoAbogado(user.getIdUsuario()); //si se logueo un abogado se listaran solo sus casos
         } else {
             casos = casoService.list(); //si es empleado o admin vera todos los casos
@@ -56,7 +55,7 @@ public class CasoController {
         if (!Util.isLogged(session)) return "redirect:/usuario/login"; //chequeo si hay usuario logueado
         Usuario user = (Usuario) session.getAttribute("user"); //obtengo el usuario logueado desde la sesion
         Util.mostrarAlertas(model,session,"agregarCaso"); //muestro alertas si hay
-        List<Cliente> clientes = null;
+        List<Cliente> clientes;
         boolean abogado = false;
 
         if(user.getRol().toLowerCase().equals("abogado")) {
@@ -115,7 +114,7 @@ public class CasoController {
         * Estado es para alertar del exito o el error
         * */
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
-        String estado = "";
+        String estado;
         Cliente cli = clienteService.findById(id);
 
         if(repr != 0) caso.setRepresentante(usuarioService.findByIdUsuario(repr).getFullName());
@@ -134,7 +133,7 @@ public class CasoController {
     @PostMapping("/editar")
     public String editarCaso(@Validated Caso caso, HttpSession session, @RequestParam(value = "repr", required = false, defaultValue = "0")int repr, @RequestParam("cliente")int id) {
         Cliente cliente = clienteService.findById(id); //busca el cliente segun el id proporcionado
-        String estado ="", redir = "redirect:/caso/editar/" + caso.getIdCaso();
+        String estado, redir = "redirect:/caso/editar/" + caso.getIdCaso();
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
 
         if ((cliente.getUsuario().getIdUsuario() == repr) || (cliente.getUsuario().getIdUsuario() == usuarioActivo.getIdUsuario())) {
@@ -154,7 +153,22 @@ public class CasoController {
 
     @PostMapping("/baja")
     public String eliminarCaso(@RequestParam("id") int idCaso, HttpSession session) {
-        casoService.delete(idCaso);//elimina el caso del id proporcionado
+        Caso caso  = casoService.findCasoById(idCaso);
+        List<Archivo> archivosDelCaso = archivoService.list(caso.getCliente().getUsuario().getIdUsuario(), idCaso);
+
+        casoService.delete(idCaso);//   elimina el caso
+        //elimina los archivos locales del caso
+        if(!archivosDelCaso.isEmpty()) {
+            for ( Archivo arc : archivosDelCaso) {
+                File file = new File(arc.getRuta());// SE ELIMINA EL ARCHIVO LOCAL
+                String resultado = file.delete() ? "exito" : "error";
+                if(resultado.equalsIgnoreCase("error")) {
+                    session.setAttribute("eliminarCaso", "error");
+                    return "redirect:/caso/lista";
+                }
+            }
+        }
+
         session.setAttribute("eliminarCaso", "exito"); //guarda la alerta de exito
         return "redirect:/caso/lista"; //se redirecciona a la vista de casos
     }
