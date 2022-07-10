@@ -19,7 +19,7 @@
 <body class="bg-dark text-light">
     <!-- boton home -->
     <div class="text-end">
-        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}">
             <div class="div-home text-center my-3 p-1 bg-secondary">
                 <img class="home" th:src="@{/img/home.png}" alt="">
             </div>
@@ -47,7 +47,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="cantidad" class="col-sm-4 control-label">Cantidad abonada:</label>
-                    <input id="cantidad" maxlength="50" class="form-control" th:field="*{cantAbonada}" type="text" pattern="[0-9.,]{1,50}" title="Solo se deben ingresar números, y uin punto o coma indicando la separación decimal" required>
+                    <input id="cantidad" maxlength="50" class="form-control" th:field="*{cantAbonada}" type="text" pattern="[0-9.]{1,50}" title="Solo se deben ingresar números, y un punto indicando la separación decimal" required>
                 </div>
                 <div class="form-group">
                     <label for="fecha" class="col-sm-4 control-label">Fecha:</label>
