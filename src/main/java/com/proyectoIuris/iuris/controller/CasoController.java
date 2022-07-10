@@ -25,6 +25,8 @@ public class CasoController {
     private IClienteService clienteService;
     @Autowired
     private IUsuarioService usuarioService;
+    @Autowired
+    private IPagoService pagoService;
 
     @GetMapping("/lista")
     public String getCasos(Model model, HttpSession session) {
@@ -154,7 +156,23 @@ public class CasoController {
 
     @PostMapping("/baja")
     public String eliminarCaso(@RequestParam("id") int idCaso, HttpSession session) {
-        casoService.delete(idCaso);//elimina el caso del id proporcionado
+        Caso caso  = casoService.findCasoById(idCaso);
+        List<Archivo> archivosDelCaso = archivoService.list(caso.getCliente().getUsuario().getIdUsuario(), idCaso);
+        List<Pago> pagosDelCaso = pagoService.findPagoByIdCaso(idCaso);
+
+        casoService.delete(idCaso);//   elimina el caso
+        //elimina los archivos locales del caso
+        if(!archivosDelCaso.isEmpty()) {
+            for ( Archivo arc : archivosDelCaso) {
+                File file = new File(arc.getRuta());// SE ELIMINA EL ARCHIVO LOCAL
+                String resultado = file.delete() ? "exito" : "error";
+                if(resultado.equalsIgnoreCase("error")) {
+                    session.setAttribute("eliminarCaso", "error");
+                    return "redirect:/caso/lista";
+                }
+            }
+        }
+
         session.setAttribute("eliminarCaso", "exito"); //guarda la alerta de exito
         return "redirect:/caso/lista"; //se redirecciona a la vista de casos
     }

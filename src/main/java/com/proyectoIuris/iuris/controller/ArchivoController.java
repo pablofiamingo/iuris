@@ -28,7 +28,7 @@ public class ArchivoController {
     @GetMapping("/lista/{idUsuario}/{idCaso}")
     public String listarArchivosCaso(HttpSession session, Model model, @PathVariable("idCaso")int idCaso, @PathVariable("idUsuario")int idUsuario) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-
+        Util.mostrarAlertas(model,session,"eliminarArchivo");
         List<Archivo> archivos = archivoService.list(idUsuario, idCaso);
         model.addAttribute("resultados", archivos);
         model.addAttribute("caso", casoService.findCasoById(idCaso));
@@ -83,11 +83,14 @@ public class ArchivoController {
     }
 
     @PostMapping("/eliminar")
-    public String eliminarArchivo(@RequestParam("idArc") int id) {
-        Archivo archivo = archivoService.findById(id);
-        archivoService.delete(id);
-        File file = new File(archivo.getRuta());
-        file.delete();
-        return "redirect:/archivo/lista/" + archivo.getCaso().getIdCaso();
+    public String eliminarArchivo(@RequestParam("idArc") int id, HttpSession session) {
+        Archivo archivo = archivoService.findById(id); //SE ELIMINA DE LA BD
+        String resultado = archivoService.delete(id) ? "exito" : "error";
+        if (resultado.equalsIgnoreCase("exito")) {
+            File file = new File(archivo.getRuta());// SE ELIMINA EL ARCHIVO LOCAL
+            resultado = file.delete() ? "exito" : "error";
+        }
+        session.setAttribute("eliminarArchivo", resultado);
+        return "redirect:/archivo/lista/" + archivo.getCaso().getCliente().getUsuario().getIdUsuario() + "/" + archivo.getCaso().getIdCaso(); //REDIRIGE A LISTA
     }
 }
