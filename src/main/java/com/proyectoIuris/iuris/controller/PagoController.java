@@ -1,10 +1,8 @@
 package com.proyectoIuris.iuris.controller;
 
-import com.proyectoIuris.iuris.model.Caso;
 import com.proyectoIuris.iuris.model.Pago;
 import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.service.Interfaces.ICasoService;
-import com.proyectoIuris.iuris.service.Interfaces.IClienteService;
 import com.proyectoIuris.iuris.service.Interfaces.IPagoService;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,87 +12,57 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/pago")
 public class  PagoController {
     @Autowired
     private IPagoService pagoService;
-
-    @Autowired
-    private IClienteService clienteService;
-
     @Autowired
     private ICasoService casoService;
 
     @GetMapping("/lista/{caso}")
-    public String getPagosFindIdCaso(Model model,
-                                  HttpSession session,
-                                  @PathVariable("caso") int caso) {
-
+    public String getPagosFindIdCaso(Model model, HttpSession session, @PathVariable("caso") int caso) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-        Usuario user = (Usuario) session.getAttribute("user");
-        Caso caso1 = casoService.findCasoById(caso);
-        List<Pago> pagos = pagoService.findPagoByIdCaso(caso);
-        model.addAttribute("resultados", pagos);
-        model.addAttribute("caso", caso1);
+
+        model.addAttribute("resultados", pagoService.findPagoByIdCaso(caso));
+        model.addAttribute("caso", casoService.findCasoById(caso));
         return "resultadosPagos";
     }
-
     @GetMapping("/alta/{idCaso}")
-    public String getAgregarPago(Pago pago, Model model, HttpSession session,
-                                 @PathVariable("idCaso") int idCaso)  {
-
+    public String getAgregarPago(Pago pago, Model model, HttpSession session, @PathVariable("idCaso") int idCaso)  {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario user = (Usuario) session.getAttribute("user");
-        Caso caso = casoService.findCasoById(idCaso);
-        pago.setCaso(caso);
+
+        pago.setCaso(casoService.findCasoById(idCaso));
         model.addAttribute("pago", pago);
         model.addAttribute("user", user);
         return "agregarPago";
     }
-
     @GetMapping("/editar/{idPago}")
-    public String getEditarPago(@PathVariable("idPago") String idPago,
-                                Model model,
-                                HttpSession session ) {
-        Integer id = Integer.parseInt(idPago);
+    public String getEditarPago(@PathVariable("idPago") String idPago, Model model, HttpSession session ) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-        String redirected = (String) session.getAttribute("editarPago");
-        if(redirected!=null) {
-            model.addAttribute(redirected,true);
-            session.removeAttribute("editarPago");
-        }
-        Pago pago = pagoService.findPagoById(id);
-        model.addAttribute("pago", pago);
+        Util.mostrarAlertas(model,session,"editarPago");
+
+        Integer id = Integer.parseInt(idPago);
+
+        model.addAttribute("pago", pagoService.findPagoById(id));
         return "editarPago";
     }
 
     //POSTMAPPING-----------------------------------------------------------------------------------------------------
     @PostMapping("/agregar")
     public String agregarPago(@Validated Pago pago, HttpSession session) {
+        String estado = pagoService.save(pago) ? "exito" : "error";
 
-        if (pago != null) {
-            if (pagoService.save(pago)) {
-                session.setAttribute("agregarPago", "exito");
-            } else {
-                session.setAttribute("agregarPago", "error");
-            }
-        } else {
-            session.setAttribute("agregarPago", "error");
-        }
+        session.setAttribute("agregarPago", estado);
         return "redirect:/pago/alta/" + pago.getCaso().getIdCaso();
     }
-
     @PostMapping("/editar")
     public String editarPago(@Validated Pago pago, HttpSession session) {
-        if (pago!=null) {
-            pagoService.save(pago);
-            session.setAttribute("editarPago", "exito");
-        } else {
-            session.setAttribute("editarPago", "error");
-        }
+        String estado = pagoService.save(pago) ? "exito":"error";
+        session.setAttribute("editarPago", estado);
+
         return  "redirect:/pago/editar/" + pago.getIdPago();
     }
     @PostMapping("/baja")

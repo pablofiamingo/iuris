@@ -20,12 +20,13 @@
 <body class="bg-dark text-light">
     <!-- boton home -->
     <div class="text-end">
-        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" >
             <div class="div-home text-center my-3 p-1 bg-secondary">
                 <img class="home" th:src="@{/img/home.png}" alt="">
             </div>
         </a>
     </div>
+    <!-- alertas -->
     <div class=" col-sm-12">
         <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
             <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
@@ -36,9 +37,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
+
     <br> <br>
     <h1 class="h1" align="center">Editar datos de un cliente</h1>
     <br> <br>
+
     <div class="container py-3 card bg-blue900" style="width:35%">
         <form th:action="@{/cliente/editar}" th:object="${cliente}" method="post">
             <div style="padding-left: 10%; padding-right: 10%;">
@@ -48,15 +51,15 @@
                 </div>
                 <div class="form-group">
                     <label for="apellido" class="col-sm-4 control-label">Apellido:</label>
-                    <input id="apellido" maxlength="30" class="form-control" th:field="*{apellido}" type="text"  required>
+                    <input id="apellido" maxlength="30" class="form-control" th:field="*{apellido}" type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras y espacios"  required>
                 </div>
                 <div class="form-group">
                     <label for="nombre" class="col-sm-4 control-label">Nombre:</label>
-                    <input id="nombre" maxlength="30" class="form-control" th:field="*{nombre}" type="text" required>
+                    <input id="nombre" maxlength="30" class="form-control" th:field="*{nombre}" type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras y espacios"  required>
                 </div>
                 <div class="form-group">
                     <label for="dni" class="col-sm-4 control-label">DNI:</label>
-                    <input id="dni" maxlength="50" class="form-control" th:field="*{dni}" type="text"   required>
+                    <input id="dni" maxlength="50" class="form-control" th:field="*{dni}" type="text" pattern="[0-9]{7,8}" title="Ingrese su DNI sin puntos ni espacios" required>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-8 control-label">Correo electrónico:</label>
@@ -64,7 +67,15 @@
                 </div>
                 <div class="form-group">
                     <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
-                    <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="text" required>
+                    <input id="telefono" maxlength="50" class="form-control" th:field="*{telefono}" type="tel" pattern="[0-9_- ]{1,50}" title="Sólo se permite ingresar números, guiones altos y bajos y espacios en blanco" required>
+                </div>
+                <div class="form-group" th:if="${abogado == false}">
+                    <label for="repr" class="col-sm-4 control-label">Representante:</label>
+                    <select class="form-select" id="repr" th:name="repr" required>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.idUsuario}" th:text="${usuario.fullName}" th:selected="${usuario.fullName == cliente.usuario.fullName}">
+                        </option>
+                    </select>
+
                 </div>
                 <div class="row justify-content-center">
                     <button id="btnEditarCliente" class="btn btn-primary mt-3 col-sm-4" type="submit">Confirmar cambios</button>

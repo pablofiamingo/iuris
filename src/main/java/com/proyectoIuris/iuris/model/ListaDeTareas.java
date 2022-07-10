@@ -24,7 +24,7 @@ public class ListaDeTareas {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "listaDeTareas")
+    @OneToMany(mappedBy = "listaDeTareas", cascade = CascadeType.ALL)
     private List<DetalleTarea> tareas;
 
 }

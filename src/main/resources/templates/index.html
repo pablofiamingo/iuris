@@ -43,15 +43,6 @@
         calendar.render();
       });
     </script>
-    <script>
-        function agregarCita() {
-            if (document.getElementById("formulario").style.visibility == "hidden") {
-                document.getElementById("formulario").style.visibility = "visible";
-            } else {
-             document.getElementById("formulario").style.visibility = "hidden";
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="row g-0 bg-blue300 full-height">
@@ -131,22 +122,19 @@
                             <button type="submit" class="btn btn-primary mb-3">Agregar</button>
                         </div>
                     </form>
-                    <ul class="list-group" th:each="tarea: ${tareas}">
-                        <li  id="idDeBDDdeTarea" class="list-group-item bg-dark text-light row" >
+                    <ul class="list-group" th:if="${tareas != null}" th:each="tarea: ${tareas}">
+                        <li  th:id="${tarea.idDetalleTarea}" class="list-group-item bg-dark text-light row" >
                             <div class="row justify-content-between">
                                 <div th:if="${tarea.enabled == true}" class="col-md-6 pt-2">
                                     <input class="form-check-input me-1" type="checkbox" checked onchange="tachar(this)" th:value="${tarea.idDetalleTarea}" aria-label="...">
-                                    <span style="text-decoration-line: line-through;" th:id="${tarea.idDetalleTarea}" th:text="${tarea.tarea}"></span>
+                                    <span style="text-decoration-line: line-through;" th:text="${tarea.tarea}"></span>
                                 </div>
                                 <div th:if="${tarea.enabled == false}" class="col-md-6 pt-2">
                                     <input class="form-check-input me-1" type="checkbox" onchange="tachar(this)" th:value="${tarea.idDetalleTarea}" aria-label="...">
-                                    <span th:id="${tarea.idDetalleTarea}" th:text="${tarea.tarea}"></span>
+                                    <span th:text="${tarea.tarea}"></span>
                                 </div>
                                 <div class="col-md-1 offset-md-4">
-                                    <form th:action="@{/listaDeTareas/eliminar}" method="post">
-                                        <button type="submit" class="btn-close btn-close-white form-control form-control-sm" aria-label="Close"></button>
-                                        <input type="hidden" th:name="idTarea" th:value="${tarea.idDetalleTarea}">
-                                    </form>
+                                    <button type="submit" th:onclick="'eliminarTarea('+ ${tarea.idDetalleTarea} +')'" class="btn-close btn-close-white form-control form-control-sm" aria-label="Close"></button>
                                 </div>
                             </div>
                         </li>
@@ -158,9 +146,16 @@
 
 <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
 <script>
-    function eliminarTarea(){
-      let li = document.getElementById("idDeBDDdeTarea");
+    function eliminarTarea(id){
+      let li = document.getElementById(id);
       li.remove();
+
+      var oReq = new XMLHttpRequest();
+      oReq.open("POST", "http://localhost:8080/listaDeTareas/eliminar");
+      var formData = new FormData();
+      formData.append("idTarea", id);
+      oReq.send(formData);
+
     }
 
     function tachar(tarea){
@@ -173,16 +168,22 @@
         var checked;
 
         if (tarea.checked){
-            //textoTarea.className += " text-decoration-line-through";
             textoTarea.style.textDecoration = "line-through";
             checked = false;
         } else {
-            //textoTarea.className -= " text-decoration-line-through";
             textoTarea.style.textDecoration = "none";
             checked = true;
         }
         formData.append("check", checked);
         oReq.send(formData);
+    }
+
+    function agregarCita() {
+        if (document.getElementById("formulario").style.visibility == "hidden") {
+            document.getElementById("formulario").style.visibility = "visible";
+        } else {
+         document.getElementById("formulario").style.visibility = "hidden";
+        }
     }
 </script>
 </body>

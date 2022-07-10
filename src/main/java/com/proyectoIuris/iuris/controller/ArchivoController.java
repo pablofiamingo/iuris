@@ -25,16 +25,15 @@ public class ArchivoController {
     @Autowired
     private ICasoService casoService;
 
-    @GetMapping("/lista/{idCaso}")
-    public String listarArchivosCaso(HttpSession session, Model model, @PathVariable("idCaso")int idCaso) {
-
+    @GetMapping("/lista/{idUsuario}/{idCaso}")
+    public String listarArchivosCaso(HttpSession session, Model model, @PathVariable("idCaso")int idCaso, @PathVariable("idUsuario")int idUsuario) {
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
-        Usuario usuario = (Usuario) session.getAttribute("user");
-        Caso caso = casoService.findCasoById(idCaso);
-        List<Archivo> archivos = archivoService.list(usuario.getIdUsuario(), idCaso);
+        Util.mostrarAlertas(model,session,"eliminarArchivo");
+        List<Archivo> archivos = archivoService.list(idUsuario, idCaso);
         model.addAttribute("resultados", archivos);
-        model.addAttribute("caso", caso);
+        model.addAttribute("caso", casoService.findCasoById(idCaso));
         return "resultadosArchivos";
+
     }
 
     @GetMapping(value = "/ver/{id}")
@@ -67,8 +66,7 @@ public class ArchivoController {
 
         Usuario user = (Usuario) session.getAttribute("user");
         Caso caso = casoService.findCasoById(idCaso);
-        String ruta = System.getenv("APPDATA") + "\\IURIS\\Archivos\\Usuario_" + user.getIdUsuario() +
-                                                                            "\\Cliente_" + caso.getCliente().getIdCliente()+
+        String ruta = Util.RUTA_CARPETA_IURIS + "Archivos\\Usuario_" + user.getIdUsuario() + "\\Cliente_" + caso.getCliente().getIdCliente()+
                                                                             "\\Caso_" + caso.getIdCaso() + "\\";
 
         archivoService.crearDir(ruta);
@@ -80,13 +78,18 @@ public class ArchivoController {
         archivo.setNombre(file.getOriginalFilename());
         archivo.setRuta(ruta+file.getOriginalFilename());
         archivoService.insert(archivo);
-        return "redirect:/archivo/lista/" + caso.getIdCaso();
+        return "redirect:/archivo/lista/" + caso.getCliente().getUsuario().getIdUsuario() + "/" + caso.getIdCaso();
     }
 
     @PostMapping("/eliminar")
-    public String eliminarArchivo(@RequestParam("idArc") int id) {
-        Archivo archivo = archivoService.findById(id);
-        archivoService.delete(id);
-        return "redirect:/archivo/lista/" + archivo.getCaso().getIdCaso();
+    public String eliminarArchivo(@RequestParam("idArc") int id, HttpSession session) {
+        Archivo archivo = archivoService.findById(id); //SE ELIMINA DE LA BD
+        String resultado = archivoService.delete(id) ? "exito" : "error";
+        if (resultado.equalsIgnoreCase("exito")) {
+            File file = new File(archivo.getRuta());// SE ELIMINA EL ARCHIVO LOCAL
+            resultado = file.delete() ? "exito" : "error";
+        }
+        session.setAttribute("eliminarArchivo", resultado);
+        return "redirect:/archivo/lista/" + archivo.getCaso().getCliente().getUsuario().getIdUsuario() + "/" + archivo.getCaso().getIdCaso(); //REDIRIGE A LISTA
     }
 }

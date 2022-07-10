@@ -19,12 +19,15 @@
 <body class="bg-dark text-light">
     <!-- boton home -->
     <div class="text-end">
-        <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+        <a href="" class="mx-3 no-underline" th:href="@{/inicio}">
             <div class="div-home text-center my-3 p-1 bg-secondary">
                 <img class="home" th:src="@{/img/home.png}" alt="">
             </div>
         </a>
     </div>
+
+    <!--Alertas-->
+
     <div class=" col-sm-12">
         <div class="alert alert-danger alert-dismissible fade show" id="alert" th:if="${error == true}" role="alert">
             <strong>Ha ocurrido un error!</strong> Por favor, intente nuevamente.
@@ -38,40 +41,48 @@
     <br><br>
     <h1 class="h1" align="center">Agregar un nuevo caso</h1>
     <br> <br>
-    <div class="container py-10 card bg-blue900">
 
+    <!--Formulario-->
+
+    <div class="container py-10 card bg-blue900">
         <form class="row" th:action="@{/caso/agregar}" th:object="${caso}" method="post">
             <div class="col">
                 <div class="form-group">
                     <label for="caratula" class="col-sm-4 control-label">Carátula:</label>
-                    <input id="caratula" maxlength="50" class="form-control" th:field="*{caratula}" type="text"  required>
+                    <input id="caratula" maxlength="50" class="form-control" th:field="*{caratula}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
                 <div class="form-group">
                     <label for="materia" class="col-sm-4 control-label">Materia:</label>
-                    <input id="materia" maxlength="50" class="form-control" th:field="*{materia}" type="text"  required>
+                    <input id="materia" maxlength="50" class="form-control" th:field="*{materia}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
                 <div class="form-group">
                     <label for="fuero" class="col-sm-4 control-label">Fuero:</label>
-                    <input id="fuero" maxlength="50" class="form-control" th:field="*{fuero}" type="text" required>
+                    <input id="fuero" maxlength="50" class="form-control" th:field="*{fuero}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
                 <div class="form-group">
                     <label for="estado" class="col-sm-4 control-label">Estado:</label>
-                    <input id="estado" maxlength="50" class="form-control" th:field="*{estado}" type="text" required>
+                    <input id="estado" maxlength="50" class="form-control" th:field="*{estado}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
             </div>
-
             <div class="col">
                 <div class="form-group">
                     <label for="juzgado" class="col-sm-4 control-label">Juzgado:</label>
-                    <input id="juzgado" maxlength="50" class="form-control" th:field="*{juzgado}" type="text" required>
+                    <input id="juzgado" maxlength="50" class="form-control" th:field="*{juzgado}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
                 <div class="form-group">
                     <label for="datosParte" class="col-sm-4 control-label">Datos de la otra parte:</label>
-                    <input id="datosParte" maxlength="50" class="form-control" th:field="*{datoOtraParte}" type="text" required>
+                    <input id="datosParte" maxlength="50" class="form-control" th:field="*{datoOtraParte}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,50}" title="Solo se permiten letras, números y espacios" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:if="${abogado == true}">
                     <label for="representante" class="col-sm-4 control-label">Representante:</label>
                     <input id="representante" maxlength="50" class="form-control" th:field="*{representante}" type="text" readonly required>
+                </div>
+                <div class="form-group" th:if="${notabogado == true}">
+                    <label for="repr" class="col-sm-4 control-label">Representante:</label>
+                    <select class="form-select" id="repr" th:name="repr" required>
+                        <option th:each="usuario : ${usuarios}" th:value="${usuario.idUsuario}" th:text="${usuario.fullName}">
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Cliente:</label>
@@ -83,8 +94,10 @@
             </div>
             <div class="form-group">
                 <label for="descripcion" class="col-sm-4 control-label">Descripción:</label>
-                <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" required>
+                <input id="descripcion" maxlength="150" class="form-control" th:field="*{descripcion}" type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚü ]{1,150}" title="Solo se permiten letras, números y espacios" required>
             </div>
+
+<!--Botones-->
             <div class="row justify-content-center">
                 <button id="btnAgregarCaso" class="btn btn-primary my-3 col-sm-4" type="submit">Agregar Caso</button>
             </div>

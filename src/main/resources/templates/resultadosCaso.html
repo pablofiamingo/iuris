@@ -27,7 +27,7 @@
         <img class="home" th:src="@{/img/new.png}" alt="">
       </div>
     </a>
-    <a href="" class="mx-3 no-underline" th:href="@{/inicio}" th:target="_blank">
+    <a href="" class="mx-3 no-underline" th:href="@{/inicio}">
       <div class="div-home text-center my-3 p-1 bg-secondary">
         <img class="home" th:src="@{/img/home.png}" alt="">
       </div>
@@ -97,7 +97,7 @@
                 </tr>
                 <!--resultados-->
                 <tr th:each="caso: ${resultados}">
-                  <td scope="row" th:text="${caso.caratula}"></td>
+                  <td th:text="${caso.caratula}"></td>
                   <td th:text="${caso.materia}"></td>
                   <td th:text="${caso.fuero}"></td>
                   <td th:text="${caso.estado}"></td>
@@ -118,7 +118,7 @@
                   <td th:text="${caso.representante}"></td>
                   <td ><a th:href="@{'/pago/lista/' + ${caso.idCaso}}" target="_blank"> Ir a Pagos ></a></td>
                   <!-- ver los archivos del caso -->
-                  <td ><a th:href="@{'/archivo/lista/' + ${caso.idCaso}}" target="_blank"> Ver archivos ></a></td>
+                  <td ><a th:href="@{'/archivo/lista/' + ${caso.cliente.usuario.idUsuario} + '/' + ${caso.idCaso}}" target="_blank"> Ver archivos ></a></td>
                   <td>
                     <!-- editar y eliminar -->
                     <a th:href="@{'/caso/editar/' + ${caso.idCaso}}" target="_blank"><img th:src="@{/img/square-pen-solid.png}" class="icon"></a>

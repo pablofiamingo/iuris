@@ -23,9 +23,9 @@ public class CArchivoService implements IArchivoService {
     @Override
     public void uploadToLocal(MultipartFile file, String ruta) {
         try {
-            byte[] data = file.getBytes();
-            Path path = Paths.get(ruta + file.getOriginalFilename());
-            Files.write(path,data, StandardOpenOption.CREATE);
+            byte[] datosArchivoBytes = file.getBytes(); //copia los bytes del archivo ingresado a uno nuevo
+            Path rutaDelArchivo = Paths.get(ruta + file.getOriginalFilename()); //se crea una ruta desde una ruta ingresada mas el nombre del archivo
+            Files.write(rutaDelArchivo,datosArchivoBytes, StandardOpenOption.CREATE); //finalmente se escribe el archivo con los datos dados
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +44,6 @@ public class CArchivoService implements IArchivoService {
     public boolean crearDir(String directorioCaso) {
         boolean success = false;
         File path = new File(directorioCaso);
-        System.out.println(path);
         if (!path.exists()) {
             success = path.mkdirs();
         }
@@ -53,12 +52,8 @@ public class CArchivoService implements IArchivoService {
 
     @Override
     public boolean insert(Archivo archivo) {
-        if(archivo!=null) {
-            arcRepo.save(archivo);
-            return true;
-        } else {
-            return false;
-        }
+        arcRepo.save(archivo);
+        return true;
     }
 
     @Override

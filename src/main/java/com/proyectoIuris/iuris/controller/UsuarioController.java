@@ -18,10 +18,6 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
     @Autowired
-    private IListaDeTareasService listaDeTareasService;
-    @Autowired
-    private ICalendarioService calendarioService;
-    @Autowired
     private ICasoService casoService;
 
     //Métodos por GET
@@ -42,19 +38,17 @@ public class UsuarioController {
 
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
+
         if (!usuarioActivo.getRol().equals("admin")) return "redirect:/error";
 
-        List<Usuario> usuarios = usuarioService.list();
-        model.addAttribute("resultados", usuarios);
-
+        model.addAttribute("resultados", usuarioService.list());
         return "resultadosUsuario";
     }
 
     @GetMapping("/login")
     String getLogin(Model model, HttpSession httpSession) {
         //si hay usuario activo, redirige a inicio
-        //si no hay usuario logueado, envia un objeto usuario en blanco para que
-        //le coloquen los datos de inicio de sesion
+        //si no hay usuario logueado, envia un objeto usuario en blanco para que le coloquen los datos de inicio de sesion
         Usuario usuarioActivo = (Usuario) httpSession.getAttribute("user");
         if(usuarioActivo != null) return "redirect:/inicio";
 
@@ -62,49 +56,9 @@ public class UsuarioController {
         return "login";
     }
 
-    @PostMapping("/registro")
-    public String insertUser(@Validated Usuario usuario, Model model) {
-        if(usuario != null) {
-            if(usuario.getRol().equals("abogado") || usuario.getRol().equals("empleado")) {
-
-                if(Util.containsIllegals(usuario.getUser()) || Util.containsIllegals(usuario.getFullName())) {
-                    //Si el usuario a registrar no contiene datos validos
-                    //se detiene la ejecucion del registro y se notifica el error
-                    //al usuario
-                    model.addAttribute("error", "true");
-                    return "agregarUsuario";
-                }
-                /* si esta todo en orden, se crea el usuario
-                *     y al mismo se le asigna una lista de tareas y un calendario
-                *       para que pueda utilizar correctamente la aplicacion */
-                Usuario usuarioInsertado = usuarioService.insert(usuario);
-
-                ListaDeTareas listaDeTareas = new ListaDeTareas();
-                listaDeTareas.setUsuario(usuarioInsertado);
-                usuarioInsertado.setListaDeTareas(listaDeTareas);
-                listaDeTareasService.save(listaDeTareas);
-
-                Calendario calendario = new Calendario();
-                calendario.setUsuario(usuarioInsertado);
-                usuarioInsertado.setCalendario(calendario);
-                calendarioService.save(calendario);
-
-                /* finalmente se guardan tanto el calendario como la lista de tareas
-                en el usuario y se actualiza la bbdd */
-                usuarioService.insert(usuarioInsertado);
-
-                model.addAttribute("exito","true");
-            } else {
-                model.addAttribute("error", "true");
-            }
-        }
-        return "agregarUsuario";
-    }
-
     @GetMapping("/editar/{idUsuario}")
     public String getEditarUsuario(HttpSession session, Model model, @PathVariable("idUsuario")int idUsuarioAEditar) {
-        /*Busca el usuario a editar por su id, obtiene el objeto
-        * y lo envia al template para la manipulacion de sus datos */
+        /*Busca el usuario a editar por su id, obtiene el objeto y lo envia al template para la manipulacion de sus datos */
         if (!Util.isLogged(session)) return "redirect:/usuario/login";
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
         if (!usuarioActivo.getRol().equals("admin")) return "redirect:/inicio";
@@ -112,6 +66,26 @@ public class UsuarioController {
         Usuario usuarioAEditar = usuarioService.findByIdUsuario(idUsuarioAEditar);
         model.addAttribute("usuario", usuarioAEditar);
         return "editarUsuario";
+    }
+
+    @PostMapping("/registro")
+    public String insertUser(@Validated Usuario usuario, Model model) {
+
+        String estado = "error";
+
+        if(usuario.getRol().equals("abogado") || usuario.getRol().equals("empleado")) {
+            if(Util.containsIllegals(usuario.getUser()) || Util.containsIllegals(usuario.getFullName())) {
+                //Si el usuario a registrar no contiene datos validos se detiene la ejecucion del registro y se notifica el error al usuario
+                estado = "error";
+            } else {
+                /* si esta todo en orden, se crea el usuario */
+                usuarioService.insert(usuario);
+                estado = "exito";
+            }
+        }
+
+        model.addAttribute(estado, "true");
+        return "agregarUsuario";
     }
 
 
@@ -122,46 +96,35 @@ public class UsuarioController {
         Usuario usuarioActivo = (Usuario) session.getAttribute("user");
         if (!usuarioActivo.getRol().equals("admin")) return "redirect:/inicio";
 
-        if(usuario!=null) {
-            /*
-            * Al editar el usuario, en caso de que se haya cambiado
-            * el nombre del mismo, este se actualiza en los casos
-            * que posea el usuario, si el mismo es abogado. */
-            usuarioService.insert(usuario);
+        /*Al editar el usuario, en caso de que se haya cambiado el nombre del mismo, este se actualiza en los casos que posea el usuario, si el mismo es abogado. */
+        usuarioService.insert(usuario);
 
-            if(usuario.getRol().equals("abogado")) {
-                List<Caso> casos = casoService.listPermisoAbogado(usuario.getIdUsuario());
-                if(!casos.isEmpty()) {
-                    for (Caso caso : casos) {
-                        caso.setRepresentante(usuario.getFullName());
-                        casoService.save(caso);
-                    }
+        if(usuario.getRol().equals("abogado")) {
+            List<Caso> casos = casoService.listPermisoAbogado(usuario.getIdUsuario());
+            if(!casos.isEmpty()) {
+                for (Caso caso : casos) {
+                    caso.setRepresentante(usuario.getFullName());
+                    casoService.save(caso);
                 }
             }
-
-            model.addAttribute("exito", true);
-        } else {
-            model.addAttribute("error", true);
         }
+
+        model.addAttribute("exito", true);
         return "editarUsuario";
     }
 
     @PostMapping("/login")
     public String login(@Validated Usuario u, Model model, HttpSession httpSession) {
-        /*Para el login, se busca que exista el usuario buscandolo
-        * por su nombre de usuario, luego se comparan las contraseñas*/
+        /*Para el login, se busca que exista el usuario buscandolo por su nombre de usuario, luego se comparan las contraseñas*/
         Usuario usuario = usuarioService.findByUsername(u.getUser());
 
-        if(usuario != null) {
-            if(usuario.getPass().equals(u.getPass())) {
-                httpSession.setAttribute("user", usuario);
-                return "redirect:/inicio";
-            } else {
-                model.addAttribute("error", "true");
-            }
+        if(usuario.getPass().equals(u.getPass())) {
+            httpSession.setAttribute("user", usuario);
+            return "redirect:/inicio";
         } else {
             model.addAttribute("error", "true");
         }
+
         return "login";
     }
 
