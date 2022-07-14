@@ -10,4 +10,5 @@ public interface IUsuarioService {
     public Usuario findByUsername(String username);
     public Usuario findByIdUsuario(int id);
     public Usuario insert(Usuario u);
+    public Usuario FindByEmail(String email);
 }

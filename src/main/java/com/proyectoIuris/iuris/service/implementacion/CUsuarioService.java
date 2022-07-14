@@ -4,6 +4,7 @@ import com.proyectoIuris.iuris.model.Usuario;
 import com.proyectoIuris.iuris.repository.UsuariosRepository;
 import com.proyectoIuris.iuris.service.Interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,9 @@ public class CUsuarioService implements IUsuarioService {
 
     @Autowired
     private UsuariosRepository uRepo;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Override
     public List<Usuario> list() {
@@ -41,4 +45,17 @@ public class CUsuarioService implements IUsuarioService {
     public Usuario insert(Usuario u) {
         return uRepo.save(u);
     }
+
+    @Override
+    public Usuario FindByEmail(String email) {
+
+        Usuario user = null;
+        for (Usuario u : this.list()) {
+            if(u.getUser().equals(email)) {
+                user = u;
+            }
+        }
+        return user;
+    }
 }
+

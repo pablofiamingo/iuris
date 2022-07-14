@@ -2,6 +2,7 @@ package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.*;
 import com.proyectoIuris.iuris.service.Interfaces.*;
+import com.proyectoIuris.iuris.service.implementacion.EmailSenderService;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,10 @@ public class UsuarioController {
     private IUsuarioService usuarioService;
     @Autowired
     private ICasoService casoService;
+
+    @Autowired
+    private EmailSenderService senderService;
+
 
     //Métodos por GET
     @GetMapping("/registro")
@@ -66,6 +71,21 @@ public class UsuarioController {
         Usuario usuarioAEditar = usuarioService.findByIdUsuario(idUsuarioAEditar);
         model.addAttribute("usuario", usuarioAEditar);
         return "editarUsuario";
+    }
+
+    @GetMapping("/olvide/clave")
+    public String sendMail( Model model, @PathVariable("email")String email) {
+        Usuario usuarioMail = usuarioService.FindByEmail(email);
+        model.addAttribute("usuario", usuarioMail);
+
+        //Validar front
+        if(email == null || email.isEmpty()) return "redirect:/error";
+
+        senderService.sendEmail(email,
+                "Reenvio de clave",
+                "Su clave es: "+usuarioMail.getEmail());
+
+        return "redirect:/recuperarClave";
     }
 
     @PostMapping("/registro")

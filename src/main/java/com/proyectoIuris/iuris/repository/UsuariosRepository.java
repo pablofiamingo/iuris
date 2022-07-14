@@ -10,4 +10,5 @@ public interface UsuariosRepository extends CrudRepository<Usuario, Integer> {
     public Usuario findByIdUsuario(int id);
     public Usuario save(Usuario usuario);
 
+    public Usuario findByEmail(String email);
 }
