@@ -14,10 +14,7 @@ public class CUsuarioService implements IUsuarioService {
 
     @Autowired
     private UsuariosRepository uRepo;
-
-    @Autowired
-    private JavaMailSender javaMailSender;
-
+    
     @Override
     public List<Usuario> list() {
         List<Usuario> usuarios = (List<Usuario>) uRepo.findAll();
