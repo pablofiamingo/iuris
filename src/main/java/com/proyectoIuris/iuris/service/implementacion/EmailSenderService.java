@@ -16,7 +16,7 @@ public class EmailSenderService {
                           String cuerpo){
         SimpleMailMessage message = new SimpleMailMessage(); //instanciamos  la clase para del mail
 
-        message.setFrom("matiasvarela076@gmail.com"); //aca va el mail de quien lo envia
+        message.setFrom("iuris.sprt@gmail.com"); //aca va el mail de quien lo envia
         // (habria que crear un mail para iuris)
         message.setTo(email); //el mail de quien lo recibe
         message.setText(cuerpo); //cuerpo del mail

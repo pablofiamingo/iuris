@@ -40,6 +40,13 @@ public class UsuarioController {
         return redirect;
     }
 
+    @GetMapping("/recuperar")
+    public String getRecuperar(Model model, HttpSession session) {
+
+        Util.mostrarAlertas(model, session, "recuperarClave");
+        return "recuperarClave";
+    }
+
     @GetMapping("/lista")
     public String getUsuarios(HttpSession session, Model model) {
 
@@ -76,7 +83,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/olvide/clave")
-    public String sendMail(@RequestParam(value = "email") String email,@Validated Usuario usuario,Model model) {
+    public String sendMail(@RequestParam(value = "email") String email,Model model, HttpSession session) {
 
         String estado = "error";
        if(usuariosRepository.findByEmail(email) == null) {
@@ -95,9 +102,9 @@ public class UsuarioController {
                            "\nQue tenga un buen día!");
            estado = "exito";
        }
-        model.addAttribute(estado, "true");
 
-        return "recuperarClave";
+       session.setAttribute("recuperarClave", estado);
+       return "redirect:/usuario/recuperar";
     }
 
     @PostMapping("/registro")
