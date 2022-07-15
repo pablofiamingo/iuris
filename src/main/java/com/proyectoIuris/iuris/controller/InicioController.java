@@ -98,9 +98,4 @@ public class InicioController {
         return "redirect:/inicio";
     }
 
-    @GetMapping("/recuperar")
-    public String forgot(){
-        return "recuperarClave";
-    }
-
 }

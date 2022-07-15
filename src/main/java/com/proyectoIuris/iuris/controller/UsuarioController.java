@@ -1,7 +1,9 @@
 package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.repository.UsuariosRepository;
 import com.proyectoIuris.iuris.service.Interfaces.*;
+import com.proyectoIuris.iuris.service.implementacion.EmailSenderService;
 import com.proyectoIuris.iuris.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,11 @@ public class UsuarioController {
     private IUsuarioService usuarioService;
     @Autowired
     private ICasoService casoService;
+    @Autowired
+    private UsuariosRepository usuariosRepository;
+    @Autowired
+    private EmailSenderService senderService;
+
 
     //Métodos por GET
     @GetMapping("/registro")
@@ -31,6 +38,13 @@ public class UsuarioController {
         //envio un nuevo objeto usuario para que le carguen datos
         model.addAttribute("usuario", new Usuario());
         return redirect;
+    }
+
+    @GetMapping("/recuperar")
+    public String getRecuperar(Model model, HttpSession session) {
+
+        Util.mostrarAlertas(model, session, "recuperarClave");
+        return "recuperarClave";
     }
 
     @GetMapping("/lista")
@@ -66,6 +80,31 @@ public class UsuarioController {
         Usuario usuarioAEditar = usuarioService.findByIdUsuario(idUsuarioAEditar);
         model.addAttribute("usuario", usuarioAEditar);
         return "editarUsuario";
+    }
+
+    @PostMapping("/olvide/clave")
+    public String sendMail(@RequestParam(value = "email") String email,Model model, HttpSession session) {
+
+        String estado = "error";
+       if(usuariosRepository.findByEmail(email) == null) {
+           estado = "error";
+       }else {
+
+           //Recibimos el email del form y encontramos al usuario con ese email
+           Usuario usuarioMail = usuariosRepository.findByEmail(email);
+
+           //se envia el mail
+           senderService.sendEmail(email,
+                   "Reenvio de clave",
+                   "Hola: " + usuarioMail.getUser() +
+                           "\nSu clave es: "
+                           + usuarioMail.getPass() +
+                           "\nQue tenga un buen día!");
+           estado = "exito";
+       }
+
+       session.setAttribute("recuperarClave", estado);
+       return "redirect:/usuario/recuperar";
     }
 
     @PostMapping("/registro")
