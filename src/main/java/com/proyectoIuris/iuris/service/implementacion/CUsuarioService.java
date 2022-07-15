@@ -14,7 +14,7 @@ public class CUsuarioService implements IUsuarioService {
 
     @Autowired
     private UsuariosRepository uRepo;
-    
+
     @Override
     public List<Usuario> list() {
         List<Usuario> usuarios = (List<Usuario>) uRepo.findAll();

@@ -92,7 +92,7 @@ public class UsuarioController {
                    "Hola: " + usuarioMail.getUser() +
                            "\nSu clave es: "
                            + usuarioMail.getPass() +
-                           "\nQue tenga un buen día! :)");
+                           "\nQue tenga un buen día!");
            estado = "exito";
        }
         model.addAttribute(estado, "true");
