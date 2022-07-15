@@ -1,6 +1,7 @@
 package com.proyectoIuris.iuris.controller;
 
 import com.proyectoIuris.iuris.model.*;
+import com.proyectoIuris.iuris.repository.UsuariosRepository;
 import com.proyectoIuris.iuris.service.Interfaces.*;
 import com.proyectoIuris.iuris.service.implementacion.EmailSenderService;
 import com.proyectoIuris.iuris.util.Util;
@@ -20,7 +21,8 @@ public class UsuarioController {
     private IUsuarioService usuarioService;
     @Autowired
     private ICasoService casoService;
-
+    @Autowired
+    private UsuariosRepository usuariosRepository;
     @Autowired
     private EmailSenderService senderService;
 
@@ -73,19 +75,29 @@ public class UsuarioController {
         return "editarUsuario";
     }
 
-    @GetMapping("/olvide/clave")
-    public String sendMail( Model model, @PathVariable("email")String email) {
-        Usuario usuarioMail = usuarioService.FindByEmail(email);
-        model.addAttribute("usuario", usuarioMail);
+    @PostMapping("/olvide/clave")
+    public String sendMail(@RequestParam(value = "email") String email,@Validated Usuario usuario,Model model) {
 
-        //Validar front
-        if(email == null || email.isEmpty()) return "redirect:/error";
+        String estado = "error";
+       if(usuariosRepository.findByEmail(email) == null) {
+           estado = "error";
+       }else {
 
-        senderService.sendEmail(email,
-                "Reenvio de clave",
-                "Su clave es: "+usuarioMail.getEmail());
+           //Recibimos el email del form y encontramos al usuario con ese email
+           Usuario usuarioMail = usuariosRepository.findByEmail(email);
 
-        return "redirect:/recuperarClave";
+           //se envia el mail
+           senderService.sendEmail(email,
+                   "Reenvio de clave",
+                   "Hola: " + usuarioMail.getUser() +
+                           "\nSu clave es: "
+                           + usuarioMail.getPass() +
+                           "\nQue tenga un buen día! :)");
+           estado = "exito";
+       }
+        model.addAttribute(estado, "true");
+
+        return "recuperarClave";
     }
 
     @PostMapping("/registro")

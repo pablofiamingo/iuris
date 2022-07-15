@@ -12,18 +12,16 @@ public class EmailSenderService {
     private JavaMailSender mailSender;
 
     public void sendEmail(String email,
-                          String tituloMail,
+                          String tituloMail, //agregamos los parametros que tiene un mail
                           String cuerpo){
-        SimpleMailMessage message = new SimpleMailMessage();
+        SimpleMailMessage message = new SimpleMailMessage(); //instanciamos  la clase para del mail
 
-        message.setFrom("matiasvarela076@gmail.com");
-        message.setTo(email);
-        message.setText(cuerpo);
-        message.setSubject(tituloMail);
+        message.setFrom("matiasvarela076@gmail.com"); //aca va el mail de quien lo envia
+        // (habria que crear un mail para iuris)
+        message.setTo(email); //el mail de quien lo recibe
+        message.setText(cuerpo); //cuerpo del mail
+        message.setSubject(tituloMail); //y el titulo del mail
 
-        mailSender.send(message);
-
-        System.out.println("email enviado");
-
+        mailSender.send(message); //se envia
     }
 }

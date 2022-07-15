@@ -24,7 +24,6 @@ public class CUsuarioService implements IUsuarioService {
         return usuarios;
     }
 
-    
     @Override
     public Usuario findByUsername(String username) {
         Usuario user = null;
@@ -44,18 +43,6 @@ public class CUsuarioService implements IUsuarioService {
     @Override
     public Usuario insert(Usuario u) {
         return uRepo.save(u);
-    }
-
-    @Override
-    public Usuario FindByEmail(String email) {
-
-        Usuario user = null;
-        for (Usuario u : this.list()) {
-            if(u.getUser().equals(email)) {
-                user = u;
-            }
-        }
-        return user;
     }
 }
 
