@@ -22,7 +22,7 @@
                 </div>
                 <div th:if="${error != null}" class="row" >
                     <div class="col mx-5">
-                        <div class="alert alert-warning text-center" role="alert"  th:text="'Los datos son incorrectos, inténtelo nuevamente.'"></div>
+                        <div class="alert alert-warning text-center" role="alert"  th:text="'Algo no se ingresó bien, pero ánimo, probá nuevamente!'"></div>
                     </div>
                 </div>
                 <form th:action="@{/usuario/login}" th:object="${usuario}" method="POST">
